@@ -31,6 +31,7 @@ Ini adalah proyek UAS untuk mata kuliah Software Development yang dikembangkan o
    ```env
    DATABASE_URL="mongodb+srv://purnomoht17:<db_password>@cluster0.gqddkdw.mongodb.net/Digisteels?retryWrites=true&w=majority"
    ```
+   Ganti `purnomoht17` dengan username MongoDB Anda.
    Ganti `<db_password>` dengan password MongoDB Anda.
 
 6. **Jalankan Aplikasi**
