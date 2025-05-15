@@ -1,0 +1,69 @@
+REGISTER Pelanggan
+POST http://localhost:3000/api/pelanggan/register
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "Heru@example.com",
+  "password" : "Herupurnomo17.",
+  "name" : "Heru Purnomo"
+}
+
+{
+    "email": "Ellen@example.com",
+    "password": "EllenAngelina.",
+    "nama": "Ellen Angelina"
+}
+
+LOGIN Pelanggan
+POST http://localhost:3000/api/pelanggan/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "Heru@example.com",
+  "password" : "Herupurnomo17."
+}
+token: 1f2c79f8-40ce-40e2-86f4-8b29bc8704ba
+
+{
+  "email": "Ellen@example.com",
+  "password" : "EllenAngelina."
+}
+token: d900ac24-e76b-4a7a-90ef-739930de026e
+
+LOGOUT
+DELETE http://localhost:3000/api/pelanggan/logout
+Content-Type: application/json
+Accept: application/json
+Authorization: 85b65db9-217e-4470-b398-66504a0c98ba
+
+{
+  "email": "heru@example.com"
+}
+
+REGISTER Admin
+POST http://localhost:3000/api/admin/register
+Content-Type: application/json
+Accept: application/json
+
+{
+  "uername": "admin_heru",
+  "password" : "Herupurnomo17."
+}
+
+LOGIN admin
+POST http://localhost:3000/api/admin/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "uername": "admin_heru",
+  "password" : "Herupurnomo17."
+}
+
+LOGOUT
+DELETE http://localhost:3000/api/pelanggan/logout
+Content-Type: application/json
+Accept: application/json
+Authorization: 85b65db9-217e-4470-b398-66504a0c98ba
