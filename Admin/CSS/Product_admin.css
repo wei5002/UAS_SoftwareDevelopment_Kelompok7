@@ -23,6 +23,7 @@ body{
   letter-spacing: 5px;
   cursor: pointer;
   transition: 0.3s ease;
+  margin-top: 150px;
 }
 
 .tab.active{
