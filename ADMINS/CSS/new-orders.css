@@ -1,0 +1,90 @@
+* {
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+.order-list {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    margin-top: 140px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+    background: rgba(49, 59, 70, 1);
+}
+
+.order-card {
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    box-shadow:
+    10px 0px 20px rgba(0,0,0,0.3),
+    -10px 0px 20px rgba(0,0,0,0.3),
+    0px 10px 20px rgba(0,0,0,0.3),
+    0px -10px 20px rgba(0,0,0,0.3);
+    padding: 30px 30px;
+}
+
+.order-card-img {
+    margin-right: 20px;
+}
+
+.order-card-img img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.order-card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
+}
+
+.order-card-desc {
+    color: white;
+    display: flex;
+    width: 390px;
+    flex-direction: column;
+    line-height: 1.95rem;
+}
+
+.order-card-desc p {
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.order-card-size-wrap {
+    padding: 5px 0px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.order-card-size {
+    padding-left: 10px;
+    padding-right: 10px;
+    background: #ffffff;
+    border-radius: 20px;
+}
+
+.order-card-size p {
+    color: black !important;
+}
+
+.button-wrap {
+    display: flex;
+    justify-content: right;
+}
+
+.detail-btn {
+    height: 35px;
+    width: 100px;
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    border-radius: 20px;
+    border: none;
+}
