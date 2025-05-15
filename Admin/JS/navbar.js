@@ -3,4 +3,4 @@ fetch("navbar.html")
   .then((data) => {
     document.getElementById("navbar-placeholder").innerHTML = data;
   })
-  .catch((error) => console.error("Error loading footer:", error));
+  .catch((error) => console.error("Error loading navbar:", error));
