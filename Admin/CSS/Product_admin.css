@@ -14,7 +14,8 @@ body{
   gap: 40px;
 }
 
-.tab{
+.tab a{
+  display: inline-block;
   background-color: #d1cece;
   border: none;
   border-radius: 20px;
@@ -23,12 +24,18 @@ body{
   letter-spacing: 5px;
   cursor: pointer;
   transition: 0.3s ease;
+  text-decoration: none;
+  color: black;
+  margin-right: 10px;
+}
+.tab{
   margin-top: 150px;
 }
 
-.tab.active{
-  background-color: #908d8d;
+.tab a.active{
+  background-color:#adabab ;
 }
+
 
 .grid_produk{
   display: grid;

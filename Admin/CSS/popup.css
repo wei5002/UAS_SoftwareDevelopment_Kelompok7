@@ -1,0 +1,234 @@
+.popup_produk {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.popup_isi {
+  background-color: #2f3943;
+  margin: 5% auto;
+  padding: 20px;
+  width: 850px;
+  max-width: 90%;
+  height: 500px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+
+.popup_container {
+  display: flex;
+  gap: 0px;
+}
+
+.popup_header{
+  margin-left: 30px;
+}
+
+.gambar_produk {
+  width: 330px;
+  height: 330px;
+  object-fit: cover;
+  padding-bottom: 17px;
+}
+
+.judul_produk {
+  font-size: 1.5rem;
+  margin-bottom: -20px;
+  letter-spacing: 1px;
+  color: white;
+}
+
+.jenis_produk {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+  color: white;
+}
+
+.popup_detail {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  /* margin-top: 2%; */
+}
+
+.bagian_kanan {
+  margin-bottom: 20px;
+}
+
+.bagian_kanan h3 {
+  color: white;
+  font-size: 23px;
+  margin-bottom: 7px;
+  letter-spacing: 5px;
+}
+
+/* THICKNESS*/
+.thickness_buttons {
+  display: flex;
+  flex-wrap: wrap; 
+  /* gap: 5px; */
+  gap: 20px;
+  margin-top: 5px;
+  margin-left: 7%;
+}
+    
+.thickness_btn {
+  margin-left: 5px;
+  padding: 8px 17px;
+  background-color: #ffffff;
+  font-size: 21px;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  letter-spacing: 1px;
+  margin-bottom: -12px; 
+}
+    
+.thickness_btn:hover {
+  background-color: #4a89dc;
+  /* box-shadow: 0 0 1px rgba(255, 0, 0, 0.2); */
+}
+    
+.thickness_btn.active {
+  background-color: #4a89dc;
+  /* font-weight: bold; */
+}
+
+/* HOLE */
+.hole_buttons {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 5px;
+  gap: 20px;
+  margin-top: 5px;
+  margin-left: 7%;
+}
+    
+.hole_btn {
+  margin-left: 5px;
+  padding: 8px 17px;
+  background-color: #ffffff;
+  font-size: 21px;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  letter-spacing: 1px;
+  margin-bottom: -12px; 
+}
+    
+.hole_btn:hover {
+  background-color: #4a89dc;
+  /* box-shadow: 0 0 1px rgba(255, 0, 0, 0.2); */
+}
+    
+.hole_btn.active {
+  background-color: #4a89dc;
+  /* font-weight: bold; */
+}
+
+/* SIZE */
+.size_buttons {
+  display: flex;
+  flex-wrap: wrap; 
+  /* gap: 5px; */
+  /* gap: 20px; */
+  margin-top: 5px;
+  margin-left: 1%;
+}
+
+.size_btn {
+  margin-left: 7%;
+  padding: 8px 17px;
+  background-color: #ffffff;
+  font-size: 21px;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  letter-spacing: 3px;
+  margin-bottom: 8px; 
+}
+
+.size_btn:hover {
+  background-color: #4a89dc;
+}
+
+.size_btn.active {
+  background-color: #4a89dc;
+}
+
+/* button */
+.edit-delete-btn{
+  display: flex;
+  gap: 40px;
+  margin-left: 0px; 
+}
+
+.edit_btn, .delete_btn {
+  font-size: 18px;
+  padding: 5px 25px;
+  border-radius: 3000px;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+.edit_btn{
+  border: 5px solid #2f3943;
+  background-color: #2f3943;
+  color: white;
+}
+
+.delete_btn{
+  border: 5px solid #c91616;
+  background-color: #c91616;
+  color: white;
+}
+
+.popup_action {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.stock_price {
+  font-size: 21px;
+  letter-spacing: 5px;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.nilai_stock {
+  color: white; 
+}
+
+.nilai_price {
+  margin-left: 250px; 
+  font-size: 21px;
+}
+
+.close {
+  color: #ffffff;
+  position: absolute;
+  right: 325px;
+  top: 75px;
+  font-size: 36px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: grey;
+}
