@@ -12,7 +12,7 @@
 
 .popup_isi {
   background-color: #2f3943;
-  margin: 5% auto;
+  margin: 6% auto;
   padding: 20px;
   width: 850px;
   max-width: 90%;
@@ -54,7 +54,6 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  /* margin-top: 2%; */
 }
 
 .bagian_kanan {
@@ -71,8 +70,7 @@
 /* THICKNESS*/
 .thickness_buttons {
   display: flex;
-  flex-wrap: wrap; 
-  /* gap: 5px; */
+  flex-wrap: wrap;
   gap: 20px;
   margin-top: 5px;
   margin-left: 7%;
@@ -94,12 +92,10 @@
     
 .thickness_btn:hover {
   background-color: #4a89dc;
-  /* box-shadow: 0 0 1px rgba(255, 0, 0, 0.2); */
 }
     
 .thickness_btn.active {
   background-color: #4a89dc;
-  /* font-weight: bold; */
 }
 
 /* HOLE */
@@ -128,20 +124,16 @@
     
 .hole_btn:hover {
   background-color: #4a89dc;
-  /* box-shadow: 0 0 1px rgba(255, 0, 0, 0.2); */
 }
     
 .hole_btn.active {
   background-color: #4a89dc;
-  /* font-weight: bold; */
 }
 
 /* SIZE */
 .size_buttons {
   display: flex;
   flex-wrap: wrap; 
-  /* gap: 5px; */
-  /* gap: 20px; */
   margin-top: 5px;
   margin-left: 1%;
 }
@@ -168,7 +160,14 @@
   background-color: #4a89dc;
 }
 
-/* button */
+/* button edit dan delete*/
+.popup_action {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
 .edit-delete-btn{
   display: flex;
   gap: 40px;
@@ -195,13 +194,9 @@
   color: white;
 }
 
-.popup_action {
-  margin-top: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-}
 
+
+/* Stok dan Harga */
 .stock_price {
   font-size: 21px;
   letter-spacing: 5px;
@@ -219,11 +214,13 @@
   font-size: 21px;
 }
 
+
+/* BUTTON CLOSE */
 .close {
   color: #ffffff;
   position: absolute;
   right: 325px;
-  top: 75px;
+  top: 90px;
   font-size: 36px;
   font-weight: bold;
   cursor: pointer;
