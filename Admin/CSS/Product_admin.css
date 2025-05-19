@@ -1,8 +1,18 @@
-body{
+/* body{
   font-family: 'Times New Roman', Times, serif;
   background-color: #f4f1f1;
   margin: 0;
   padding: 0;
+  text-align: center;
+} */
+
+* {
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+body {
+  background-color: #f4f1f1;
   text-align: center;
 }
 
