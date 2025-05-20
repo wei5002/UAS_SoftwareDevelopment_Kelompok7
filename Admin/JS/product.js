@@ -115,3 +115,27 @@ productItems.forEach(produk=>{
 close.addEventListener('click',()=>{
     popup.style.display='none';
 })
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".produk").forEach((produk) => {
+    const stock = parseInt(produk.getAttribute("data-stock"), 10);
+    const stockSpan = produk.closest('.daftar_produk').querySelector('.nilai_stock');
+
+    stockSpan.textContent = stock;
+    
+    // Hapus warning yang ada jika ada
+    const existingWarning = produk.querySelector(".stock-warning");
+    if (existingWarning) {
+      existingWarning.remove();
+    }
+
+    // Jika stok kurang dari 10, tambahkan warning
+    if (stock < 10) {
+      const warning = document.createElement("div");
+      warning.classList.add("stock-warning");
+      warning.textContent = "!";
+      produk.appendChild(warning);
+    }
+  });
+});
