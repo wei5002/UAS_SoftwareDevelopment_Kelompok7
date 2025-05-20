@@ -16,7 +16,7 @@
   padding: 20px;
   width: 850px;
   max-width: 90%;
-  height: 500px;
+  height: 533px;
   box-shadow: 0 0 20px rgba(0,0,0,0.2);
 }
 
@@ -202,7 +202,13 @@
   letter-spacing: 5px;
   color: white;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.stock_price p{
+  margin-bottom: -20px;
+  margin-left: 40px;
 }
 
 .nilai_stock {
@@ -210,9 +216,9 @@
 }
 
 .nilai_price {
-  margin-left: 250px; 
   font-size: 21px;
 }
+
 
 
 /* BUTTON CLOSE */

@@ -130,3 +130,7 @@ body {
 .add_product:hover{
   transform: scale(1.1);
 }
+
+.daftar_produk span{
+  color: black;
+}
