@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="/Admin/CSS/navbar.css"/>
   <link rel="stylesheet" href="/Admin/CSS/footer.css"/>
   <link rel="stylesheet" href="/Admin/CSS/popup.css">
+  <link rel="stylesheet" href="/Admin/CSS/popup-edit.css">
+  <link rel="stylesheet" href="/Admin/CSS/popup-add.css">
 </head>
 <body>
 
@@ -185,6 +187,101 @@
     </div>
   </div>
 
+  <!-- popup edit detail produk -->
+  <div id="edit-popup">
+      <div class="popup-content">
+          <span class="close" id="edit-close">&times;</span>
+          <form id="edit-form">
+            <span class="edit-title">
+                <input type="text" id="edit-title" name="title" required/>
+            </span>
+            
+            <img id="edit_gambar" src="" alt="Product Image" class="edit_gambar" style="cursor: pointer;" />
+            <input type="file" id="edit-image" accept="image/*" style="display: none;" />
+
+
+            <span class="thickness-size-edit">
+                <label for="edit-thickness">Thickness</label>
+                <textarea id="edit-thickness" name="thickness" rows="1"></textarea>
+            </span>
+              
+            <span class="thickness-size-edit">
+                <label for="edit-hole">Hole Diameter</label>
+                <textarea id="edit-hole" name="hole" rows="1"></textarea>
+            </span>
+
+            <span class="thickness-size-edit">
+                <label for="edit-size">Size</label>
+                <textarea id="edit-size" name="size" rows="1"></textarea>
+            </span>
+            
+            <span class="stock-price-edit">
+                <label for="edit-stock">Stock</label>
+                <input type="number" id="edit-stock" name="stock" />
+            </span>
+            
+            <span class="stock-price-edit">
+                <label for="edit-price">Price</label>
+                <input type="text" id="edit-price" name="price" />
+            </span>
+          
+              <button type="submit">Save</button>
+          </form>
+      </div>
+  </div>
+
+  <!-- popup menambah produk -->
+  <div id="add-product-popup" class="popup_produk">
+    <div class="popup_isi">
+      <span class="close">&times;</span>
+      <div class="popup_container">
+        <div class="popup_header">
+          <h2>Tambah Produk Baru</h2>
+          <form id="add-product-form">
+            <div class="form-group">
+              <label for="new-product-title">Judul Produk:</label>
+              <input type="text" id="new-product-title" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="new-product-image">Gambar Produk:</label>
+              <input type="file" id="new-product-image" accept="image/*" required>
+              <img id="new-product-preview" src="#" alt="Preview Gambar" style="display:none; max-width:200px; margin-top:10px;">
+            </div>
+            
+            <div class="form-group">
+              <label for="new-product-thickness">Thickness (mm):</label>
+              <textarea id="new-product-thickness" placeholder="Pisahkan dengan koma, contoh: 0.5,1,2"></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label for="new-product-hole">Hole Diameter (mm):</label>
+              <textarea id="new-product-hole" placeholder="Pisahkan dengan koma, contoh: 2,3,4"></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label for="new-product-size">Size:</label>
+              <textarea id="new-product-size" required placeholder="Contoh: 1 x 1 x 600, 3 x 3 x 600"></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label for="new-product-stock">Stock:</label>
+              <input type="number" id="new-product-stock" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="new-product-price">Price:</label>
+              <input type="text" id="new-product-price" required placeholder="Contoh: Rp 100.000">
+            </div>
+
+            <button type="submit" class="submit-btn">Tambah Produk</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <div id="footer-placeholder"></div>
   
   <script src="/Admin/JS/header-logout.js"></script>
@@ -192,6 +289,8 @@
   <script src="/Admin/JS/footer.js"></script>
   <script src="/Admin/JS/product.js"></script>
   <script src="/Admin/JS/stock-produk.js"></script>
+  <script src="/Admin/JS/popup-add-produk.js"></script>
+  <script src="/Admin/JS/popup-edit-produk.js"></script>
 
 </body>
 </html>
