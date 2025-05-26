@@ -24,36 +24,108 @@
             </tr>
             <tr style="background-color: #ffffff;">
                 <td>PLATE STAINLESS STEEL 201</td>
-                <td><img src="/Admin/img/eye.png"/></td>
+                <td>
+                    <img 
+                    src="/Admin/img/eye.png"
+                    alt="detail"
+                    class="eye-icon"
+                    style="cursor:pointer"
+                    data-title="PLATE STAINLESS STEEL 201"
+                    data-thickness="2 mm"
+                    data-size="3x3x600 cm"
+                    />
+                </td>
                 <td>Heru</td>
                 <td>01-04-2025</td>
                 <td>Rp 1.098.000</td>
             </tr>
             <tr style="background-color: #d7d7d7;">
                 <td>ANGLE BAR STAINLESS STEEL 304</td>
-                <td><img src="/Admin/img/eye.png"/></td>
+                <td>
+                    <img 
+                    src="/Admin/img/eye.png"
+                    alt="detail"
+                    class="eye-icon"
+                    style="cursor:pointer"
+                    data-title="ANGLE BAR STAINLESS STEEL 304"
+                    data-thickness="1.5 mm"
+                    data-size="5x5x500 cm"
+                    />
+                </td>
                 <td>Adidtiya</td>
                 <td>28-02-2025</td>
                 <td>Rp 500.000</td>
             </tr>
             <tr style="background-color: #ffffff;">
                 <td>PERFORATED PLATE STAINLESS STEEL 201</td>
-                <td><img src="/Admin/img/eye.png"/></td>
+                <td>
+                    <img 
+                    src="/Admin/img/eye.png"
+                    alt="detail"
+                    class="eye-icon"
+                    style="cursor:pointer"
+                    data-title="PERFORATED PLATE STAINLESS STEEL 201"
+                    data-thickness="2 mm"
+                    data-size="3x3x600 cm"
+                    />
+                </td>
                 <td>Elysia</td>
                 <td>12-11-2024</td>
                 <td>Rp 1.200.000</td>
             </tr>
             <tr style="background-color: #d7d7d7;">
                 <td>ROD STAINLESS STEEL 316</td>
-                <td><img src="/Admin/img/eye.png"/></td>
+                <td>
+                    <img 
+                    src="/Admin/img/eye.png"
+                    alt="detail"
+                    class="eye-icon"
+                    style="cursor:pointer"
+                    data-title="ROD STAINLESS STEEL 316"
+                    data-thickness="6 mm"
+                    data-size="Length 6000 mm"
+                    />
+                </td>
                 <td>Shirley</td>
                 <td>09-10-2024</td>
                 <td>Rp 420.000</td>
             </tr>
         </table>
     </div>
+
+    <!-- DESAIN POPUP -->
+     <div id="popup" class="popup-hidden">
+        <div class="popup-content">
+            <span class="popup-close">&times;</span>
+            <h3 id="popup-title" class="popup-title"></h3>
+            <div class="popup-wrapper">
+
+                <!-- bagian label detail -->
+                <div class="popup-column">
+                    <div class="popup-row">
+                        <span class="popup-label">THICKNESS (mm)</span>
+                    </div>
+                    <div class="popup-row">
+                        <span class="popup-label">SIZE (cm)</span>
+                    </div>
+                </div>
+
+                <!-- bagian value detail -->
+                <div class="popup-column">
+                    <div class="popup-row">
+                        <span class="popup-value" id="popup-thickness"></span>
+                    </div>
+                    <div class="popup-row">
+                        <span class="popup-value" id="popup-size"></span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+     </div>
     
     <script src="/Admin/JS/header-logout.js"></script>
     <script src="/Admin/JS/navbar.js"></script>
+    <script src="/Admin/JS/sales-report.js"></script>
 </body>
 </html>
