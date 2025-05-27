@@ -27,7 +27,20 @@ header {
     letter-spacing: 5px;
 }
 
+.login-signup-btn {
+    display: flex;
+    gap: 12px;
+}
+
 .login-btn {
+    background: none;
+    border: 1px solid white;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.signup-btn {
     background: none;
     border: 1px solid white;
     color: white;
