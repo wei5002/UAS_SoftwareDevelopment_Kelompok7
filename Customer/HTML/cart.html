@@ -6,13 +6,127 @@
     <title>cart</title>
     <link rel="stylesheet" href="/Customer/CSS/cart.css"/>
     <link rel="stylesheet" href="/Customer/CSS/header-logout.css"/>
-    <link rel="stylesheet" href="/Customer/CSS/footer.css"/>
+    <link rel="stylesheet" href="/Customer/CSS/footer-white.css"/>
     <link rel="stylesheet" href="/Admin/CSS/navbar.css"/>
 </head>
 <body>
 
     <div id="header-placeholder"></div>
     <div id="navbar-placeholder"></div>
+
+    <div class="order-list">
+        <div class="order-card">
+            <div class="order-card-img">
+                <img src="/Admin/img/rod 304.jpg"/>
+            </div>
+            <div class="order-card-content">
+                <div class="order-card-desc">
+                    <h3>ROD STAINLESS STEEL 304</h3>
+                    <div class="order-card-size-wrap">
+                        <div class="order-card-size">
+                            <p>diameter 5 - length 6000</p>
+                        </div>
+                    </div> 
+                    <p>Price : Rp 180.000</p>
+                    <br><p>Amount : 3</p>
+                </div>
+                <div class="button-wrap">
+                    <button
+                    class="detail-btn"
+                    data-title="ROD STAINLESS STEEL 304"
+                    data-img="/Admin/img/rod 304.jpg"
+                    data-spec-1-title="Diameter (mm)"
+                    data-spec-1-value="5"
+                    data-spec-2-title="Length (mm)"
+                    data-spec-2-value="6000"
+                    data-price="Rp 180.000"
+                    data-cus-name="Heru"
+                    data-cus-bank-name="BCA"
+                    data-cus-account-holder="Heru Purnomo"
+                    data-cus-account-number="098765432123"
+                    data-cus-province="DKI Jakarta"
+                    data-cus-city="Jakarta Barat"
+                    data-cus-district="Kalideres"
+                    data-cus-urban="Kalideres"
+                    data-cus-street="Jl Anggrek, Blok A1"
+                    data-cus-phone="081212345678"
+                    data-receipt-img="/Admin/img/sampel bukti tf heru.png"
+                    >
+                        Detail
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DESAIN POPUP -->
+    <div id="popup" class="popup-overlay" style="display: none;">
+        <div class="popup-content">
+            <span class="close-popup">&times;</span>
+            <div class="popup-wrapper">
+                <div class="popup-title">
+                    <h3 id="popup-title"></h3>
+                </div>
+                <div class="popup-line-one">
+                    <div class="popup-img">
+                        <img id="popup-img" src="" alt="Product Image"/>
+                    </div>
+                    <div class="popup-cusinfo">
+                        <div class="popup-cusinfo-title">
+                            <p><strong>Name</strong></p>
+                            <p><strong>Bank Name</strong></p>
+                            <p><strong>Account Holder's Name</strong></p>
+                            <p><strong>Bank Account</strong></p>
+                            <p><strong>Province</strong></p>
+                            <p><strong>City</strong></p>
+                            <p><strong>District</strong></p>
+                            <p><strong>Urban Village</strong></p>
+                            <p><strong>Street</strong></p>
+                            <p><strong>Phone Number</strong></p>
+                        </div>
+                        <div class="popup-cusinfo-content">
+                            <p id="cus-name"></p>
+                            <p id="cus-bank-name"></p>
+                            <p id="cus-account-holder"></p>
+                            <p id="cus-account-number"></p>
+                            <p id="cus-province"></p>
+                            <p id="cus-city"></p>
+                            <p id="cus-district"></p>
+                            <p id="cus-urban"></p>
+                            <p id="cus-street"></p>
+                            <p id="cus-phone"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="popup-line-two">
+                    <div class="popup-productinfo">
+                        <div class="popup-productinfo-title">
+                            <p><strong id="popup-spec-1-title"></strong></p>
+                            <p><strong id="popup-spec-2-title"></strong></p>
+                            <p><strong>Total Price</strong></p>
+                            <p><strong>Transfer Receipt</strong></p>
+                        </div>
+                        <div class="popup-productinfo-content">
+                            <p id="popup-spec-1-value"></p>
+                            <p id="popup-spec-2-value"></p>
+                            <p id="popup-price"></p>
+                            <p><button class="see-receipt-btn">see receipt</button></p>
+                        </div>
+                    </div>
+                    <div class="popup-confirm-btn">
+                        <button class="confirm-btn">Confirm Order</button>
+                    </div>
+                    <div class="popup-tyoe-text">
+                        <p><strong>Something is wrong?</strong></p>
+                        <input type="text" placeholder="Type here" class="text-type"/>
+                    </div>
+                    <div class="popup-decline-btn">
+                        <button class="decline-btn">Decline Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <div id="footer-placeholder"></div>
 
