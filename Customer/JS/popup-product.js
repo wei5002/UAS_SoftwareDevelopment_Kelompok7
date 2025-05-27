@@ -52,7 +52,7 @@ productItems.forEach(produk => {
                 const btn = document.createElement('button');
                 btn.className = 'thickness_btn';
                 btn.textContent = hasilThickness;
-                btn.addEventListener('click', function() {
+                btn.addEventListener('click', function () {
                     document.querySelectorAll('.thickness_btn').forEach(btn => btn.classList.remove('active'));
                     this.classList.add('active');
                 });
@@ -69,7 +69,7 @@ productItems.forEach(produk => {
                 const btn = document.createElement('button');
                 btn.className = 'hole_btn';
                 btn.textContent = hasilHole;
-                btn.addEventListener('click', function() {
+                btn.addEventListener('click', function () {
                     document.querySelectorAll('.hole_btn').forEach(btn => btn.classList.remove('active'));
                     this.classList.add('active');
                 });
@@ -86,7 +86,7 @@ productItems.forEach(produk => {
                 const btn = document.createElement('button');
                 btn.className = 'size_btn';
                 btn.textContent = hasilSize;
-                btn.addEventListener('click', function() {
+                btn.addEventListener('click', function () {
                     document.querySelectorAll('.size_btn').forEach(btn => btn.classList.remove('active'));
                     this.classList.add('active');
                 });
@@ -122,18 +122,32 @@ productItems.forEach(produk => {
         };
 
         keranjangBtn.onclick = () => {
-            if (jumlahProduk > 0) {
-                if (jumlahProduk <= parseInt(stock, 10)) {
-                    alert("Success to cart");
-                    popup.style.display = 'none'; // tutup popup
-                    jumlahProduk = 0;
-                    jumlahEl.textContent = jumlahProduk;
-                    kurangBtn.disabled = true;
-                } else {
-                    alert("Jumlah melebihi stok tersedia.");
-                }
-            } else {
+            const selectedThickness = document.querySelector('.thickness_btn.active');
+            const selectedHole = document.querySelector('.hole_btn.active');
+            const selectedSize = document.querySelector('.size_btn.active');
+
+            const isNeedThickness = thickness && thickness.trim() !== '';
+            const isNeedHole = hole && hole.trim() !== '';
+            const isNeedSize = size && size.trim() !== '';
+
+            // Validasi pemilihan opsi
+            if ((isNeedThickness && !selectedThickness) ||
+                (isNeedHole && !selectedHole) ||
+                (isNeedSize && !selectedSize)) {
+                alert("Silakan pilih opsi yang tersedia (thickness, hole, atau size) sebelum menambahkan ke keranjang.");
+                return;
+            }
+
+            if (jumlahProduk > 0 && jumlahProduk <= parseInt(stock, 10)) {
+                alert("Success to cart");
+                popup.style.display = 'none';
+                jumlahProduk = 0;
+                jumlahEl.textContent = jumlahProduk;
+                kurangBtn.disabled = true;
+            } else if (jumlahProduk === 0) {
                 alert("Masukkan jumlah produk terlebih dahulu.");
+            } else {
+                alert("Jumlah melebihi stok tersedia.");
             }
         };
 
