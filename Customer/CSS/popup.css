@@ -160,7 +160,6 @@
   background-color: #4a89dc;
 }
 
-
 /* button edit dan delete*/
 .popup_action {
   margin-top: auto;
@@ -169,30 +168,45 @@
   align-items: flex-end;
 }
 
-.edit-delete-btn{
+.kurang-tambah-btn{
   display: flex;
-  gap: 40px;
   margin-left: 0px; 
 }
 
-.edit_btn, .delete_btn {
+.kurang_btn, .tambah_btn, .delete_btn {
   font-size: 18px;
-  padding: 5px 25px;
+  padding: 1px 19px;
   border-radius: 3000px;
   cursor: pointer;
-  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
 
-.edit_btn{
-  border: 5px solid #2f3943;
-  background-color: #2f3943;
-  color: white;
+.kurang_btn, .tambah_btn{
+  border: 1px solid #a9aaab;
+  background-color: #a9aaab;
+  color: rgb(3, 3, 3);
 }
 
-.delete_btn{
-  border: 5px solid #c91616;
-  background-color: #c91616;
-  color: white;
+.keranjang_btn{
+  border: 5px solid #9ee8f1;
+  background-color: #9ee8f1;
+  color: black;
+  font-weight: bold;
+  letter-spacing: 3px;
+}
+
+.jumlah_produk {
+  font-size: 20px;
+  color: black;
+  min-width: 30px;
+  text-align: center;
+  line-height: 40px;
+  margin: 37px;
+}
+
+.jumlah_wrapper{
+  border: 3px solid #e6e9ea;
+  background-color: #e6e9ea;
 }
 
 
