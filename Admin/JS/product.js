@@ -146,3 +146,45 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+async function loadProducts() {
+  try {
+    const response = await fetch('/api/produk');
+    const products = await response.json();
+
+    const grid = document.querySelector('.grid_produk');
+    grid.innerHTML = ''; // bersihkan konten lama
+
+    products.forEach((produk) => {
+      const div = document.createElement('div');
+      div.className = 'daftar_produk';
+      div.innerHTML = `
+        <div class="produk"
+             data-id="${produk.id}"
+             data-judul="${produk.namaProduk}"
+             data-jenis="${produk.jenisProduk || ''}"
+             data-gambar="${produk.gambarProduk}"
+             data-thickness="${produk.thickness || ''}"
+             data-hole="${produk.hole || ''}"
+             data-size="${produk.size}"
+             data-stock="${produk.stok}"
+             data-price="${produk.harga}">
+          <img src="${produk.gambarProduk}" alt="${produk.namaProduk}">
+        </div>
+        <h3>${produk.namaProduk}</h3>
+        <p class="stock_produk">Stock: <span class="nilai_stock">${produk.stok}</span></p>
+        <p>Click for more</p>
+      `;
+      grid.appendChild(div);
+    });
+
+    // tambahkan kembali event listener untuk produk
+    document.querySelectorAll('.produk').forEach(addProductClickHandler);
+
+  } catch (error) {
+    console.error('Gagal memuat produk:', error);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadProducts);
+
+

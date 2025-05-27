@@ -67,3 +67,16 @@ DELETE http://localhost:3000/api/pelanggan/logout
 Content-Type: application/json
 Accept: application/json
 Authorization: 85b65db9-217e-4470-b398-66504a0c98ba
+
+PRODUK
+GET http://localhost:3000/api/produk
+
+{
+  "nama": "Contoh Produk",
+  "gambar": "data:image/jpeg;base64,...",
+  "thickness": "1,2,3",
+  "hole": "4,5",
+  "size": "100x200",
+  "stok": 10,
+  "harga": 10000
+}
