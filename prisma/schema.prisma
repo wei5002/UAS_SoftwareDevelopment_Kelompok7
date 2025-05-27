@@ -27,3 +27,15 @@ model Admin {
   password String
   token    String?
 }
+
+model Produk {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  nama      String
+  deskripsi String?
+  harga     Float
+  stok      Int
+  thickness String?
+  hole      String?
+  size      String?
+  gambar    String
+}
