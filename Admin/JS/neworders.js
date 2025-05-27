@@ -12,44 +12,68 @@ document.addEventListener('DOMContentLoaded', function () {
     const cusUrban = document.getElementById("cus-urban");
     const cusStreet = document.getElementById("cus-street");
     const cusPhone = document.getElementById("cus-phone");
-    const popupSpec1Title = document.getElementById('popup-spec-1-title');
-    const popupSpec1Value = document.getElementById('popup-spec-1-value');
-    const popupSpec2Title = document.getElementById('popup-spec-2-title');
-    const popupSpec2Value = document.getElementById('popup-spec-2-value');
-    const popupPrice = document.getElementById('popup-price');
-    const closeBtn = document.querySelector('.close-popup');
+    const popupSpec1Title = document.getElementById("popup-spec-1-title");
+    const popupSpec1Value = document.getElementById("popup-spec-1-value");
+    const popupSpec2Title = document.getElementById("popup-spec-2-title");
+    const popupSpec2Value = document.getElementById("popup-spec-2-value");
+    const popupPrice = document.getElementById("popup-price");
 
-    document.querySelectorAll('.detail-btn').forEach(button => {
-        button.addEventListener('click', () => {
-            popupTitle.textContent = button.dataset.title;
-            popupImg.src = button.dataset.img;
-            cusName.textContent = button.dataset.cusName;
-            cusBankName.textContent = button.dataset.cusBankName;
-            cusAccountHolder.textContent = button.dataset.cusAccountHolder;
-            cusAccountNumber.textContent = button.dataset.cusAccountNumber;
-            cusProvince.textContent = button.dataset.cusProvince;
-            cusCity.textContent = button.dataset.cusCity;
-            cusDistrict.textContent = button.dataset.cusDistrict;
-            cusUrban.textContent = button.dataset.cusUrban;
-            cusStreet.textContent = button.dataset.cusStreet;
-            cusPhone.textContent = button.dataset.cusPhone;
-            popupSpec1Title.textContent = button.dataset.spec1Title;
-            popupSpec1Value.textContent = button.dataset.spec1Value;
-            popupSpec2Title.textContent = button.dataset.spec2Title;
-            popupSpec2Value.textContent = button.dataset.spec2Value;
-            popupPrice.textContent = button.dataset.price;
+    const receiptPopup = document.getElementById("receipt-popup");
+    const receiptImg = document.getElementById("receipt-img");
+    const closeReceiptPopup = document.querySelector(".close-receipt-popup");
 
+    let currentReceiptUrl = "";
+
+    document.querySelectorAll('.detail-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
             popup.style.display = 'flex';
+
+            popupTitle.textContent = btn.dataset.title;
+            popupImg.src = btn.dataset.img;
+            cusName.textContent = btn.dataset.cusName;
+            cusBankName.textContent = btn.dataset.cusBankName;
+            cusAccountHolder.textContent = btn.dataset.cusAccountHolder;
+            cusAccountNumber.textContent = btn.dataset.cusAccountNumber;
+            cusProvince.textContent = btn.dataset.cusProvince;
+            cusCity.textContent = btn.dataset.cusCity;
+            cusDistrict.textContent = btn.dataset.cusDistrict;
+            cusUrban.textContent = btn.dataset.cusUrban;
+            cusStreet.textContent = btn.dataset.cusStreet;
+            cusPhone.textContent = btn.dataset.cusPhone;
+
+            popupSpec1Title.textContent = btn.dataset.spec1Title;
+            popupSpec1Value.textContent = btn.dataset.spec1Value;
+            popupSpec2Title.textContent = btn.dataset.spec2Title;
+            popupSpec2Value.textContent = btn.dataset.spec2Value;
+            popupPrice.textContent = btn.dataset.price;
+
+            currentReceiptUrl = btn.dataset.receiptImg;
         });
     });
 
-    closeBtn.addEventListener('click', () => {
+    document.querySelector('.close-popup').addEventListener('click', function () {
         popup.style.display = 'none';
     });
 
-    window.addEventListener('click', function (event) {
-        if (event.target === popup) {
-            popup.style.display = 'none';
+    // Saat tombol "see receipt" diklik
+    document.querySelector('.see-receipt-btn').addEventListener('click', function () {
+        if (currentReceiptUrl) {
+            receiptImg.src = currentReceiptUrl;
+            receiptPopup.style.display = 'flex';
+        }
+    });
+
+    // Tutup popup bukti transfer
+    closeReceiptPopup.addEventListener('click', function () {
+        receiptPopup.style.display = 'none';
+        receiptImg.src = "";
+    });
+
+    // Tutup popup receipt jika klik di luar konten
+    receiptPopup.addEventListener('click', function (e) {
+        if (e.target === receiptPopup) {
+            receiptPopup.style.display = 'none';
+            receiptImg.src = "";
         }
     });
 });

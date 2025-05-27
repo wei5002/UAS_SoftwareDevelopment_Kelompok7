@@ -2,7 +2,6 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Times New Roman', Times, serif;
 }
 
 body{
@@ -95,24 +94,33 @@ input{
   left: 20px; */
 }
 
-button{
+/* button{
   padding: 15px 40px;
   font-size: 1.2rem;
   font-weight: bold;
   border: none;
   border-radius: 20px;
   cursor: pointer;
-}
+} */
 
 .btn-back{
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
   background-color: #fff;
   color: #000;
   border: 2px solid #000;
 }
 
 .btn-next{
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
   background-color: #fff;
   color: #000;
   border: 2px solid #000;
 }
-
