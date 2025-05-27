@@ -6,6 +6,7 @@
 
 body{
   background-color: rgb(255, 255, 255);
+  background-image: url('/Customer/img/barang stainless steel.png');
   background-size: cover;
   color: black;
 }
