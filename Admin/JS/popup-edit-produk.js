@@ -104,6 +104,39 @@ editForm.addEventListener('submit', async function (e) {
         console.error('Gagal mengedit produk:', error);
         alert('Gagal mengedit produk. Coba lagi.');
     }
+    const deleteButton = document.querySelector('.delete_btn');
+
+    deleteButton.addEventListener('click', async () => {
+        if (!currentEditingProduct) {
+            alert('Tidak ada produk yang dipilih.');
+            return;
+    }
+
+        const id = currentEditingProduct.getAttribute('data-id');
+
+        const konfirmasi = confirm('Apakah Anda yakin ingin menghapus produk ini?');
+        if (!konfirmasi) return;
+
+         try {
+            await fetch(`/api/produk/${id}`, {
+            method: 'DELETE'
+        });
+
+            alert('Produk berhasil dihapus.');
+
+            // tutup popup
+            editPopup.style.display = 'none';
+            popup.style.display = 'none';
+
+        if (typeof loadProducts === 'function') {
+      loadProducts(); // refresh produk
+        }
+        } catch (error) {
+        console.error('Gagal menghapus produk:', error);
+        alert('Terjadi kesalahan saat menghapus produk.');
+        }
+    });
+
 });
 
 // Gambar edit
