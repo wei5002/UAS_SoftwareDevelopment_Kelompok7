@@ -1,7 +1,19 @@
 <header>
-    <div class="container header-content">
-        <img src="/Admin/img/majumakmur.png" alt="Logo" class="logo"/>
-        <div class="tagline">Your trusted supplier for High Quality Stainless Steel Materials</div>
-        <button class="login-btn"  onclick="window.location.href='/Admin/HTML/home.html'">LOG OUT</button>
-    </div>
+  <div class="container header-content">
+    <img src="/Admin/img/majumakmur.png" alt="Logo" class="logo" />
+    <div class="tagline">Your trusted supplier for High Quality Stainless Steel Materials</div>
+    <button class="logout-btn" onclick="showLogoutPopup()">LOG OUT</button>
+  </div>
 </header>
+
+<div id="logout-popup" class="popup-overlay" style="display: none;">
+  <div class="popup-container">
+    <div class="logout-title">
+        <p>Are you sure<br>you want to log out?</p>
+    </div>
+    <div class="popup-buttons">
+        <button onclick="confirmLogout()">Yes</button>
+      <button onclick="closeLogoutPopup()">No</button>
+    </div>
+  </div>
+</div>
