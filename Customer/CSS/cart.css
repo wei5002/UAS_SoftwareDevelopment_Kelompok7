@@ -1,13 +1,8 @@
 * {
-    box-sizing: border-box;
-    font-family: sans-serif;
-}
-
-body{
     margin:0;
     padding: 0;
-    background-color: #2d3640;
-    height: 100%;
+    box-sizing: border-box;
+    font-family: sans-serif;
 }
 
 .order-list {
@@ -18,7 +13,7 @@ body{
     flex-direction: column;
     gap: 40px;
     align-items: center;
-    min-height: 55vh;
+    background: rgba(49, 59, 70, 1);
 }
 
 .order-card {
@@ -47,7 +42,6 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: right;
-    width: 670px;
 }
 
 .order-card-desc {
@@ -55,12 +49,12 @@ body{
     display: flex;
     width: 390px;
     flex-direction: column;
+    line-height: 1.95rem;
 }
 
 .order-card-desc p {
     font-size: 20px;
     font-family: 'Times New Roman', Times, serif;
-    margin: 2px;
 }
 
 .order-card-size-wrap {
@@ -84,12 +78,9 @@ body{
 .button-wrap {
     display: flex;
     justify-content: right;
-    gap: 5px;
 }
 
-.produk,
-.order-btn,
-.delete-cart-btn {
+.detail-btn {
     height: 35px;
     width: 100px;
     font-size: 20px;
@@ -238,26 +229,4 @@ body{
 #receipt-img {
     width: 360px;
     height: auto;
-}
-
-.popup-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.popup-content {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 300px;
-}
-
-.edit-popup-body input {
-    width: 100%;
-    margin-bottom: 10px;
 }

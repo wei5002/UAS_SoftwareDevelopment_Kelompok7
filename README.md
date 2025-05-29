@@ -1,135 +1,110 @@
-# UAS Software Development Kelompok 7
-
-Ini adalah proyek UAS untuk mata kuliah Software Development yang dikembangkan oleh Kelompok 7. Aplikasi ini menggunakan Node.js, Express, Prisma, dan MongoDB.
 
 ---
 
-## Langkah Instalasi dan Menjalankan Aplikasi
+# UAS Software Development - Kelompok 7
 
-1. **Clone Repository**
-   ```bash
-   git clone https://github.com/username/UAS_SoftwareDevelopment_Kelompok7.git
-   ```
+Proyek ini merupakan tugas akhir dari mata kuliah Software Development. Aplikasi ini mencakup backend menggunakan **Node.js + Express + Prisma + MongoDB**, serta frontend menggunakan **Next.js (App Router)**.
 
-2. **Masuk ke Direktori Proyek**
-   ```bash
-   cd UAS_SoftwareDevelopment_Kelompok7
-   ```
 
-3. **Install Dependencies**
-   ```bash
-   npm install
-   ```
+## 📥 Clone Repository
 
-4. **Salin File `.env`**
-   ```bash
-   cp .env.example .env
-   ```
-
-5. **Konfigurasi Environment**
-   Edit file `.env` dan pastikan konfigurasi berikut sudah sesuai:
-   ```env
-   DATABASE_URL="mongodb+srv://purnomoht17:<db_password>@cluster0.gqddkdw.mongodb.net/Digisteels?retryWrites=true&w=majority"
-   ```
-   Ganti `purnomoht17` dengan username MongoDB Anda.
-   Ganti `<db_password>` dengan password MongoDB Anda.
-
-6. **Jalankan Aplikasi**
-   ```bash
-   npm start
-   ```
-
-7. **Pengujian**
-   Untuk pengujian menyeluruh, kita perlu menunggu integrasi dari tim frontend.
+```bash
+git clone https://github.com/wei5002/UAS_SoftwareDevelopment_Kelompok7.git
+cd UAS_SoftwareDevelopment_Kelompok7
+````
 
 ---
 
-## Menambahkan Model pada Prisma Schema
+## 🔧 Install Dependencies
 
-1. **Edit File `schema.prisma`**
-   Tambahkan model baru, misalnya:
-   ```prisma
-   model Product {
-     id          String   @id @default(auto()) @map("_id") @test.ObjectId
-     name        String
-     description String?
-     price       Float
-     createdAt   DateTime @default(now())
-   }
-   ```
+### 1. Backend
 
-2. **Generate Prisma Client**
-   ```bash
-   npx prisma generate
-   ```
+```bash
+cd backend
+npm install
+npx prisma generate
+```
+
+### 2. Frontend
+
+```bash
+cd ../frontend
+npm install
+```
 
 ---
 
-## Dokumentasi Pengujian Endpoint (`test.http`)
+## ⚙️ Konfigurasi Environment
 
-Kami menggunakan file `test.http` untuk menguji endpoint API dengan cepat dan efisien menggunakan REST Client (di ekstensi VS Code).
+Salin dan sesuaikan file `.env` di folder backend:
 
-### 📌 **REGISTER Pelanggan**
-```http
-POST http://localhost:3000/api/pelanggan/register
-Content-Type: application/json
-Accept: application/json
-
-{
-  "email": "Heru@example.com",
-  "password": "Herupurnomo17.",
-  "name": "Heru Purnomo"
-}
+```bash
+cp backend/.env.example backend/.env
 ```
 
-### 🔑 **LOGIN Pelanggan**
-```http
-POST http://localhost:3000/api/pelanggan/login
-Content-Type: application/json
-Accept: application/json
+Isi `DATABASE_URL` Anda:
 
-{
-  "email": "Heru@example.com",
-  "password": "Herupurnomo17."
-}
-```
-**Token:** `1f2c79f8-40ce-40e2-86f4-8b29bc8704ba`
-
-### 🚪 **LOGOUT Pelanggan**
-```http
-DELETE http://localhost:3000/api/pelanggan/logout
-Content-Type: application/json
-Accept: application/json
-Authorization: 85b65db9-217e-4470-b398-66504a0c98ba
-
-### 👨‍💼 **REGISTER Admin**
-```http
-POST http://localhost:3000/api/admin/register
-Content-Type: application/json
-Accept: application/json
-
-{
-  "username": "admin_heru",
-  "password": "Herupurnomo17."
-}
+```env
+DATABASE_URL="mongodb+srv://<username>:<password>@cluster0.mongodb.net/Digisteels?retryWrites=true&w=majority"
 ```
 
-### 🔐 **LOGIN Admin**
-```http
-POST http://localhost:3000/api/admin/login
-Content-Type: application/json
-Accept: application/json
+---
 
-{
-  "username": "admin_heru",
-  "password": "Herupurnomo17."
-}
+## ▶️ Menjalankan Aplikasi
+
+Cukup satu perintah:
+
+```bash
+cd frontend
+npm run dev
 ```
 
-### 🚪 **LOGOUT Admin**
-```http
-DELETE http://localhost:3000/api/pelanggan/logout
-Content-Type: application/json
-Accept: application/json
-Authorization: 85b65db9-217e-4470-b398-66504a0c98ba
+> Perintah di atas akan:
+>
+> * Menjalankan backend (`npm start` di folder backend)
+> * Menjalankan frontend (`next dev` di folder frontend)
+
+---
+
+## 🧪 Testing API
+
+Gunakan ekstensi **Thunder Client** (VS Code) atau aplikasi seperti **Postman** untuk menguji API:
+
+* Register/Login Pelanggan & Admin
+* Produk CRUD
+* Logout, dll
+
+---
+
+## 🗂 Struktur Proyek
+
 ```
+UAS_SoftwareDevelopment_Kelompok7/
+├── backend/         # Express.js + Prisma + MongoDB
+│   ├── controller/
+│   ├── service/
+│   ├── validation/
+│   ├── middleware/
+│   ├── application/
+│   ├── main.js
+│   └── .env
+│
+├── frontend/        # Next.js (App Router)
+│   ├── app/
+│   ├── components/
+│   ├── public/
+│   ├── styles/
+│   ├── package.json
+│   └── ...
+│
+└── README.md
+```
+
+---
+
+## ⚠️ Catatan Penting
+
+* Backend berjalan di port `3000`, frontend di `3001` (default Next.js dev server)
+* Jangan lupa menjalankan `npx prisma generate` jika mengubah `schema.prisma`
+* Middleware `cors` sudah aktif agar backend dapat diakses dari frontend
+* Pastikan file `.env` Anda benar dan terkoneksi ke MongoDB Atlas
