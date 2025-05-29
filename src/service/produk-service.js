@@ -6,9 +6,9 @@ const getAll = async () => {
 };
 
 const create = async (data) => {
-  if (!data.nama || !data.gambar || typeof data.harga !== 'number') {
-    throw new ResponseError(400, "Field 'nama', 'gambar', dan 'harga' wajib diisi dan valid.");
-  }
+  if (!data.namaProduk || !data.gambar || typeof data.harga !== 'number') {
+  throw new ResponseError(400, "Field 'namaProduk', 'gambar', dan 'harga' wajib diisi dan valid.");
+}
 
   return prismaClient.produk.create({ data });
 };
