@@ -6,7 +6,7 @@ Accept: application/json
 {
   "email": "Heru@example.com",
   "password" : "Herupurnomo17.",
-  "name" : "Heru Purnomo"
+  "nama" : "Heru Purnomo"
 }
 
 {
@@ -48,7 +48,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "uername": "admin_heru",
+  "username": "admin_heru",
   "password" : "Herupurnomo17."
 }
 
@@ -58,49 +58,74 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "uername": "admin_heru",
+  "username": "admin_heru",
   "password" : "Herupurnomo17."
 }
 
+ "token": "dbe5f306-521f-4fb5-acfb-be03d2df8fb8"
+
 LOGOUT
-DELETE http://localhost:3000/api/pelanggan/logout
+DELETE http://localhost:3000/api/admin/logout
 Content-Type: application/json
 Accept: application/json
 Authorization: 85b65db9-217e-4470-b398-66504a0c98ba
 
-PRODUK
+### GET Semua Produk (tanpa query, public)
 GET http://localhost:3000/api/produk
+Content-Type: application/json
+
+###
+
+### GET Produk dengan search + kategori + paginasi
+GET http://localhost:3000/api/produk?search=plat&kategori=PLATE&page=1&limit=5
+Content-Type: application/json
+
+###
+
+### GET Produk by ID (pelanggan atau admin)
+GET http://localhost:3000/api/produk/{{produkId}}
+Authorization: Bearer {{token_admin_or_pelanggan}}
+Content-Type: application/json
+
+###
+
+### POST Tambah Produk (admin only)
+POST http://localhost:3000/api/produk
+Authorization: Bearer {{token_admin}}
+Content-Type: application/json
 
 {
-  "namaProduk": "Pipa bulat tipe 201 ",
-  "gambar": "https://example.com/pipa.jpg",
-  "harga": 200000,
-  "stok": 35,
-  "thickness": 1.5,
-  "size": "4x10",
-  "hole": 1.6
+  "namaProduk": "PLAT STAINLESS AISI 304",
+  "kategori": "PLATE",
+  "harga": 230000,
+  "stok": 50,
+  "thickness": [1, 2, 3],
+  "hole": [],
+  "size": ["1x2", "2x4"],
+  "gambar": "https://example.com/plat304.jpg"
 }
 
-PUT http://localhost:3000/api/produk/id //id dari yang didapat didatabase
+###
+
+### PUT Update Produk (admin only)
+PUT http://localhost:3000/api/produk/{{produkId}}
+Authorization: Bearer {{token_admin}}
+Content-Type: application/json
 
 {
-  "namaProduk": "Pipa besi tipe 301 ",
-  "gambar": "https://example.com/pipa.jpg",
-  "harga": 200000,
-  "stok": 15,
-  "thickness": 1.5,
-  "size": "4x10",
-  "hole": 1.6
+  "namaProduk": "PLAT STAINLESS AISI 304 - UPDATE",
+  "kategori": "PLATE",
+  "harga": 250000,
+  "stok": 60,
+  "thickness": [1, 2, 3, 4],
+  "hole": [],
+  "size": ["1x2", "2x4", "3x6"],
+  "gambar": "https://example.com/plat304_update.jpg"
 }
 
-DELETE http://localhost:3000/api/produk/id 
+###
 
-{
-  "namaProduk": "Pipa bulat tipe 201 ",
-  "gambar": "https://example.com/pipa.jpg",
-  "harga": 200000,
-  "stok": 35,
-  "thickness": 1.5,
-  "size": "4x10",
-  "hole": 1.6
-}
+### DELETE Produk (admin only)
+DELETE http://localhost:3000/api/produk/{{produkId}}
+Authorization: Bearer {{token_admin}}
+Content-Type: application/json

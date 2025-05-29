@@ -29,12 +29,23 @@ model Admin {
 }
 
 model Produk {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  namaProduk      String
-  harga     Float    @default(0.0)
-  stok      Int      @default(0)
-  thickness Float?   @default(0)
-  hole      Float?   @default(0)
-  size      String?
-  gambar    String
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  namaProduk  String
+  kategori    Kategori?               // Enum, opsional
+  harga       Float
+  stok        Int
+  thickness   Float[]   @default([]) // Boleh kosong, tapi bukan null
+  hole        Float[]   @default([])
+  size        String[]  @default([])
+  gambar      String?                 // Ini boleh null
+}
+
+
+enum Kategori {
+  PLATE
+  ANGLE_BAR          @map("ANGEL BAR")
+  PIPE
+  HOLLOW
+  ROD
+  PERFORATED_PLATE   @map("PERFORATED PLATE")
 }
