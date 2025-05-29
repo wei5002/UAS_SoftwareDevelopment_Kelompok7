@@ -30,12 +30,12 @@ model Admin {
 
 model Produk {
   id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  nama      String
+  namaProduk      String
   deskripsi String?
-  harga     Float
-  stok      Int
-  thickness String?
-  hole      String?
+  harga     Float    @default(0.0)
+  stok      Int      @default(0)
+  thickness Float?   @default(0)
+  hole      Float?   @default(0)
   size      String?
   gambar    String
 }
