@@ -1,11 +1,12 @@
 footer {
-    position: absolute;
+    position: relative;
     width: 100%;
     bottom: 0;
     background:black;
     padding: 30px 20px;
     font-size: 19.7px;
-    color:rgba(49, 59, 70, 1);
+    /* color:rgba(49, 59, 70, 1); */
+    color: white;
 }
 
 .footer-grid {

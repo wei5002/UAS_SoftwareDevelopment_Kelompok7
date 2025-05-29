@@ -249,3 +249,24 @@
 .close:hover {
   color: grey;
 }
+
+.popup_action {
+  position: relative;
+  padding: 10px;
+}
+
+.save_btn {
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
+  padding: 8px 15px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.save_btn:hover {
+  background-color: #0056b3;
+}
