@@ -72,11 +72,38 @@ PRODUK
 GET http://localhost:3000/api/produk
 
 {
-  "nama": "Contoh Produk",
-  "gambar": "data:image/jpeg;base64,...",
-  "thickness": "1,2,3",
-  "hole": "4,5",
-  "size": "100x200",
-  "stok": 10,
-  "harga": 10000
+  "namaProduk": "Pipa bulat tipe 201 ",
+  "gambar": "https://example.com/pipa.jpg",
+  "harga": 200000,
+  "deskripsi": "Pipa baja tahan karat tipe 201",
+  "stok": 35,
+  "thickness": 1.5,
+  "size": "4x10",
+  "hole": 1.6
+}
+
+PUT http://localhost:3000/api/produk/id //id dari yang didapat didatabase
+
+{
+  "namaProduk": "Pipa besi tipe 301 ",
+  "gambar": "https://example.com/pipa.jpg",
+  "harga": 200000,
+  "deskripsi": "Pipa baja tahan karat tipe 301",
+  "stok": 15,
+  "thickness": 1.5,
+  "size": "4x10",
+  "hole": 1.6
+}
+
+DELETE http://localhost:3000/api/produk/id 
+
+{
+  "namaProduk": "Pipa bulat tipe 201 ",
+  "gambar": "https://example.com/pipa.jpg",
+  "harga": 200000,
+  "deskripsi": "Pipa baja tahan karat tipe 201",
+  "stok": 35,
+  "thickness": 1.5,
+  "size": "4x10",
+  "hole": 1.6
 }
