@@ -3,22 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cart</title>
+    <title>your orders</title>
     <link rel="stylesheet" href="/Customer/CSS/yourorders.css"/>
     <link rel="stylesheet" href="/Customer/CSS/header-logout.css"/>
-    <link rel="stylesheet" href="/Customer/CSS/footer.css"/>
-    <link rel="stylesheet" href="/Admin/CSS/navbar.css"/>
+    <link rel="stylesheet" href="/Customer/CSS/footer-black.css"/>
+    <link rel="stylesheet" href="/Customer/CSS/navbar.css"/>
+
 </head>
 <body>
 
     <div id="header-placeholder"></div>
     <div id="navbar-placeholder"></div>
+
+    <div class="order-list">
+        <div class="order-card">
+            <div class="order-card-img">
+                <img src="/Customer/img/rod 304.jpg"/>
+            </div>
+            <div class="order-card-content">
+                <div class="button-wrap-canceldone">
+                    <button
+                    class="cancel-btn"
+                    data-cus-name="Heru"
+                    data-cus-bank-name="BCA"
+                    data-cus-account-holder="Heru Purnomo"
+                    data-cus-account-number="098765432123"
+                    >
+                        Cancel
+                    </button>
+                    <button class="done-btn">
+                        Done
+                    </button>
+                </div>
+                <div class="order-card-desc">
+                    <h3>ROD STAINLESS STEEL 304</h3>
+                    <div class="order-card-size-wrap">
+                        <div class="order-card-size">
+                            <p>diameter 8 - length 6000</p>
+                        </div>
+                    </div> 
+                    <p>Price : Rp 250.000</p>
+                    <br><p>Amount : <span class="amount-value">1</span></p>
+                </div>
+                <div class="button-wrap">
+                    <button class="status-btn">
+                        Pending
+                    </button>
+                    <button class="status-btn">
+                        On Process
+                    </button>
+                    <button class="status-btn">
+                        On Delivery
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <div id="footer-placeholder"></div>
 
-    <script src="/Admin/JS/header-logout.js"></script>
-    <script src="/Admin/JS/navbar.js"></script>
-    <script src="/Customer/JS/footer.js"></script>
+    <div class="popup-overlay" id="popup" style="display: none;">
+        <div class="popup-content">
+            <div class="popup-wrapper">
+                <div class="popup-title">
+                    <h2>CANCEL REQUEST</h2>
+                </div>
+                <div class="popup-datacus">
+                    <div class="popup-datacus-title">
+                        <p>Name</p>
+                        <p>Bank Name</p>
+                        <p>Account Holder's Name</p>
+                        <p>Bank Account Number</p>
+                    </div>
+                    <div class="popup-datacus-content">
+                        <p id="cus-name"></p>
+                        <p id="cus-bank-name"></p>
+                        <p id="cus-account-holder"></p>
+                        <p id="cus-account-number"></p>
+                    </div>
+                </div>
+                <div class="popup-reason">
+                    <p>Your Reason</p>
+                    <input type="text" placeholder="Type here ...">
+                </div>
+                <div class="popup-buttons-yesno">
+                    <button class="yes-btn" id="confirmCancel">Send Request</button>
+                    <button class="no-btn" id="closePopup">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="/Customer/JS/yourorders.js"></script>
+    <script src="/Customer/JS/header-logout.js"></script>
+    <script src="/Customer/JS/navbar.js"></script>
+    <script src="/Customer/JS/footer.js"></script>
 </body>
 </html>

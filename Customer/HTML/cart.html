@@ -6,8 +6,176 @@
     <title>cart</title>
     <link rel="stylesheet" href="/Customer/CSS/cart.css"/>
     <link rel="stylesheet" href="/Customer/CSS/header-logout.css"/>
-    <link rel="stylesheet" href="/Customer/CSS/footer-white.css"/>
-    <link rel="stylesheet" href="/Admin/CSS/navbar.css"/>
+    <link rel="stylesheet" href="/Customer/CSS/footer-black.css"/>
+    <link rel="stylesheet" href="/Customer/CSS/navbar.css"/>
+    <link rel="stylesheet" href="/Customer/CSS/popup-edit-cart.css">
+    <link rel="stylesheet" href="/Customer/CSS/popup-order.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- popup detail produk -->
+    <div id="popup_produk" class="popup_produk">
+    <div class="popup_isi">
+        <span class="close">&times;</span>
+        <div class="popup_container">
+        <div class="popup_header">
+            <h2 id="judul_produk" class="judul_produk"></h2>
+            <h2 id="jenis_produk" class="jenis_produk"></h2>
+            <img id="gambar_produk" src="" alt="" class="gambar_produk">
+            <div class="kurang-tambah-btn">
+            <div class="jumlah_wrapper">
+                <button class="kurang_btn">-</button>
+                <span id="jumlah_produk" class="jumlah_produk">0</span>
+                <button class="tambah_btn">+</button>
+            </div>
+            <button class="keranjang_btn">Add to Cart</button>
+            </div>  
+        </div>
+
+        <div class="popup_detail">
+            <div class="bagian_kanan" id="detail_thickness">
+            <h3 id="judul_thickness">THICKNESS (mm)</h3>
+            <div id="popup_thickness" class="thickness_buttons"></div>
+            </div>
+
+            <div class="bagian_kanan" id="detail_hole">
+            <h3 id="judul_hole">HOLE DIAMETER (mm)</h3>
+            <div id="popup_hole" class="hole_buttons"></div>
+            </div>
+
+            <div class="bagian_kanan" id="detail_size">
+            <h3 id="judul_size">SIZE (mm)</h3>
+            <div id="popup_size" class="size_buttons"></div>
+            </div>
+
+            <div class="popup_action">
+            <div class="stock_price">
+                <p>Stock: <span id="popup_stock" class="nilai_stock"></span></p>
+                <p>Price: <span id="popup_price" class="nilai_price"></span></p>
+            </div>
+            <button id="save_changes" class="save_btn">Save</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+
+    
+
+    <div id="popup-order" class="popup-order">
+        <div class="order-container">
+
+            <span class="close-popup-order">&times;</span>
+
+            <div class="order-content">
+                <div class="content-title">
+                    <p>Our Bank Account</p>
+                </div>
+                <div class="content-isi">
+                    <p>123456789012 a.n Maju Makmur | BCA</p>
+                </div>
+            </div>
+
+            <div class="order-content">
+                <div class="content-title">
+                    <div class="content-title-isi">
+                        <p>Bank Name</p>
+                    </div>
+                    <div class="content-title-isi">
+                        <p>Account's Holder Name</p>
+                    </div>  
+                    <div class="content-title-isi">
+                        <p>Bank Account Number</p>
+                    </div>
+                    <div class="content-title-isi">
+                        <p>Phone Number</p>
+                    </div>    
+                </div>
+                <div class="content-isi">
+                    <div class="content-isi-isi">
+                        <input type="text" data-bank />
+                    </div>
+                    <div class="content-isi-isi">
+                        <input type="text" data-holder />
+                    </div>
+                    <div class="content-isi-isi">
+                        <input type="text" data-account />
+                    </div>
+                    <div class="content-isi-isi">
+                        <input type="text" data-phone />
+                    </div>
+                </div>
+                <div class="content-title">
+                    <div class="content-title-isi">
+                        <p>Province</p>
+                    </div>
+                    <div class="content-title-isi">
+                        <p>City</p>
+                    </div>  
+                    <div class="content-title-isi">
+                        <p>District</p>
+                    </div>
+                    <div class="content-title-isi">
+                        <p>Urban Village</p>
+                    </div>    
+                </div>
+                <div class="content-isi">
+                    <div class="content-isi-isi">
+                        <input type="text" data-province />
+                    </div>
+                    <div class="content-isi-isi">
+                        <input type="text" data-city />
+                    </div>
+                    <div class="content-isi-isi">
+                        <input type="text" data-district />
+                    </div>
+                    <div class="content-isi-isi">
+                        <input type="text" data-urban />
+                    </div>
+                </div>
+            </div>
+
+            <div class="order-content">
+                <div class="content-title">
+                    <p>Shipping Fee (Rp)</p>
+                </div>
+                <div class="content-isi">
+                    <p data-shipping-fee>0</p>
+                </div>
+            </div>
+        
+            <div class="order-content">
+                <p>Shipping fee is calculated based on the distance between your city to our store
+                <br>Shipping fee is free if you/re in the same city with us</p>
+            </div>
+
+            <div class="order-content">
+                <div class="content-title">
+                    <p>Total Price (Rp)</p>
+                </div>
+                <div class="content-isi">
+                    <p data-total-price>180.000</p>
+                </div>
+            </div>
+
+            <div class="order-content">
+                <div class="content-title">
+                    <p>Transfer Receipt</p>
+                </div>
+                <div class="content-isi">
+                    <button id="file-attach-btn" class="file-attach-btn">No file attached</button>
+                    <input type="file" id="file-input" style="display: none;" />
+                </div>
+            </div>
+
+            <div class="order-content">
+                <p>Your order will be processed once the payment is confirmed by us
+                <br>Please attach your transfer receipt</p>
+            </div>
+
+            <button id="order-btn" class="order-btn">Order</button>
+        </div>
+        </div>
+
 </head>
 <body>
 
@@ -17,7 +185,7 @@
     <div class="order-list">
         <div class="order-card">
             <div class="order-card-img">
-                <img src="/Admin/img/rod 304.jpg"/>
+                <img src="/Customer/img/rod 304.jpg"/>
             </div>
             <div class="order-card-content">
                 <div class="order-card-desc">
@@ -28,101 +196,30 @@
                         </div>
                     </div> 
                     <p>Price : Rp 180.000</p>
-                    <br><p>Amount : 3</p>
+                    <br><p>Amount : <span class="amount-value">3</span></p>
                 </div>
                 <div class="button-wrap">
-                    <button
-                    class="detail-btn"
-                    data-title="ROD STAINLESS STEEL 304"
-                    data-img="/Admin/img/rod 304.jpg"
-                    data-spec-1-title="Diameter (mm)"
-                    data-spec-1-value="5"
-                    data-spec-2-title="Length (mm)"
-                    data-spec-2-value="6000"
-                    data-price="Rp 180.000"
-                    data-cus-name="Heru"
-                    data-cus-bank-name="BCA"
-                    data-cus-account-holder="Heru Purnomo"
-                    data-cus-account-number="098765432123"
-                    data-cus-province="DKI Jakarta"
-                    data-cus-city="Jakarta Barat"
-                    data-cus-district="Kalideres"
-                    data-cus-urban="Kalideres"
-                    data-cus-street="Jl Anggrek, Blok A1"
-                    data-cus-phone="081212345678"
-                    data-receipt-img="/Admin/img/sampel bukti tf heru.png"
-                    >
-                        Detail
+                    <button class="order-btn">
+                        Order
                     </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- DESAIN POPUP -->
-    <div id="popup" class="popup-overlay" style="display: none;">
-        <div class="popup-content">
-            <span class="close-popup">&times;</span>
-            <div class="popup-wrapper">
-                <div class="popup-title">
-                    <h3 id="popup-title"></h3>
-                </div>
-                <div class="popup-line-one">
-                    <div class="popup-img">
-                        <img id="popup-img" src="" alt="Product Image"/>
-                    </div>
-                    <div class="popup-cusinfo">
-                        <div class="popup-cusinfo-title">
-                            <p><strong>Name</strong></p>
-                            <p><strong>Bank Name</strong></p>
-                            <p><strong>Account Holder's Name</strong></p>
-                            <p><strong>Bank Account</strong></p>
-                            <p><strong>Province</strong></p>
-                            <p><strong>City</strong></p>
-                            <p><strong>District</strong></p>
-                            <p><strong>Urban Village</strong></p>
-                            <p><strong>Street</strong></p>
-                            <p><strong>Phone Number</strong></p>
-                        </div>
-                        <div class="popup-cusinfo-content">
-                            <p id="cus-name"></p>
-                            <p id="cus-bank-name"></p>
-                            <p id="cus-account-holder"></p>
-                            <p id="cus-account-number"></p>
-                            <p id="cus-province"></p>
-                            <p id="cus-city"></p>
-                            <p id="cus-district"></p>
-                            <p id="cus-urban"></p>
-                            <p id="cus-street"></p>
-                            <p id="cus-phone"></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="popup-line-two">
-                    <div class="popup-productinfo">
-                        <div class="popup-productinfo-title">
-                            <p><strong id="popup-spec-1-title"></strong></p>
-                            <p><strong id="popup-spec-2-title"></strong></p>
-                            <p><strong>Total Price</strong></p>
-                            <p><strong>Transfer Receipt</strong></p>
-                        </div>
-                        <div class="popup-productinfo-content">
-                            <p id="popup-spec-1-value"></p>
-                            <p id="popup-spec-2-value"></p>
-                            <p id="popup-price"></p>
-                            <p><button class="see-receipt-btn">see receipt</button></p>
-                        </div>
-                    </div>
-                    <div class="popup-confirm-btn">
-                        <button class="confirm-btn">Confirm Order</button>
-                    </div>
-                    <div class="popup-tyoe-text">
-                        <p><strong>Something is wrong?</strong></p>
-                        <input type="text" placeholder="Type here" class="text-type"/>
-                    </div>
-                    <div class="popup-decline-btn">
-                        <button class="decline-btn">Decline Order</button>
-                    </div>
+                    <button
+                        class="produk"
+                        data-judul="ROD"
+                        data-jenis="STAINLESS STEEL 304"
+                        data-gambar="/Customer/img/rod 304.jpg"
+                        data-size="diameter 3 - length 6000, 
+                                diameter 4 - length 6000,
+                                diameter 5 - length 6000,
+                                diameter 6 - length 6000,
+                                diameter 8 - length 6000"
+                        data-stock="250"
+                        data-price="Rp 0"
+                    >
+                        Edit
+                    </button>
+                    <button class="delete-cart-btn">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -130,9 +227,10 @@
     
     <div id="footer-placeholder"></div>
 
-    <script src="/Admin/JS/header-logout.js"></script>
-    <script src="/Admin/JS/navbar.js"></script>
-    <script src="/Customer/JS/footer.js"></script>
     <script src="/Customer/JS/cart.js"></script>
+    <script src="/Customer/JS/popup-order.js"></script>
+    <script src="/Customer/JS/header-logout.js"></script>
+    <script src="/Customer/JS/navbar.js"></script>
+    <script src="/Customer/JS/footer.js"></script>
 </body>
 </html>
