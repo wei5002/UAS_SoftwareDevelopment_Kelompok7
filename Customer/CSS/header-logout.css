@@ -27,12 +27,22 @@ header {
     letter-spacing: 5px;
 }
 
-.logout-btn {
+.logout-btn,
+.account-btn {
     background: none;
     border: 1px solid white;
     color: white;
     padding: 5px 10px;
     cursor: pointer;
+}
+
+.account-logout-btn {
+    display: flex;
+    gap: 12px;
+}
+
+.fa {
+    color: #2d3640;
 }
 
 .popup-overlay {
@@ -76,4 +86,95 @@ header {
 
 .popup-buttons button:hover {
     background-color: rgb(138, 138, 138);
+}
+
+.account-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.account-popup-container {
+    background-color: #2d3640;
+    padding: 20px 30px;
+    border-radius: 8px;
+    width: 400px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.account-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    height: 30px;
+}
+
+.account-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.account-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.account-content label {
+    font-size: 14px;
+}
+
+.account-content input {
+    padding: 8px;
+    border-radius: 4px;
+    border: none;
+    width: 100%;
+}
+
+.password-field {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.password-field input {
+    flex: 1;
+    padding-right: 40px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    user-select: none;
+}
+
+.account-save-btn {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.account-save-btn button {
+    padding: 8px 16px;
+    border: none;
+    background-color: white;
+    color: black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.account-save-btn button:hover {
+    background-color: rgb(170, 170, 170);
 }

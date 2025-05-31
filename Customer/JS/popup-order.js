@@ -2,16 +2,20 @@ document.addEventListener("DOMContentLoaded", function () {
   const popupOrder = document.getElementById("popup-order");
   const orderButtons = document.querySelectorAll(".button-wrap button:first-child"); // tombol Order
   const closePopup = document.querySelector(".close-popup-order");
+  const orderButton = document.getElementById('order-btn');
+  const fileInput = document.getElementById('file-input');
 
-  // Buka popup saat tombol order diklik
+  let currentOrderCard = null;
+
   orderButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
       popupOrder.style.display = "flex";
-      document.body.style.overflow = "hidden"; // biar ga bisa scroll di belakang
+      document.body.style.overflow = "hidden";
+
+      currentOrderCard = btn.closest(".order-card");
     });
   });
 
-  // Tutup popup saat close diklik
   if (closePopup) {
     closePopup.addEventListener("click", () => {
       popupOrder.style.display = "none";
@@ -19,21 +23,46 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Tutup popup kalau klik di luar area isi
   window.addEventListener("click", function (e) {
     if (e.target === popupOrder) {
       popupOrder.style.display = "none";
       document.body.style.overflow = "auto";
     }
   });
-});
 
-document.addEventListener("DOMContentLoaded", function () {
+  orderButton.addEventListener('click', function (event) {
+    const inputs = document.querySelectorAll(
+      'input[data-bank], input[data-holder], input[data-account], input[data-phone], input[data-province], input[data-city], input[data-district], input[data-urban]'
+    );
+
+    let isValid = true;
+    inputs.forEach(input => {
+      if (!input.value.trim()) {
+        isValid = false;
+      }
+    });
+
+    const isFileAttached = fileInput.files.length > 0;
+
+    if (!isValid || !isFileAttached) {
+      event.preventDefault();
+      alert('Please fill in all fields and attach the transfer receipt.');
+    } else {
+      alert('Order submitted successfully!');
+      popupOrder.style.display = "none";
+      document.body.style.overflow = "auto";
+
+      if (currentOrderCard) {
+        currentOrderCard.remove();
+        currentOrderCard = null;
+      }
+    }
+  });
+
   const fileBtn = document.getElementById("file-attach-btn");
-  const fileInput = document.getElementById("file-input");
 
   fileBtn.addEventListener("click", function () {
-    fileInput.click(); // buka file picker
+    fileInput.click();
   });
 
   fileInput.addEventListener("change", function () {

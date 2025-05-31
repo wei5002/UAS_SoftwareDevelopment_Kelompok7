@@ -238,11 +238,6 @@ document.addEventListener('click', function (e) {
         const orderCard = e.target.closest('.order-card');
         if (orderCard) {
             orderCard.remove();
-
-            const remainingCards = document.querySelectorAll('.order-card');
-            if (remainingCards.length === 0) {
-                document.getElementById('emptyCartMessage').style.display = 'block';
-            }
         }
     }
 });

@@ -2,7 +2,10 @@
   <div class="container header-content">
     <img src="/Customer/img/majumakmur.png" alt="Logo" class="logo" />
     <div class="tagline">Your trusted supplier for High Quality Stainless Steel Materials</div>
-    <button class="logout-btn" onclick="showLogoutPopup()">LOG OUT</button>
+    <div class="account-logout-btn">
+      <button class="account-btn" onclick="showAccountPopup()">ACCOUNT</button>
+      <button class="logout-btn" onclick="showLogoutPopup()">LOG OUT</button>
+    </div>
   </div>
 </header>
 
@@ -14,6 +17,41 @@
     <div class="popup-buttons">
         <button onclick="confirmLogout()">Yes</button>
         <button onclick="closeLogoutPopup()">No</button>
+    </div>
+  </div>
+</div>
+
+<div id="account-popup" class="account-overlay" style="display: none;">
+  <div class="account-popup-container">
+    <div class="account-title">
+        <p>ACCOUNT</p>
+    </div>
+    <div class="account-wrapper">
+      <div class="account-content">
+        <div>
+          <label>Name</label>
+          <input type="text" id="acc-name" data-cus-name placeholder="Enter name" />
+        </div>
+
+        <div>
+          <label>Email</label>
+          <input type="email" id="acc-email" data-cus-email placeholder="Enter email" />
+        </div>
+
+        <div>
+          <label>Password</label>
+          <div class="password-field">
+            <input type="password" id="acc-password" data-cus-password placeholder="Enter password" />
+            <span class="toggle-password" onclick="togglePasswordVisibility()">
+              <i class="fa fa-eye-slash" aria-hidden="true"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="account-save-btn">
+        <button onclick="saveAccountChanges()">SAVE</button>
+      </div>
     </div>
   </div>
 </div>
