@@ -59,6 +59,8 @@ document.addEventListener("DOMContentLoaded", function () {
     
 const acceptPopup = document.getElementById('accept-popup');
 const closeAcceptBtn = acceptPopup.querySelector('.close-accept');
+const cancelPopup = document.getElementById('cancel-popup');
+const closeCancelBtn = cancelPopup.querySelector('.close-cancel');
 
 // Tutup popup saat klik tombol close (×)
 closeAcceptBtn.addEventListener('click', () => {
@@ -69,5 +71,17 @@ closeAcceptBtn.addEventListener('click', () => {
 acceptPopup.addEventListener('click', (e) => {
   if (e.target === acceptPopup) {
     acceptPopup.style.display = 'none';
+  }
+});
+
+// Tutup popup saat klik tombol ×
+closeCancelBtn.addEventListener('click', () => {
+  cancelPopup.style.display = 'none';
+});
+
+// Tutup popup saat klik di luar popup-content
+cancelPopup.addEventListener('click', (e) => {
+  if (e.target === cancelPopup) {
+    cancelPopup.style.display = 'none';
   }
 });
