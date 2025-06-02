@@ -1,11 +1,19 @@
 'use client';
 
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function CustomerNavbar() {
   const router = useRouter();
   const pathname = usePathname();
+
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token); // true jika token ada
+  }, []);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -14,12 +22,10 @@ export default function CustomerNavbar() {
 
   return (
     <>
+      {/* Header */}
       <header>
         <div className="container header-content">
-          <div
-            style={{ cursor: "pointer" }}
-            onClick={() => router.push("/")}
-          >
+          <div style={{ cursor: "pointer" }} onClick={() => router.push("/")}>
             <Image
               src="/assets/images/majumakmur.png"
               alt="Logo"
@@ -34,17 +40,51 @@ export default function CustomerNavbar() {
           </div>
 
           <div className="login-signup-btn">
-            <button className="logout-btn" onClick={handleLogout}>
-              LOG OUT
-            </button>
+            {isLoggedIn === null ? (
+              <div style={{ width: 140 }}></div> // Spacer untuk jaga posisi
+            ) : !isLoggedIn ? (
+              <>
+                {(pathname === "/" || pathname === "/produk" || pathname === "/cart" || pathname === "/orders") && (
+                  <>
+                    <button className="login-btn" onClick={() => router.push("/login")}>
+                      LOG IN
+                    </button>
+                    <button className="signup-btn" onClick={() => router.push("/signup")}>
+                      SIGN UP
+                    </button>
+                  </>
+                )}
+                {pathname === "/login" && (
+                  <button className="signup-btn" onClick={() => router.push("/signup")}>
+                    SIGN UP
+                  </button>
+                )}
+                {pathname === "/signup" && (
+                  <button className="login-btn" onClick={() => router.push("/login")}>
+                    LOG IN
+                  </button>
+                )}
+              </>
+            ) : (
+              <button className="login-btn" onClick={handleLogout}>
+                LOG OUT
+              </button>
+            )}
           </div>
         </div>
       </header>
 
+      {/* Navbar */}
       <nav className="navbar">
-        <a className={pathname === "/produk" ? "active" : ""} href="/produk">PRODUCTS</a>
-        <a className={pathname === "/cart" ? "active" : ""} href="/cart">CART</a>
-        <a className={pathname === "/orders" ? "active" : ""} href="/orders">YOUR ORDERS</a>
+        <a className={pathname === "/produk" ? "active" : ""} href="/produk">
+          PRODUCTS
+        </a>
+        <a className={pathname === "/cart" ? "active" : ""} href="/cart">
+          CART
+        </a>
+        <a className={pathname === "/orders" ? "active" : ""} href="/orders">
+          YOUR ORDERS
+        </a>
       </nav>
     </>
   );

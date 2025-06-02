@@ -6,15 +6,9 @@ import {
   getProdukValidation
 } from "../validation/produk-validation.js";
 
-// Ambil semua produk
+// Ambil semua produk dengan filter dan paginasi
 const getAll = async (query) => {
-  const {
-    kategori,
-    search,
-    page = 1,
-    limit = 10
-  } = query;
-
+  const { kategori, search, page = 1, limit = 10 } = query;
   const filters = {};
 
   if (kategori) {
@@ -54,8 +48,7 @@ const getAll = async (query) => {
   };
 };
 
-
-// Ambil produk berdasarkan ID
+// Ambil satu produk berdasarkan ID
 const getById = async (id) => {
   const produkId = validate(getProdukValidation, id);
 
@@ -70,14 +63,14 @@ const getById = async (id) => {
   return produk;
 };
 
-// Tambah produk
+// Tambah produk baru
 const create = async (request) => {
   const data = validate(createProdukValidation, request);
 
   return prismaClient.produk.create({
     data: {
       namaProduk: data.namaProduk,
-      kategori: data.kategori || undefined,
+      kategori: data.kategori,
       harga: data.harga,
       stok: data.stok,
       thickness: data.thickness || [],
@@ -104,7 +97,7 @@ const update = async (id, request) => {
     where: { id: produkId },
     data: {
       namaProduk: request.namaProduk,
-      kategori: request.kategori || undefined,
+      kategori: request.kategori,
       harga: request.harga,
       stok: request.stok,
       thickness: request.thickness || [],

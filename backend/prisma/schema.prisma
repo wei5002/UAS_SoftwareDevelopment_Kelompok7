@@ -14,11 +14,12 @@ datasource db {
 }
 
 model Pelanggan {
-  id       String  @id @default(auto()) @map("_id") @db.ObjectId
-  nama     String
-  password String
-  email    String  @unique
-  token    String?
+  id        String             @id @default(auto()) @map("_id") @db.ObjectId
+  nama      String
+  email     String             @unique
+  password  String
+  token     String?
+  keranjang KeranjangBelanja[]
 }
 
 model Admin {
@@ -29,23 +30,29 @@ model Admin {
 }
 
 model Produk {
-  id          String     @id @default(auto()) @map("_id") @db.ObjectId
-  namaProduk  String
-  kategori    Kategori?               // Enum, opsional
-  harga       Float
-  stok        Int
-  thickness   Float[]   @default([]) // Boleh kosong, tapi bukan null
-  hole        Float[]   @default([])
-  size        String[]  @default([])
-  gambar      String?                 // Ini boleh null
+  id         String             @id @default(auto()) @map("_id") @db.ObjectId
+  namaProduk String
+  kategori   String
+  harga      Float
+  stok       Int
+  thickness  Float[]            @default([]) // Boleh kosong, tapi bukan null
+  hole       Float[]            @default([])
+  size       String[]           @default([])
+  gambar     String? // Ini boleh null
+  keranjang  KeranjangBelanja[]
+}
+
+model KeranjangBelanja {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String  @db.ObjectId
+  produkId  String  @db.ObjectId
+  jumlah    Int     @default(1)
+  size      String?
+  thickness Float?
+  hole      Float?
+
+  user   Pelanggan @relation(fields: [userId], references: [id])
+  produk Produk    @relation(fields: [produkId], references: [id])
 }
 
 
-enum Kategori {
-  PLATE
-  ANGLE_BAR          @map("ANGEL BAR")
-  PIPE
-  HOLLOW
-  ROD
-  PERFORATED_PLATE   @map("PERFORATED PLATE")
-}

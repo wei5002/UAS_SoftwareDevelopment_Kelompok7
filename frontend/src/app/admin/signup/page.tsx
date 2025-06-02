@@ -3,12 +3,12 @@
 import NavbarAdmin from '@/app/components/navbarAdmin';
 import Footer from '@/app/footer';
 
-export default function LoginAdmin() {
+export default function SignupAdmin() {
   return (
     <>
       <NavbarAdmin />
       <main style={{ marginTop: '100px', padding: '2rem', textAlign: 'center' }}>
-        <h1>Login Admin</h1>
+        <h1>Signup Admin</h1>
       </main>
       <Footer />
     </>

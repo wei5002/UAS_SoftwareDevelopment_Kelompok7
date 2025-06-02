@@ -1,6 +1,6 @@
 import produkService from "../service/produk-service.js";
 
-// GET semua produk (dengan support query: search, kategori, page, limit)
+// Ambil semua produk (dengan query: search, kategori, page, limit)
 const getAll = async (req, res, next) => {
   try {
     const result = await produkService.getAll(req.query);
@@ -14,7 +14,7 @@ const getAll = async (req, res, next) => {
   }
 };
 
-// GET produk berdasarkan ID
+// Ambil detail produk berdasarkan ID
 const getById = async (req, res, next) => {
   try {
     const produk = await produkService.getById(req.params.id);
@@ -27,7 +27,7 @@ const getById = async (req, res, next) => {
   }
 };
 
-// POST buat produk baru
+// Tambah produk baru
 const create = async (req, res, next) => {
   try {
     const result = await produkService.create(req.body);
@@ -40,7 +40,7 @@ const create = async (req, res, next) => {
   }
 };
 
-// PUT update produk berdasarkan ID
+// Update produk
 const update = async (req, res, next) => {
   try {
     const result = await produkService.update(req.params.id, req.body);
@@ -53,7 +53,7 @@ const update = async (req, res, next) => {
   }
 };
 
-// DELETE hapus produk berdasarkan ID
+// Hapus produk
 const remove = async (req, res, next) => {
   try {
     await produkService.remove(req.params.id);

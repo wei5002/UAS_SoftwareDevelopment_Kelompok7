@@ -70,35 +70,96 @@ Content-Type: application/json
 Accept: application/json
 Authorization: 85b65db9-217e-4470-b398-66504a0c98ba
 
-### GET Semua Produk (tanpa query, public)
+### GET semua produk
 GET http://localhost:3000/api/produk
-Content-Type: application/json
+Accept: application/json
 
 ###
 
-### GET Produk dengan search + kategori + paginasi
-GET http://localhost:3000/api/produk?search=plat&kategori=PLATE&page=1&limit=5
-Content-Type: application/json
+### GET produk dengan search, kategori, paginasi
+GET http://localhost:3000/api/produk?search=plat&kategori=201&page=1&limit=5
+Accept: application/json
 
 ###
 
-### GET Produk by ID (pelanggan atau admin)
-GET http://localhost:3000/api/produk/{{produkId}}
-Authorization: Bearer {{token_admin_or_pelanggan}}
-Content-Type: application/json
+### GET produk berdasarkan ID
+GET http://localhost:3000/api/produk/PASTE_PRODUK_ID_DI_SINI
+Accept: application/json
 
 ###
 
-### POST Tambah Produk (admin only)
+### POST tambah produk baru
 POST http://localhost:3000/api/produk
-Authorization: Bearer {{token_admin}}
 Content-Type: application/json
+Accept: application/json
 
 {
-  "namaProduk": "PLAT STAINLESS AISI 304",
-  "kategori": "PLATE",
+  "namaProduk": "Produk 1",
+  "kategori": "304",
   "harga": 230000,
   "stok": 50,
+  "thickness": [1, 2, 3],
+  "hole": [],
+  "size": ["1x2", "2x4"],
+  "gambar": "https://ik.imagekit.io/6iomykfjj/upload-dasar/perforated-1748664027616_w6V4kyHTI.jpg"
+}
+
+{
+  "namaProduk": "Produk 2",
+  "kategori": "304",
+  "harga": 230000,
+  "stok": 50,
+  "thickness": [1, 2, 3],
+  "hole": [],
+  "size": ["1x2", "2x4"],
+  "gambar": "https://ik.imagekit.io/6iomykfjj/upload-dasar/perforated_2-1748664044863_velzuwQSs.jpg"
+}
+
+{
+  "namaProduk": "Produk 3",
+  "kategori": "304",
+  "harga": 230000,
+  "stok": 50,
+  "thickness": [1, 2, 3],
+  "hole": [],
+  "size": ["1x2", "2x4"],
+  "gambar": "https://ik.imagekit.io/6iomykfjj/upload-dasar/hollow-1748664190535_yz7LRUEs1.jpg"
+}
+
+{
+  "namaProduk": "Produk 4",
+  "kategori": "304",
+  "harga": 230000,
+  "stok": 50,
+  "thickness": [1, 2, 3],
+  "hole": [],
+  "size": ["1x2", "2x4"],
+  "gambar": "https://ik.imagekit.io/6iomykfjj/upload-dasar/hero-1748664204167__drPCD12H.jpg"
+}
+
+{
+  "namaProduk": "Produk 5",
+  "kategori": "304",
+  "harga": 230000,
+  "stok": 50,
+  "thickness": [1, 2, 3],
+  "hole": [],
+  "size": ["1x2", "2x4"],
+  "gambar": "https://ik.imagekit.io/6iomykfjj/upload-dasar/angle-1748664219218_FhBQmvbL1.jpg"
+}
+
+###
+
+### PUT update produk berdasarkan ID
+PUT http://localhost:3000/api/produk/PASTE_PRODUK_ID_DI_SINI
+Content-Type: application/json
+Accept: application/json
+
+{
+  "namaProduk": "PLAT STAINLESS AISI 304 - Edited",
+  "kategori": "304",
+  "harga": 250000,
+  "stok": 40,
   "thickness": [1, 2, 3],
   "hole": [],
   "size": ["1x2", "2x4"],
@@ -107,25 +168,59 @@ Content-Type: application/json
 
 ###
 
-### PUT Update Produk (admin only)
-PUT http://localhost:3000/api/produk/{{produkId}}
-Authorization: Bearer {{token_admin}}
+### DELETE produk
+DELETE http://localhost:3000/api/produk/PASTE_PRODUK_ID_DI_SINI
+Accept: application/json
+
+
+### Ambil semua keranjang milik pelanggan tertentu (pelanggan atau admin)
+GET http://localhost:3000/api/keranjang/64fabc1234567890abc12345
+Authorization: Bearer <TOKEN_PELANGGAN>
+
+
+### Ambil item keranjang berdasarkan ID (pelanggan atau admin)
+GET http://localhost:3000/api/keranjang/item/64fa22223333abcdeeff1111
+Authorization: Bearer <TOKEN_ADMIN>
+
+
+### Tambah item ke keranjang (hanya pelanggan)
+POST http://localhost:3000/api/keranjang
+Authorization: Bearer <TOKEN_PELANGGAN>
 Content-Type: application/json
 
 {
-  "namaProduk": "PLAT STAINLESS AISI 304 - UPDATE",
-  "kategori": "PLATE",
-  "harga": 250000,
-  "stok": 60,
-  "thickness": [1, 2, 3, 4],
-  "hole": [],
-  "size": ["1x2", "2x4", "3x6"],
-  "gambar": "https://example.com/plat304_update.jpg"
+  "userId": "64fabc1234567890abc12345",
+  "produkId": "64fa99998888abcdef12345",
+  "jumlah": 2,
+  "size": "2x4",
+  "thickness": 1.5,
+  "hole": 5
 }
 
-###
 
-### DELETE Produk (admin only)
-DELETE http://localhost:3000/api/produk/{{produkId}}
-Authorization: Bearer {{token_admin}}
+### Update jumlah item keranjang (hanya pelanggan)
+PATCH http://localhost:3000/api/keranjang/64fa22223333abcdeeff1111/jumlah
+Authorization: Bearer <TOKEN_PELANGGAN>
 Content-Type: application/json
+
+{
+  "jumlah": 3
+}
+
+
+### Update spesifikasi item keranjang (hanya pelanggan)
+PATCH http://localhost:3000/api/keranjang/64fa22223333abcdeeff1111/spesifikasi
+Authorization: Bearer <TOKEN_PELANGGAN>
+Content-Type: application/json
+
+{
+  "size": "1x2",
+  "thickness": 2.0,
+  "hole": 4,
+  "jumlah": 1
+}
+
+
+### Hapus item keranjang (hanya pelanggan)
+DELETE http://localhost:3000/api/keranjang/64fa22223333abcdeeff1111
+Authorization: Bearer <TOKEN_PELANGGAN>

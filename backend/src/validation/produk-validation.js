@@ -1,14 +1,7 @@
 import Joi from "joi";
 
-// Daftar enum kategori (sesuai Prisma schema)
-const kategoriEnum = [
-    "PLATE",
-    "ANGLE_BAR",
-    "PIPE",
-    "HOLLOW",
-    "ROD",
-    "PERFORATED_PLATE"
-];
+// Daftar enum kategori numerik sebagai string
+const kategoriEnum = ["201", "304", "316"];
 
 // Validasi untuk menambahkan produk
 const createProdukValidation = Joi.object({
@@ -23,10 +16,11 @@ const createProdukValidation = Joi.object({
 
     kategori: Joi.string()
         .valid(...kategoriEnum)
-        .optional()
+        .required()
         .messages({
             'string.base': "Kategori harus berupa string",
             'any.only': `Kategori hanya boleh salah satu dari: ${kategoriEnum.join(", ")}`,
+            'any.required': "Kategori wajib diisi"
         }),
 
     harga: Joi.number()
