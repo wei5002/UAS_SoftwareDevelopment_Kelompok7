@@ -21,7 +21,7 @@ export default function ProdukPage() {
   useEffect(() => {
     const fetchProduk = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/api/produk?kategori=${kategori}`);
+        const res = await fetch(`http://localhost:5001/api/produk?kategori=${kategori}`);
         const data = await res.json();
         setProdukList(data.data || []);
       } catch (error) {

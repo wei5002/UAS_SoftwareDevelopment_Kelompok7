@@ -71,7 +71,7 @@ Accept: application/json
 Authorization: 85b65db9-217e-4470-b398-66504a0c98ba
 
 ### GET semua produk
-GET http://localhost:3000/api/produk
+GET http://localhost:6000/api/produk
 Accept: application/json
 
 ###

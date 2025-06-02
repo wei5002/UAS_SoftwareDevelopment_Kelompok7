@@ -19,7 +19,7 @@ export default function Login() {
     setIsError(false);
 
     try {
-      const response = await fetch('http://localhost:3000/api/pelanggan/login', {
+      const response = await fetch('http://localhost:5001/api/pelanggan/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

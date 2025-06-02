@@ -58,7 +58,7 @@ export default function Signup() {
     }
 
     try {
-      const res = await fetch('http://localhost:3000/api/pelanggan/register', {
+      const res = await fetch('http://localhost:5001/api/pelanggan/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

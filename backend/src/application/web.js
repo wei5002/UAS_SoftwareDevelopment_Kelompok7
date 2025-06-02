@@ -10,7 +10,7 @@ import { router as produkRouter } from "../route/produk-api.js";
 export const web = express();
 
 web.use(cors({
-  origin: "http://localhost:3001",
+  origin: "http://localhost:3000",
   credentials: true
 }));
 
