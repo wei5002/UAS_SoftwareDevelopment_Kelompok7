@@ -188,3 +188,84 @@ body {
   pointer-events: none;
   z-index: 1;
 }
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .grid_produk {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    padding: 30px;
+  }
+
+  .hero-text {
+    left: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+  }
+
+  .add_product {
+    margin-left: auto;
+    margin-right: 20px;
+  }
+}
+
+@media (max-width: 530px) {
+  .grid_produk {
+    grid-template-columns: 3fr;
+    gap: 30px;
+    padding: 20px;
+  }
+
+  .tab_container {
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0;
+  }
+
+  .tab a {
+    padding: 8px 20px;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    margin: 0 auto;
+  }
+
+  .hero-text h1 {
+    font-size: 1.5rem;
+    line-height: 1.4;
+  }
+
+  .add_product {
+    font-size: 1.3rem;
+    margin: 10px auto;
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    margin-top: 80px;
+  }
+
+  .hero-text h1 {
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+  }
+
+  .produk {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1/1;
+  }
+
+  .produk img {
+    border-radius: 8px;
+  }
+
+  .daftar_produk h3 {
+    font-size: 1rem;
+  }
+
+  .daftar_produk p {
+    font-size: 0.8rem;
+  }
+}

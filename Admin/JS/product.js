@@ -42,6 +42,13 @@ productItems.forEach(produk => {
         popupHole.innerHTML = '';
         popupSize.innerHTML = '';
 
+        inputStock.value = stock;
+        inputPrice.value = price;
+
+        currentEditingProduct = produk; // Tambahkan baris ini
+        popup.style.display = 'block';
+
+
         // Memeriksa dan menampilkan ketebalan (thickness) jika ada
         if (thickness && thickness.trim() !== '') {
             detailThickness.style.display = 'block';
@@ -188,3 +195,84 @@ async function loadProducts() {
 document.addEventListener('DOMContentLoaded', loadProducts);
 
 
+const popupProduk = document.getElementById('popup_produk');
+const closeProdukBtn = popupProduk.querySelector('.close');
+
+// Tutup popup saat klik tombol ×
+closeProdukBtn.addEventListener('click', () => {
+  popupProduk.style.display = 'none';
+});
+
+// Tutup popup saat klik di luar isi popup
+popupProduk.addEventListener('click', (e) => {
+  if (e.target === popupProduk) {
+    popupProduk.style.display = 'none';
+  }
+});
+
+const inputStock = document.getElementById('edit-stock');
+const inputPrice = document.getElementById('edit-price');
+
+productItems.forEach(produk => {
+  produk.addEventListener('click', () => {
+    // ambil data
+    const stock = produk.getAttribute('data-stock');
+    const price = produk.getAttribute('data-price');
+
+    // set nilai ke input
+    inputStock.value = stock;
+    inputPrice.value = price;
+    popup.style.display = 'block';
+});
+});
+
+
+const saveBtn = document.getElementById('saveBtn');
+
+saveBtn.addEventListener('click', () => {
+    console.log('Save button clicked'); // Tambahkan ini untuk debugging
+    const stockValue = inputStock.value;
+    const priceValue = inputPrice.value;
+
+    // Validasi input
+    if (stockValue === '' || priceValue === '') {
+        alert('Stock dan Price tidak boleh kosong!');
+        return;
+    }
+
+    if (currentEditingProduct) {
+        // Update atribut data
+        currentEditingProduct.setAttribute('data-stock', stockValue);
+        currentEditingProduct.setAttribute('data-price', priceValue);
+
+        // Update tampilan popup dan elemen UI lainnya
+        popupStock.textContent = stockValue;
+        popupPrice.textContent = priceValue;
+
+        // Update elemen stock di daftar produk
+        const stockText = currentEditingProduct.closest('.daftar_produk').querySelector('.nilai_stock');
+        if (stockText) {
+            stockText.textContent = stockValue;
+        }
+
+        // Tangani peringatan stok
+        const warning = currentEditingProduct.querySelector('.stock-warning');
+        if (warning) {
+            warning.remove();
+        }
+        if (parseInt(stockValue, 10) < 10) {
+            const newWarning = document.createElement('div');
+            newWarning.classList.add('stock-warning');
+            newWarning.textContent = '!';
+            currentEditingProduct.appendChild(newWarning);
+        }
+    }
+
+    // Tutup popup
+    popup.style.display = 'none';
+
+    alert('Data berhasil disimpan!');
+});
+
+
+currentEditingProduct = produk; // simpan referensi elemen yang sedang diedit

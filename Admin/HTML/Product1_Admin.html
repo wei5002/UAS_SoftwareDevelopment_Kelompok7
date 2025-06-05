@@ -187,10 +187,13 @@
           <!-- untuk menentukan harga dan jumlah stok -->
           <div class="popup_action">
             <div class="stock_price">
-              <p>Stock: <span id="popup_stock" class="nilai_stock"></span></p>
-              <p>Price: <span id="popup_price" class="nilai_price"></span></p>
-              <!-- <span id="popup_price" class="nilai_price"></span> -->
+              <p>Stock: <input type="number" id="edit-stock" name="stock" /></p>
+              <p>Price: <input type="string" id="edit-price" name="price" /></p>
             </div>
+            <!-- Letakkan ini di dalam div popup_action atau sesuai layout kamu -->
+          </div>
+          <div class="save_container">
+            <button id="saveBtn" class="btn-save">Save</button>
           </div>
         </div>
       </div>
@@ -225,7 +228,7 @@
                 <textarea id="edit-size" name="size" rows="1"></textarea>
             </span>
             
-            <span class="stock-price-edit">
+            <!-- <span class="stock-price-edit">
                 <label for="edit-stock">Stock</label>
                 <input type="number" id="edit-stock" name="stock" />
             </span>
@@ -233,7 +236,7 @@
             <span class="stock-price-edit">
                 <label for="edit-price">Price</label>
                 <input type="text" id="edit-price" name="price" />
-            </span>
+            </span> -->
           
               <button type="submit">Save</button>
           </form>
@@ -243,7 +246,7 @@
   <!-- popup menambah produk -->
   <div id="add-product-popup" class="popup_produk">
     <div class="popup_isi">
-      <span class="close">&times;</span>
+      <!-- <span class="close">&times;</span> -->
       <div class="popup_container">
         <div class="popup_header">
           <h2>Tambah Produk Baru</h2>

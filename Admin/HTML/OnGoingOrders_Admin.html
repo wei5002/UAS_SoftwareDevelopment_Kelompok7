@@ -1,20 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>On Going Orders - Maju Makmur</title>
-  <link rel="stylesheet" href="/Admin/CSS/OnGoingOrders_Admin.css">
+  <link rel="stylesheet" href="/Admin/CSS/OnGoingOrders_Admin.css"/>
   <link rel="stylesheet" href="/Admin/CSS/header-logout.css"/>
   <link rel="stylesheet" href="/Admin/CSS/navbar.css"/>
 </head>
 <body>
 
   <div id="header-placeholder"></div>
-
   <div id="navbar-placeholder"></div>
 
+  <!-- Order Aktif -->
   <div class="order">
+    <img src="/Admin/img/hollow 201.jpg" alt="Hollow 201" />
+    <div class="detail_order">
+      <h2>HOLLOW STAINLESS STEEL 201</h2>
+      <div class="detail_ukuran">
+        <span class="box">1</span>
+        <span class="box">122 x 244</span>
+      </div>
+      <p>Price : Rp 1.035.000</p>
+      <p>Amount : 1</p>
+      <div class="status_pesanan">
+        <button class="active">Pending</button>
+        <button>On Process</button>
+        <button>On Delivery</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Dibatalkan -->
+  <div class="batal">
+    <div class="overlay">
+      <button class="cancel-btn">!</button>
+    </div>
     <img src="/Admin/img/hollow 201.jpg" alt="Hollow 201">
     <div class="detail_order">
       <h2>HOLLOW STAINLESS STEEL 201</h2>
@@ -28,14 +50,72 @@
         <button class="active">Pending</button>
         <button>On Process</button>
         <button>On Delivery</button>
-        <p>Done</p>
       </div>
+    </div>
+  </div>
+
+   <!-- POPUP PEMBATALAN UTAMA -->
+  <div id="cancel-popup" class="cancel-popup" style="display: none;">
+    <div class="cancel-popup-content">
+      <h2>CANCEL REQUEST</h2>
+      <div class="cancel-info">
+        <div class="info-list">
+          <div class="info-item">
+            <span class="label">Name</span>
+            <span class="value">: Heru</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Bank Name</span>
+            <span class="value">: BCA</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Account Holder’s Name</span>
+            <span class="value">: Heru Purnomo</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Bank Account Number</span>
+            <span class="value">: 098765432123</span>
+          </div>
+        </div>    
+      </div>
+
+      <div class="cancel-reason">
+        <label for="client-reason">Client Reason</label>
+        <textarea id="client-reason" readonly>Saya salah pesan ukuran</textarea>
+      </div>
+      
+      <div class="cancel-actions">
+        <button class="accept-btn">Accept Request</button>
+      </div>
+
+      <div class="cancel-reason">
+        <label for="admin-reason">Admin Reason</label>
+        <textarea id="admin-reason" placeholder="Type here..."></textarea>
+      </div>
+
+      <div class="cancel-actions">
+        <button class="decline-btn">Decline Request</button>
+      </div>
+
+      <span class="close-cancel close-btn">&times;</span>
+    </div>
+  </div>
+
+  <!-- POPUP UPLOAD BUKTI TRANSFER -->
+  <div id="accept-popup" class="popup">
+    <div class="popup-content">
+      <span class="close-btn close-accept">&times;</span>
+      <h3>Upload Refund Transfer Receipt</h3>
+      <form>
+        <input type="file" accept="image/*,.pdf" required>
+        <button type="submit">Upload</button>
+      </form>      
     </div>
   </div>
   
   <script src="/Admin/JS/ongoing.js"></script>
   <script src="/Admin/JS/header-logout.js"></script>
   <script src="/Admin/JS/navbar.js"></script>
-
+  
 </body>
 </html>
