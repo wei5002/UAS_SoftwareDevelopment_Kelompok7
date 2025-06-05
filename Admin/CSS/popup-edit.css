@@ -16,7 +16,7 @@
     margin: 6% auto;
     padding: 60px;
     width: 45%;
-    height: 75%;
+    height: auto;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     position: relative;
     top: 7px;
@@ -74,7 +74,7 @@
     border: 1px solid #555;
     background-color: #444;
     margin-right: 600px;
-    width:75%; 
+    width:78%; 
     height: 80px;
     box-sizing: border-box; 
 }
@@ -125,10 +125,19 @@
 }
 
 .edit_gambar {
-    position: fixed;
-    width: 8%;
-    height: 11%;
-    top: 23%;
-    left: 60.5%;
+    position: absolute;
+    top: 60px;
+    right: 63px;
+    width: 80px;
+    height: 80px;
     object-fit: cover;
+}
+
+@media (max-width: 768px) {
+    .edit_gambar {
+        top: 10px;
+        right: 10px;
+        width: 60px;
+        height: 60px;
+    }
 }

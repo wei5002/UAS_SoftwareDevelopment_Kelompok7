@@ -185,9 +185,13 @@
           <!-- untuk menentukan harga dan jumlah stok -->
           <div class="popup_action">
             <div class="stock_price">
-              <p>Stock: <span id="popup_stock" class="nilai_stock"></span></p>
-              <p>Price: <span id="popup_price" class="nilai_price"></span></p>
+              <p>Stock: <input type="number" id="edit-stock" name="stock" /></p>
+              <p>Price: <input type="string" id="edit-price" name="price" /></p>
             </div>
+            <!-- Letakkan ini di dalam div popup_action atau sesuai layout kamu -->
+          </div>
+          <div class="save_container">
+            <button id="saveBtn" class="btn-save">Save</button>
           </div>
         </div>
       </div>

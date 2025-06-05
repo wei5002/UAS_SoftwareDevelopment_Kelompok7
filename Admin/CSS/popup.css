@@ -11,6 +11,7 @@
 }
 
 .popup_isi {
+  position: relative;
   background-color: #2f3943;
   margin: 6% auto;
   padding: 20px;
@@ -18,6 +19,8 @@
   max-width: 90%;
   height: auto;
   box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  /* display: flex; */
+  /* flex-direction: column; */
 }
 
 .popup_container {
@@ -211,12 +214,13 @@
   margin-left: 40px;
 }
 
-.nilai_stock {
-  color: white; 
-}
-
-.nilai_price {
-  font-size: 21px;
+#edit-stock, 
+#edit-price {
+  width: 55%;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 4px;
+  /* background-color: yellow; */
 }
 
 
@@ -224,13 +228,161 @@
 .close {
   color: #ffffff;
   position: absolute;
-  right: 355px;
-  top: 95px;
+  top: 20px;
+  right: 20px;
   font-size: 36px;
   font-weight: bold;
   cursor: pointer;
+  z-index: 1000;
 }
 
 .close:hover {
   color: grey;
+}
+
+.btn-save {
+  background-color: #28a745; /* hijau */
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-save:hover {
+  background-color: #218838; /* hijau lebih gelap saat hover */
+  box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+}
+
+.btn-save:active {
+  background-color: #1e7e34;
+  box-shadow: inset 0 3px 5px rgba(0,0,0,0.2);
+}
+
+.save_container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  
+}
+
+
+@media (max-width: 1024px) {
+  .popup_isi {
+    width: 50%;
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .popup_container {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .popup_header {
+    margin-left: 0;
+    text-align: center;
+  }
+
+  .gambar_produk {
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+  }
+
+  .close {
+    right: 30px;
+    top: 30px;
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .popup_isi {
+    width: 60%;
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .judul_produk,
+  .jenis_produk,
+  .bagian_kanan h3,
+  .stock_price,
+  .nilai_price {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  .thickness_buttons,
+  .hole_buttons,
+  .size_buttons {
+    margin-left: 0;
+    justify-content: center;
+  }
+
+  .size_btn,
+  .thickness_btn,
+  .hole_btn {
+    font-size: 1rem;
+    padding: 6px 12px;
+    margin-left: 0;
+  }
+
+  .edit-delete-btn {
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .edit_btn,
+  .delete_btn {
+    font-size: 1rem;
+    padding: 6px 20px;
+  }
+
+  .stock_price p {
+    margin-left: 0;
+    text-align: center;
+  }
+
+  .close {
+    right: 20px;
+    top: 20px;
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .popup_isi {
+    padding: 15px;
+  }
+
+  .popup_header {
+    text-align: center;
+    margin: 0;
+  }
+
+  .gambar_produk {
+    max-width: 250px;
+  }
+
+  .popup_action {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .stock_price {
+    align-items: center;
+  }
+
+  .close {
+    right: 15px;
+    top: 15px;
+    font-size: 24px;
+  }
 }

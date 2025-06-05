@@ -9,8 +9,6 @@ function showEditPopup(product) {
     document.getElementById('edit-thickness').value = product.getAttribute('data-thickness') || '';
     document.getElementById('edit-hole').value = product.getAttribute('data-hole') || '';
     document.getElementById('edit-size').value = product.getAttribute('data-size') || '';
-    document.getElementById('edit-stock').value = product.getAttribute('data-stock');
-    document.getElementById('edit-price').value = product.getAttribute('data-price');
 
     const imageSrc = product.getAttribute('data-gambar');
     const editImage = document.getElementById('edit_gambar');
@@ -67,16 +65,12 @@ editForm.addEventListener('submit', async function (e) {
     const thickness = document.getElementById('edit-thickness').value;
     const hole = document.getElementById('edit-hole').value;
     const size = document.getElementById('edit-size').value;
-    const stock = document.getElementById('edit-stock').value;
-    const price = document.getElementById('edit-price').value;
 
     const data = {
         namaProduk: title,
         thickness,
         hole,
         size,
-        stok: parseInt(stock),
-        harga: price
     };
 
     if (editedImageDataURL) {

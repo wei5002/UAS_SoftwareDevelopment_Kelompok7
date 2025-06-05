@@ -294,3 +294,133 @@ form {
   margin: 0 auto;  
   
 }
+
+
+@media (max-width: 1150px) {
+  .order,
+  .batal {
+    width: 50%;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .order img,
+  .batal img {
+    width: 180px;
+    height: 180px;
+  }
+
+  .detail_ukuran {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .status_pesanan {
+    flex-direction: column;
+    gap: 10px;
+ 
+  }
+
+
+}
+
+@media (max-width: 768px) {
+  .order,
+  .batal {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .order img,
+  .batal img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .detail_order h2 {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .detail_order p {
+    font-size: 16px;
+  }
+
+  .box {
+    font-size: 16px;
+    padding: 5px 10px;
+  }
+
+  .cancel-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 18px;
+  }
+
+  .popup-content,
+  .cancel-popup-content {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .popup-content h3,
+  .cancel-popup-content h2 {
+    font-size: 16px;
+  }
+
+  .info-item {
+    flex-direction: column;
+  }
+
+  .label {
+    width: 100%;
+  }
+
+  .cancel-reason textarea {
+    font-size: 13px;
+  }
+
+  .accept-btn,
+  .decline-btn {
+    font-size: 12px;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .order img,
+  .batal img {
+    width: 120px;
+    height: 120px;
+  }
+
+  .detail_order h2 {
+    font-size: 16px;
+  }
+
+  .detail_order p {
+    font-size: 14px;
+  }
+
+  .box {
+    font-size: 14px;
+    padding: 4px 8px;
+  }
+
+  .status_pesanan button {
+    font-size: 14px;
+    padding: 8px 14px;
+  }
+
+  .popup-content button {
+    width: 80px;
+    font-size: 13px;
+  }
+
+  .cancel-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+  }
+}
