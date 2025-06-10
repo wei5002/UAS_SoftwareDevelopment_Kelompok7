@@ -59,6 +59,100 @@
                 </div>
             </div>
         </div>
+
+        <div class="batal">
+            <div class="overlay">
+                <button class="admin-cancel">!</button>
+            </div>
+            <div class="order-card-img">
+                <img src="/Customer/img/hollow 201.jpg"/>
+            </div>
+            <div class="order-card-content">
+                <div class="button-wrap-canceldone">
+                    <button
+                    class="cancel-btn"
+                    data-cus-name="Heru"
+                    data-cus-bank-name="BCA"
+                    data-cus-account-holder="Heru Purnomo"
+                    data-cus-account-number="098765432123"
+                    >
+                        Cancel
+                    </button>
+                    <button class="done-btn">
+                        Done
+                    </button>
+                </div>
+                <div class="order-card-desc">
+                    <h3>HOLLOW STAINLESS STEEL 201</h3>
+                    <div class="order-card-size-wrap">
+                        <div class="order-card-size">
+                            <p>1</p>
+                            <p>2 x 2 x 600</p>
+                        </div>
+                    </div> 
+                    <p>Price : Rp 120.000</p>
+                    <br><p>Amount : <span class="amount-value">1</span></p>
+                </div>
+                <div class="button-wrap">
+                    <button class="status-btn">
+                        Pending
+                    </button>
+                    <button class="status-btn">
+                        On Process
+                    </button>
+                    <button class="status-btn">
+                        On Delivery
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tolak">
+            <div class="overlay-tolak">
+                <button class="admin-tolak">!</button>
+            </div>
+            <div class="order-card-img">
+                <img src="/Customer/img/hollow 304.jpg"/>
+            </div>
+            <div class="order-card-content">
+                <div class="button-wrap-canceldone">
+                    <button
+                    class="cancel-btn"
+                    data-cus-name="Heru"
+                    data-cus-bank-name="BCA"
+                    data-cus-account-holder="Heru Purnomo"
+                    data-cus-account-number="098765432123"
+                    >
+                        Cancel
+                    </button>
+                    <button class="done-btn">
+                        Done
+                    </button>
+                </div>
+                <div class="order-card-desc">
+                    <h3>HOLLOW STAINLESS STEEL 304</h3>
+                    <div class="order-card-size-wrap">
+                        <div class="order-card-size">
+                            <p>1</p>
+                            <p>2 x 2 x 600</p>
+                        </div>
+                    </div> 
+                    <p>Price : Rp 300.000</p>
+                    <br><p>Amount : <span class="amount-value">1</span></p>
+                </div>
+                <div class="button-wrap">
+                    <button class="status-btn">
+                        Pending
+                    </button>
+                    <button class="status-btn">
+                        On Process
+                    </button>
+                    <button class="status-btn">
+                        On Delivery
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
     
     <div id="footer-placeholder"></div>
@@ -91,6 +185,34 @@
                     <button class="yes-btn" id="confirmCancel">Send Request</button>
                     <button class="no-btn" id="closePopup">Close</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cancel-popup" class="cancel-popup" style="display: none;">
+        <div class="cancel-popup-content">
+            <h2>YOUR ORDER HAS BEEN CANCELLED BY ADMIN</h2>
+            <div class="cancel-reason">
+                <label for="client-reason">Admin Reason</label>
+                <textarea id="client-reason" readonly>Gambar yang dikirimkan bukan bukti transfer dan kami belum menerima pembayaran apapun</textarea>
+            </div>
+            
+            <div class="cancel-actions">
+                <button class="ok-btn">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="tolak-popup" class="tolak-popup" style="display: none;">
+        <div class="tolak-popup-content">
+            <h2>YOUR CANCEL REQUEST HAS BEEN DECLINED</h2>
+            <div class="tolak-reason">
+                <label for="admin-reason">Admin Reason</label>
+                <textarea id="admin-reason" readonly>Barang sudah dipotong sesuai ukuran dan tidak dapat dibatalkan</textarea>
+            </div>
+            
+            <div class="tolak-actions">
+                <button class="ok-btn">OK</button>
             </div>
         </div>
     </div>

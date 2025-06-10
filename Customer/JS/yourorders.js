@@ -11,10 +11,30 @@ document.querySelectorAll('.status_pesanan').forEach(group => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
+    const cancelBtn = document.querySelector(".overlay");
+    const cancelPopup = document.getElementById("cancel-popup");
+    const tolakBtn = document.querySelector(".overlay-tolak");
+    const tolakPopup = document.getElementById("tolak-popup");
+
     const popup = document.getElementById("popup");
     const confirmBtn = document.getElementById("confirmCancel");
     const closeBtn = document.getElementById("closePopup");
     let targetCard = null;
+
+    cancelBtn.addEventListener("click", () => {
+        cancelPopup.style.display = "flex";
+    });
+    
+    document.querySelectorAll(".ok-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            cancelPopup.style.display = "none";
+            tolakPopup.style.display = "none";
+        });
+    });
+
+    tolakBtn.addEventListener("click", () => {
+        tolakPopup.style.display = "flex";
+    });
 
     document.querySelectorAll(".cancel-btn").forEach(button => {
         button.addEventListener("click", (e) => {
@@ -52,13 +72,17 @@ document.addEventListener("DOMContentLoaded", () => {
             targetCard.appendChild(overlay);
         }
 
-        // Bersihkan input setelah submit
         reasonInput.value = "";
         popup.style.display = "none";
     });
 
     closeBtn.addEventListener("click", () => {
         popup.style.display = "none";
+    });
+
+    window.addEventListener("click", (e) => {
+        if (e.target === cancelPopup) cancelPopup.style.display = "none";
+        if (e.target === tolakPopup) tolakPopup.style.display = "none";
     });
 });
 
