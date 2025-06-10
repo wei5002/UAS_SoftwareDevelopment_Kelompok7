@@ -1,78 +1,72 @@
 
+
 ---
 
 # UAS Software Development - Kelompok 7
 
 Proyek ini merupakan tugas akhir dari mata kuliah Software Development. Aplikasi ini mencakup backend menggunakan **Node.js + Express + Prisma + MongoDB**, serta frontend menggunakan **Next.js (App Router)**.
 
-
-## 📥 Clone Repository
-
-```bash
-git clone https://github.com/wei5002/UAS_SoftwareDevelopment_Kelompok7.git
-cd UAS_SoftwareDevelopment_Kelompok7
-````
+Semua perintah dijalankan dari direktori **root** proyek untuk kemudahan.
 
 ---
 
-## 🔧 Install Dependencies
+## ▶️ Setup & Menjalankan Proyek
 
-### 1. Backend
+Hanya butuh 3 langkah mudah untuk menjalankan keseluruhan aplikasi.
 
-```bash
-cd backend
-npm install
-npx prisma generate
-```
+### Langkah 1: Konfigurasi Environment
 
-### 2. Frontend
-
-```bash
-cd ../frontend
-npm install
-```
-
----
-
-## ⚙️ Konfigurasi Environment
-
-Salin dan sesuaikan file `.env` di folder backend:
+Salin file `.env.example` di dalam folder `backend` menjadi `.env`.
 
 ```bash
 cp backend/.env.example backend/.env
 ```
 
-Isi `DATABASE_URL` Anda:
+Kemudian, buka file `backend/.env` tersebut dan isi `DATABASE_URL` dengan koneksi string MongoDB Atlas Anda.
 
 ```env
 DATABASE_URL="mongodb+srv://<username>:<password>@cluster0.mongodb.net/Digisteels?retryWrites=true&w=majority"
 ```
 
----
+### Langkah 2: Instalasi Dependensi
 
-## ▶️ Menjalankan Aplikasi
-
-Cukup satu perintah:
+Cukup jalankan satu perintah ini dari direktori root. Perintah ini akan menginstal dependensi untuk `backend` dan `frontend`, sekaligus menjalankan `prisma generate` secara otomatis.
 
 ```bash
-cd frontend
-npm run dev
+npm run install:all
 ```
 
-> Perintah di atas akan:
->
-> * Menjalankan backend (`npm start` di folder backend)
-> * Menjalankan frontend (`next dev` di folder frontend)
+### Langkah 3: Jalankan Aplikasi
+
+Untuk menjalankan server backend dan frontend secara bersamaan, gunakan perintah ini:
+
+```bash
+npm start
+```
+
+> Aplikasi frontend akan berjalan di `http://localhost:3000` dan backend akan berjalan di port yang berbeda.
+
+---
+
+## 🔧 Perintah Tambahan
+
+### Regenerasi Prisma Client
+
+Jika Anda mengubah file `schema.prisma`, Anda tidak perlu instalasi ulang. Cukup jalankan perintah ini dari root untuk memperbarui Prisma Client:
+
+```bash
+npm run prisma:generate
+```
 
 ---
 
 ## 🧪 Testing API
 
-Gunakan ekstensi **Thunder Client** (VS Code) atau aplikasi seperti **Postman** untuk menguji API:
+Gunakan ekstensi **Thunder Client** (VS Code) atau aplikasi seperti **Postman** untuk menguji API yang berjalan di backend. Endpoint yang tersedia mencakup:
 
 * Register/Login Pelanggan & Admin
 * Produk CRUD
-* Logout, dll
+* Logout, dll.
 
 ---
 
@@ -81,30 +75,7 @@ Gunakan ekstensi **Thunder Client** (VS Code) atau aplikasi seperti **Postman** 
 ```
 UAS_SoftwareDevelopment_Kelompok7/
 ├── backend/         # Express.js + Prisma + MongoDB
-│   ├── controller/
-│   ├── service/
-│   ├── validation/
-│   ├── middleware/
-│   ├── application/
-│   ├── main.js
-│   └── .env
-│
 ├── frontend/        # Next.js (App Router)
-│   ├── app/
-│   ├── components/
-│   ├── public/
-│   ├── styles/
-│   ├── package.json
-│   └── ...
-│
+├── package.json     # Pusat kendali skrip
 └── README.md
 ```
-
----
-
-## ⚠️ Catatan Penting
-
-* Backend berjalan di port `3000`, frontend di `3001` (default Next.js dev server)
-* Jangan lupa menjalankan `npx prisma generate` jika mengubah `schema.prisma`
-* Middleware `cors` sudah aktif agar backend dapat diakses dari frontend
-* Pastikan file `.env` Anda benar dan terkoneksi ke MongoDB Atlas

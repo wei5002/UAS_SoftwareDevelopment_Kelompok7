@@ -1,0 +1,38 @@
+.footer {
+  background: rgba(0, 0, 0, 1); /* hitam */
+  padding: 30px 20px;
+  font-size: 19.7px;
+  color: white;
+}
+
+.footerGrid {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.footerGridOne {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.footerGridTwo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.footerGridThree {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.footerText {
+  font-family: "Times", sans-serif;
+}

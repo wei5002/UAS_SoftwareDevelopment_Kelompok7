@@ -1,0 +1,42 @@
+### GET semua keranjang milik pelanggan yang sedang login (pakai token → /my)
+GET http://localhost:5001/api/keranjang/my
+Authorization: Bearer {{token_pelanggan}}
+
+### GET item keranjang berdasarkan ID (pelanggan atau admin)
+GET http://localhost:5001/api/keranjang/item/PASTE_ITEM_KERANJANG_ID_DI_SINI
+Authorization: Bearer {{token_pelanggan_or_admin}}
+
+### POST tambah item ke keranjang (hanya pelanggan)
+POST http://localhost:5001/api/keranjang
+Authorization: Bearer {{token_pelanggan}}
+Content-Type: application/json
+
+{
+  "produkVarianId": "PASTE_PRODUK_VARIAN_ID_DI_SINI",
+  "jumlah": 2
+}
+
+### PATCH update jumlah item keranjang (hanya pelanggan)
+PATCH http://localhost:5001/api/keranjang/PASTE_ITEM_KERANJANG_ID_DI_SINI/jumlah
+Authorization: Bearer {{token_pelanggan}}
+Content-Type: application/json
+
+{
+  "jumlah": 3
+}
+
+### PATCH update spesifikasi item keranjang (hanya pelanggan)
+PATCH http://localhost:5001/api/keranjang/PASTE_ITEM_KERANJANG_ID_DI_SINI/spesifikasi
+Authorization: Bearer {{token_pelanggan}}
+Content-Type: application/json
+
+{
+  "size": "1x2",
+  "thickness": 2.0,
+  "hole": 4,
+  "jumlah": 1
+}
+
+### DELETE item keranjang (hanya pelanggan)
+DELETE http://localhost:5001/api/keranjang/PASTE_ITEM_KERANJANG_ID_DI_SINI
+Authorization: Bearer {{token_pelanggan}}

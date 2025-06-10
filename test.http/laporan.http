@@ -1,0 +1,37 @@
+### GET ALL LAPORAN (Admin → semua laporan, tanpa filter)
+GET http://localhost:5001/api/laporan
+Authorization: Bearer {{token_admin}}
+
+### GET ALL LAPORAN (Admin → filter per bulan & tahun, misal Juni 2025)
+GET http://localhost:5001/api/laporan?month=6&year=2025
+Authorization: Bearer {{token_admin}}
+
+### GET LAPORAN BY ID
+GET http://localhost:5001/api/laporan/PASTE_ID_LAPORAN_DISINI
+Authorization: Bearer {{token_admin}}
+
+### CREATE LAPORAN (Admin only)
+POST http://localhost:5001/api/laporan
+Authorization: Bearer {{token_admin}}
+Content-Type: application/json
+
+{
+  "tanggalLaporan": "2025-06-08T08:00:00.000Z", // optional
+  "pesananId": "PASTE_ID_PESANAN_DISINI",
+  "totalPenjualan": 5000000,
+  "keterangan": "Penjualan pesanan bulan Juni"
+}
+
+### UPDATE LAPORAN (Admin only)
+PATCH http://localhost:5001/api/laporan/PASTE_ID_LAPORAN_DISINI
+Authorization: Bearer {{token_admin}}
+Content-Type: application/json
+
+{
+  "totalPenjualan": 6000000,
+  "keterangan": "Update penjualan setelah revisi"
+}
+
+### DELETE LAPORAN (Admin only)
+DELETE http://localhost:5001/api/laporan/PASTE_ID_LAPORAN_DISINI
+Authorization: Bearer {{token_admin}}

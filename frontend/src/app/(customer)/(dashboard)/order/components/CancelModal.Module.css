@@ -1,0 +1,132 @@
+.popupOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001; /* Pastikan di atas konten lain */
+}
+
+.popupContent {
+    background-color: #2d3640;
+    padding: 30px 40px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 550px;
+    color: white;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
+}
+
+.popupWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.popupTitle {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.popupTitle h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.popupDatacus {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    border-top: 1px solid #4a5568;
+    border-bottom: 1px solid #4a5568;
+    padding: 20px 0;
+}
+
+.popupDatacusTitle {
+    font-weight: bold;
+    color: #a0aec0;
+    flex-basis: 40%;
+}
+
+.popupDatacusContent {
+    flex-basis: 60%;
+}
+
+.popupDatacus p {
+    margin: 5px 0;
+}
+
+.popupReason {
+    margin-top: 20px;
+}
+
+.popupReason p {
+    font-weight: bold;
+    margin: 0 0 10px 0;
+}
+
+.popupReason textarea {
+    width: 100%;
+    padding: 15px;
+    background-color: #1a202c;
+    border: 1px solid #4a5568;
+    border-radius: 8px;
+    color: white;
+    font-family: sans-serif;
+    font-size: 1rem;
+    min-height: 80px;
+    resize: vertical;
+}
+
+.popupButtonsYesno {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 30px;
+    gap: 15px;
+}
+
+.popupButtonsYesno button {
+    flex-grow: 1;
+    padding: 12px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.yesBtn {
+    background-color: #e53e3e;
+    color: white;
+}
+
+.yesBtn:hover:not(:disabled) {
+    background-color: #c53030;
+}
+
+.noBtn {
+    background-color: #4a5568;
+    color: #e2e8f0;
+}
+
+.noBtn:hover {
+    background-color: #718096;
+}
+
+.yesBtn:disabled {
+    background-color: #744343;
+    cursor: not-allowed;
+}
+
+.errorText {
+    color: #f56565;
+    margin-top: 15px;
+    text-align: center;
+    font-weight: bold;
+}

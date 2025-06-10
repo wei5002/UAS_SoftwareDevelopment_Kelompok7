@@ -1,0 +1,59 @@
+### GET ALL PEMBATALAN (Pelanggan → my)
+GET http://localhost:5001/api/pembatalan/my
+Authorization: Bearer {{token_pelanggan}}
+
+### GET ALL PEMBATALAN (Admin → all)
+GET http://localhost:5001/api/pembatalan
+Authorization: Bearer {{token_admin}}
+
+### GET PEMBATALAN BY ID
+# ⚠️ GANTI :id dengan ID Pembatalan yang valid
+GET http://localhost:5001/api/pembatalan/item/:id
+Authorization: Bearer {{token_pelanggan_or_admin}}
+
+### CREATE PEMBATALAN (Pelanggan only)
+POST http://localhost:5001/api/pembatalan
+Authorization: Bearer {{token_pelanggan}}
+Content-Type: application/json
+
+{
+  "pesananId": "PASTE_PESANAN_ID_DI_SINI",
+  "alasanPembatalan": "Saya ingin membatalkan karena barang belum dikirim",
+  "tanggalPengajuan": "2025-06-09T08:00:00.000Z"
+}
+
+### UPDATE PEMBATALAN (Admin → setujui pembatalan)
+# ⚠️ GANTI :id dengan ID Pembatalan yang valid
+PATCH http://localhost:5001/api/pembatalan/:id
+Authorization: Bearer {{token_admin}}
+Content-Type: application/json
+
+{
+  "statusPembatalan": "disetujui",
+  "tanggalDirespon": "2025-06-09T09:00:00.000Z",
+  "catatanAdmin": "Refund akan diproses dalam 3 hari kerja",
+  "refundStatus": "diproses",
+  "jumlahRefund": 50000
+}
+
+### UPDATE PEMBATALAN (Admin → tolak pembatalan)
+# ⚠️ GANTI :id dengan ID Pembatalan yang valid
+PATCH http://localhost:5001/api/pembatalan/:id
+Authorization: Bearer {{token_admin}}
+Content-Type: application/json
+
+{
+  "statusPembatalan": "ditolak",
+  "tanggalDirespon": "2025-06-09T09:00:00.000Z",
+  "catatanAdmin": "Pesanan sudah dalam proses pengiriman, tidak bisa dibatalkan"
+}
+
+### DELETE PEMBATALAN (Pelanggan → membatalkan permintaan pembatalan, hanya jika status 'menunggu')
+# ⚠️ GANTI :id dengan ID Pembatalan yang valid
+DELETE http://localhost:5001/api/pembatalan/:id
+Authorization: Bearer {{token_pelanggan}}
+
+### DELETE PEMBATALAN (Admin → hapus data pembatalan)
+# ⚠️ GANTI :id dengan ID Pembatalan yang valid
+DELETE http://localhost:5001/api/pembatalan/:id
+Authorization: Bearer {{token_admin}}

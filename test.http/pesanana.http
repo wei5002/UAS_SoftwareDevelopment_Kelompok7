@@ -1,0 +1,68 @@
+### GET ALL PESANAN (Pelanggan → my)
+GET http://localhost:5001/api/pesanan/my
+Authorization: Bearer {{token_pelanggan}}
+
+
+### GET ALL PESANAN (Admin → all pesanan)
+GET http://localhost:5001/api/pesanan
+Authorization: Bearer {{token_admin}}
+
+
+### GET PESANAN BY ID
+GET http://localhost:5001/api/pesanan/item/60f7e1f19b1e8c23a4c9a124
+Authorization: Bearer {{token_pelanggan_or_admin}}
+
+
+### CREATE PESANAN (Pelanggan only)
+POST http://localhost:5001/api/pesanan
+Authorization: Bearer {{token_pelanggan}}
+Content-Type: application/json
+
+{
+  "status": "PENDING",
+  "alamatDetail": "Jl. Contoh Alamat No. 123",
+  "provinsi": "Jawa Barat",
+  "kabupaten": "Bandung",
+  "kecamatan": "Coblong",
+  "kelurahan": "Dago",
+  "nomorTelepon": "081234567890",
+  "keranjangId": "60f7e1f19b1e8c23a4c9a125",
+  "bankName": "Bank BRI",
+  "accountName": "Budi Santoso",
+  "accountNumber": 1234567890,
+  "buktiTransferUrl": "https://cdn.mysite.com/uploads/bukti123.jpg"
+}
+
+
+### UPDATE PESANAN (ADMIN TEST)
+PATCH http://localhost:5001/api/pesanan/60f7e1f19b1e8c23a4c9a124
+Authorization: Bearer {{token_admin}}
+Content-Type: application/json
+
+{
+  "status": "ON_DELIVERY",
+  "alamatDetail": "Jl. Baru No. 456",
+  "bankName": "Bank Mandiri",
+  "accountNumber": 9876543210,
+  "buktiTransferUrl": "https://cdn.mysite.com/uploads/bukti456.jpg"
+}
+
+
+### UPDATE PESANAN (PELANGGAN TEST → tanpa status!)
+PATCH http://localhost:5001/api/pesanan/60f7e1f19b1e8c23a4c9a124
+Authorization: Bearer {{token_pelanggan}}
+Content-Type: application/json
+
+{
+  "alamatDetail": "Jl. Baru No. 789",
+  "bankName": "Bank BCA",
+  "accountNumber": 1122334455,
+  "buktiTransferUrl": "https://cdn.mysite.com/uploads/bukti789.jpg"
+}
+
+
+### DELETE PESANAN
+# Pelanggan → hapus pesanan miliknya
+# Admin → hapus pesanan manapun
+DELETE http://localhost:5001/api/pesanan/60f7e1f19b1e8c23a4c9a124
+Authorization: Bearer {{token_pelanggan_or_admin}}

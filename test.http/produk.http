@@ -1,0 +1,184 @@
+### GET semua produk
+GET http://localhost:5001/api/produk
+Accept: application/json
+
+###
+
+### GET produk dengan search, kategori, paginasi
+GET http://localhost:5001/api/produk?search=plat&kategori=201&page=1&limit=5
+Accept: application/json
+
+###
+
+### GET produk berdasarkan ID
+GET http://localhost:5001/api/produk/:id
+Accept: application/json
+
+###
+
+### POST tambah produk baru + varian
+POST http://localhost:5001/api/produk
+Content-Type: application/json
+Accept: application/json
+
+{
+  "namaProduk": "Produk 1",
+  "kategori": "304",
+  "gambar": "https://ik.imagekit.io/6iomykfjj/upload-dasar/perforated-1748664027616_w6V4kyHTI.jpg",
+  "varian": [
+    {
+      "size": "1x2",
+      "thickness": 1,
+      "hole": 0,
+      "harga": 230000,
+      "stok": 50
+    },
+    {
+      "size": "2x4",
+      "thickness": 2,
+      "hole": 0,
+      "harga": 250000,
+      "stok": 30
+    }
+  ]
+}
+
+###
+
+{
+  "namaProduk": "Produk 2",
+  "kategori": "304",
+  "gambar": "https://ik.imagekit.io/6iomykfjj/upload-dasar/perforated_2-1748664044863_velzuwQSs.jpg",
+  "varian": [
+    {
+      "size": "1x2",
+      "thickness": 1,
+      "hole": 0,
+      "harga": 230000,
+      "stok": 50
+    },
+    {
+      "size": "2x4",
+      "thickness": 2,
+      "hole": 0,
+      "harga": 250000,
+      "stok": 30
+    }
+  ]
+}
+
+###
+
+{
+  "namaProduk": "Produk 3",
+  "kategori": "304",
+  "gambar": "https://ik.imagekit.io/6iomykfjj/upload-dasar/hollow-1748664190535_yz7LRUEs1.jpg",
+  "varian": [
+    {
+      "size": "1x2",
+      "thickness": 1,
+      "hole": 0,
+      "harga": 230000,
+      "stok": 50
+    },
+    {
+      "size": "2x4",
+      "thickness": 2,
+      "hole": 0,
+      "harga": 250000,
+      "stok": 30
+    }
+  ]
+}
+
+###
+
+{
+  "namaProduk": "Produk 4",
+  "kategori": "304",
+  "gambar": "https://ik.imagekit.io/6iomykfjj/upload-dasar/hero-1748664204167__drPCD12H.jpg",
+  "varian": [
+    {
+      "size": "1x2",
+      "thickness": 1,
+      "hole": 0,
+      "harga": 230000,
+      "stok": 50
+    },
+    {
+      "size": "2x4",
+      "thickness": 2,
+      "hole": 0,
+      "harga": 250000,
+      "stok": 30
+    }
+  ]
+}
+
+###
+
+{
+  "namaProduk": "Produk 5",
+  "kategori": "304",
+  "gambar": "https://ik.imagekit.io/6iomykfjj/upload-dasar/angle-1748664219218_FhBQmvbL1.jpg",
+  "varian": [
+    {
+      "size": "1x2",
+      "thickness": 1,
+      "hole": 0,
+      "harga": 230000,
+      "stok": 50
+    },
+    {
+      "size": "2x4",
+      "thickness": 2,
+      "hole": 0,
+      "harga": 250000,
+      "stok": 30
+    }
+  ]
+}
+
+###
+
+### PUT update produk berdasarkan ID
+PUT http://localhost:5001/api/produk/PASTE_PRODUK_ID_DI_SINI
+Content-Type: application/json
+Accept: application/json
+
+{
+  "namaProduk": "PLAT STAINLESS AISI 304 - Edited",
+  "kategori": "304",
+  "gambar": "https://example.com/plat304.jpg",
+  "varian": [
+    {
+      "id": "PASTE_VARIAN_ID_1_DI_SINI",
+      "size": "1x2",
+      "thickness": 1,
+      "hole": 0,
+      "harga": 230000,
+      "stok": 40
+    },
+    {
+      "id": "PASTE_VARIAN_ID_2_DI_SINI",
+      "size": "2x4",
+      "thickness": 2,
+      "hole": 0,
+      "harga": 250000,
+      "stok": 25
+    },
+    {
+      "size": "3x6", // varian baru → tanpa ID
+      "thickness": 3,
+      "hole": 0,
+      "harga": 300000,
+      "stok": 20
+    }
+  ]
+}
+
+###
+
+### DELETE produk
+DELETE http://localhost:5001/api/produk/PASTE_PRODUK_ID_DI_SINI
+Accept: application/json

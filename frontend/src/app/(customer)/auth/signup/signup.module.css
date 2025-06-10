@@ -1,0 +1,106 @@
+.main {
+  background-color: rgb(255, 255, 255);
+  background-size: cover;
+  color: black;
+  background-image: url('/assets/images/barang stainless steel.png');
+  text-align: center;
+  min-height: 50vh;
+  padding: 40px 20px;
+  margin-top: 80px;
+}
+
+.h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  letter-spacing: 8px;
+  margin-bottom: 30px;
+}
+
+.kotak_signup {
+  background: white;
+  padding: 40px;
+  width: 60%;
+  max-width: 800px;
+  margin: auto;
+  border-radius: 40px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden; /* supaya sudut tetap rapi */
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.label {
+  font-size: 1.5rem;
+  text-align: left;
+  letter-spacing: 5px;
+}
+
+.input {
+  padding: 15px;
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+  font-size: 1.5rem;
+  letter-spacing: 3px;
+  color: #555;
+}
+
+.baris_form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.baris_form .label {
+  flex: 1;
+  font-size: 1.5rem;
+  text-align: left;
+  letter-spacing: 5px;
+}
+
+.baris_form .input {
+  flex: 2;
+  padding: 15px;
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+  font-size: 1.5rem;
+  letter-spacing: 3px;
+  color: #555;
+}
+
+.btn_group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  padding: 0 20px;
+  width: 100%;
+}
+
+.btn_back {
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  background-color: #fff;
+  color: #000;
+  border: 2px solid #000;
+}
+
+.btn_next {
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  background-color: #fff;
+  color: #000;
+  border: 2px solid #000;
+}

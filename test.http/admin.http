@@ -1,0 +1,26 @@
+### REGISTER Admin
+POST http://localhost:5001/api/admin/register
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "admin_heru",
+  "password" : "Herupurnomo17."
+}
+
+### LOGIN admin
+POST http://localhost:5001/api/admin/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "admin_heru",
+  "password" : "Herupurnomo17."
+}
+# "token": "dbe5f306-521f-4fb5-acfb-be03d2df8fb8"
+
+### LOGOUT
+DELETE http://localhost:5001/api/admin/logout
+Content-Type: application/json
+Accept: application/json
+Authorization: 85b65db9-217e-4470-b398-66504a0c98ba

@@ -11,9 +11,10 @@ router.get('/api/produk', produkController.getAll);
 // Pelanggan atau Admin: Ambil detail produk berdasarkan ID
 router.get('/api/produk/:id', authBothMiddleware, produkController.getById);
 
+router.put('/api/produk/:id', authBothMiddleware, produkController.update);
+
 // Admin only: Tambah, Edit, Hapus produk
 router.post('/api/produk', adminMiddleware, produkController.create);
-router.put('/api/produk/:id', adminMiddleware, produkController.update);
 router.delete('/api/produk/:id', adminMiddleware, produkController.remove);
 
 export {

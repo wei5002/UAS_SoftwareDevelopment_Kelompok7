@@ -1,0 +1,251 @@
+.popup_produk {
+  text-align: center;
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.popup_isi {
+  background-color: #2f3943;
+  margin: 6% auto;
+  padding: 20px;
+  width: 850px;
+  max-width: 90%;
+  height: auto;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+
+.popup_container {
+  display: flex;
+  gap: 0px;
+}
+
+.popup_header{
+  margin-left: 30px;
+}
+
+.gambar_produk {
+  width: 330px;
+  height: 330px;
+  object-fit: cover;
+  padding-bottom: 17px;
+}
+
+.judul_produk {
+  font-size: 1.5rem;
+  margin-bottom: -20px;
+  letter-spacing: 1px;
+  color: white;
+}
+
+.jenis_produk {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+  color: white;
+}
+
+.popup_detail {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.bagian_kanan {
+  margin-bottom: 20px;
+}
+
+.bagian_kanan h3 {
+  color: white;
+  font-size: 23px;
+  margin-bottom: 7px;
+  letter-spacing: 5px;
+}
+
+/* THICKNESS*/
+.thickness_buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 5px;
+  margin-left: 7%;
+}
+    
+.thickness_btn {
+  margin-left: 5px;
+  padding: 8px 17px;
+  background-color: #ffffff;
+  font-size: 21px;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  letter-spacing: 1px;
+  margin-bottom: -12px; 
+}
+    
+.thickness_btn:hover {
+  background-color: #4a89dc;
+}
+    
+.thickness_btn.active {
+  background-color: #4a89dc;
+}
+
+/* HOLE */
+.hole_buttons {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 5px;
+  gap: 20px;
+  margin-top: 5px;
+  margin-left: 7%;
+}
+    
+.hole_btn {
+  margin-left: 5px;
+  padding: 8px 17px;
+  background-color: #ffffff;
+  font-size: 21px;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  letter-spacing: 1px;
+  margin-bottom: -12px; 
+}
+    
+.hole_btn:hover {
+  background-color: #4a89dc;
+}
+    
+.hole_btn.active {
+  background-color: #4a89dc;
+}
+
+/* SIZE */
+.size_buttons {
+  display: flex;
+  flex-wrap: wrap; 
+  margin-top: 5px;
+  margin-left: 1%;
+}
+
+.size_btn {
+  margin-left: 7%;
+  padding: 8px 17px;
+  background-color: #ffffff;
+  font-size: 21px;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  letter-spacing: 3px;
+  margin-bottom: 8px; 
+}
+
+.size_btn:hover {
+  background-color: #4a89dc;
+}
+
+.size_btn.active {
+  background-color: #4a89dc;
+}
+
+/* button edit dan delete*/
+.popup_action {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.kurang-tambah-btn{
+  display: flex;
+  margin-left: 0px; 
+}
+
+.kurang_btn, .tambah_btn, .delete_btn {
+  font-size: 18px;
+  padding: 1px 19px;
+  border-radius: 3000px;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+.kurang_btn, .tambah_btn{
+  border: 1px solid #a9aaab;
+  background-color: #a9aaab;
+  color: rgb(3, 3, 3);
+}
+
+.keranjang_btn{
+  border: 5px solid #9ee8f1;
+  background-color: #9ee8f1;
+  color: black;
+  font-weight: bold;
+  letter-spacing: 3px;
+}
+
+.jumlah_produk {
+  font-size: 20px;
+  color: black;
+  min-width: 30px;
+  text-align: center;
+  line-height: 40px;
+  margin: 37px;
+}
+
+.jumlah_wrapper{
+  border: 3px solid #e6e9ea;
+  background-color: #e6e9ea;
+}
+
+
+/* Stok dan Harga */
+.stock_price {
+  font-size: 21px;
+  letter-spacing: 5px;
+  color: white;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.stock_price p{
+  margin-bottom: -10px;
+  margin-left: 40px;
+}
+
+.nilai_stock {
+  color: white; 
+}
+
+.nilai_price {
+  font-size: 21px;
+}
+
+
+/* BUTTON CLOSE */
+.close {
+  color: #ffffff;
+  position: absolute;
+  right: 355px;
+  top: 95px;
+  font-size: 36px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: grey;
+}
