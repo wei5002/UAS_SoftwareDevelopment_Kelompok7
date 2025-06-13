@@ -7,8 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ... model Pelanggan, Admin, Produk, ProdukVarian, KeranjangBelanja tidak berubah ...
-
 model Pelanggan {
   id                String               @id @default(auto()) @map("_id") @db.ObjectId
   nama              String
@@ -34,6 +32,12 @@ model Produk {
   kategori   String
   gambar     String?
   varian     ProdukVarian[]
+  status     StatusProduk   @default(AKTIF)
+}
+
+enum StatusProduk {
+  AKTIF
+  NONAKTIF
 }
 
 model ProdukVarian {
@@ -45,7 +49,7 @@ model ProdukVarian {
   hole           Float?
   harga          Float
   stok           Int
-  keranjang      KeranjangBelanja[]
+  keranjang      KeranjangBelanja[] @relation("KeranjangBelanjaToProdukVarian")
 }
 
 model KeranjangBelanja {
@@ -56,7 +60,7 @@ model KeranjangBelanja {
   totalHarga     Float        @default(0)
   isOrdered      Boolean      @default(false)
   user           Pelanggan    @relation(fields: [userId], references: [id])
-  produkVarian   ProdukVarian @relation(fields: [produkVarianId], references: [id])
+  produkVarian   ProdukVarian @relation("KeranjangBelanjaToProdukVarian", fields: [produkVarianId], references: [id])
   pesanan        Pesanan[]
 }
 
@@ -66,10 +70,7 @@ model Pesanan {
   user              Pelanggan            @relation(fields: [userId], references: [id])
   tanggalPemesanan  DateTime             @default(now())
   status            StatusPesanan
-  
-  // --- PERUBAHAN DI SINI ---
-  ongkosKirim       Float?               @default(0) // Menambahkan field ongkos kirim
-
+  ongkosKirim       Float?               @default(0)
   alamatDetail      String
   provinsi          String
   kabupaten         String
@@ -82,6 +83,7 @@ model Pesanan {
   accountName       String
   accountNumber     Int
   buktiTransferUrl  String
+  alasanPenolakan String?
   pembatalanPesanan PembatalanPesanan?
   laporanPenjualan  LaporanPenjualan?
 
@@ -95,8 +97,6 @@ enum StatusPesanan {
   DONE
   CANCELLED
 }
-
-// ... model PembatalanPesanan dan LaporanPenjualan tidak berubah ...
 
 model PembatalanPesanan {
   id                 String             @id @default(auto()) @map("_id") @db.ObjectId

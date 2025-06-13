@@ -3,8 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './CancelModal.module.css';
 
-// Tipe data untuk properti yang diterima oleh modal
-// Tipe 'user' tidak lagi diperlukan karena nama diambil dari localStorage
 type Pesanan = {
     id: string;
     bankName: string;
@@ -25,10 +23,10 @@ export default function CancelModal({ isOpen, onClose, onSuccess, order }: Cance
     const [error, setError] = useState<string | null>(null);
     const [customerName, setCustomerName] = useState(''); // State untuk nama pelanggan
 
-    // Mengambil nama pelanggan dari localStorage saat modal dibuka
+    // Ambil nama pelanggan dari localStorage (KHUSUS CUSTOMER)
     useEffect(() => {
         if (isOpen) {
-            const nama = localStorage.getItem('nama');
+            const nama = localStorage.getItem('customer_nama');
             setCustomerName(nama || 'Nama tidak ditemukan');
         }
     }, [isOpen]);
@@ -43,7 +41,8 @@ export default function CancelModal({ isOpen, onClose, onSuccess, order }: Cance
         setError(null);
 
         try {
-            const token = localStorage.getItem('token');
+            // AMBIL TOKEN KHUSUS CUSTOMER
+            const token = localStorage.getItem('customer_token');
             if (!token) {
                 throw new Error("Autentikasi tidak ditemukan. Silakan login kembali.");
             }
@@ -97,7 +96,7 @@ export default function CancelModal({ isOpen, onClose, onSuccess, order }: Cance
                             <p>Bank Account Number</p>
                         </div>
                         <div className={styles.popupDatacusContent}>
-                            <p>{customerName}</p> {/* Menampilkan nama dari state */}
+                            <p>{customerName}</p>
                             <p>{order.bankName}</p>
                             <p>{order.accountName}</p>
                             <p>{order.accountNumber}</p>

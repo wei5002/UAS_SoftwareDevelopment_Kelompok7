@@ -72,7 +72,7 @@
 ├── backend
 │   ├── babel.config.json
 │   ├── env.example
-│   ├── imagekit-config.js
+│   ├── imagekit.config.js
 │   ├── node_modules
 │   │   ├── @ampproject
 │   │   │   └── remapping
@@ -3067,6 +3067,16 @@
 │   │   │   ├── LICENSE
 │   │   │   ├── package.json
 │   │   │   └── README.md
+│   │   ├── append-field
+│   │   │   ├── index.js
+│   │   │   ├── lib
+│   │   │   │   ├── parse-path.js
+│   │   │   │   └── set-value.js
+│   │   │   ├── LICENSE
+│   │   │   ├── package.json
+│   │   │   ├── README.md
+│   │   │   └── test
+│   │   │       └── forms.js
 │   │   ├── argparse
 │   │   │   ├── CHANGELOG.md
 │   │   │   ├── index.js
@@ -3272,6 +3282,110 @@
 │   │   │   ├── serial.js
 │   │   │   ├── serialOrdered.js
 │   │   │   └── stream.js
+│   │   ├── axios
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── dist
+│   │   │   │   ├── axios.js
+│   │   │   │   ├── axios.js.map
+│   │   │   │   ├── axios.min.js
+│   │   │   │   ├── axios.min.js.map
+│   │   │   │   ├── browser
+│   │   │   │   │   ├── axios.cjs
+│   │   │   │   │   └── axios.cjs.map
+│   │   │   │   ├── esm
+│   │   │   │   │   ├── axios.js
+│   │   │   │   │   ├── axios.js.map
+│   │   │   │   │   ├── axios.min.js
+│   │   │   │   │   └── axios.min.js.map
+│   │   │   │   └── node
+│   │   │   │       ├── axios.cjs
+│   │   │   │       └── axios.cjs.map
+│   │   │   ├── index.d.cts
+│   │   │   ├── index.d.ts
+│   │   │   ├── index.js
+│   │   │   ├── lib
+│   │   │   │   ├── adapters
+│   │   │   │   │   ├── adapters.js
+│   │   │   │   │   ├── fetch.js
+│   │   │   │   │   ├── http.js
+│   │   │   │   │   ├── README.md
+│   │   │   │   │   └── xhr.js
+│   │   │   │   ├── axios.js
+│   │   │   │   ├── cancel
+│   │   │   │   │   ├── CanceledError.js
+│   │   │   │   │   ├── CancelToken.js
+│   │   │   │   │   └── isCancel.js
+│   │   │   │   ├── core
+│   │   │   │   │   ├── Axios.js
+│   │   │   │   │   ├── AxiosError.js
+│   │   │   │   │   ├── AxiosHeaders.js
+│   │   │   │   │   ├── buildFullPath.js
+│   │   │   │   │   ├── dispatchRequest.js
+│   │   │   │   │   ├── InterceptorManager.js
+│   │   │   │   │   ├── mergeConfig.js
+│   │   │   │   │   ├── README.md
+│   │   │   │   │   ├── settle.js
+│   │   │   │   │   └── transformData.js
+│   │   │   │   ├── defaults
+│   │   │   │   │   ├── index.js
+│   │   │   │   │   └── transitional.js
+│   │   │   │   ├── env
+│   │   │   │   │   ├── classes
+│   │   │   │   │   │   └── FormData.js
+│   │   │   │   │   ├── data.js
+│   │   │   │   │   └── README.md
+│   │   │   │   ├── helpers
+│   │   │   │   │   ├── AxiosTransformStream.js
+│   │   │   │   │   ├── AxiosURLSearchParams.js
+│   │   │   │   │   ├── bind.js
+│   │   │   │   │   ├── buildURL.js
+│   │   │   │   │   ├── callbackify.js
+│   │   │   │   │   ├── combineURLs.js
+│   │   │   │   │   ├── composeSignals.js
+│   │   │   │   │   ├── cookies.js
+│   │   │   │   │   ├── deprecatedMethod.js
+│   │   │   │   │   ├── formDataToJSON.js
+│   │   │   │   │   ├── formDataToStream.js
+│   │   │   │   │   ├── fromDataURI.js
+│   │   │   │   │   ├── HttpStatusCode.js
+│   │   │   │   │   ├── isAbsoluteURL.js
+│   │   │   │   │   ├── isAxiosError.js
+│   │   │   │   │   ├── isURLSameOrigin.js
+│   │   │   │   │   ├── null.js
+│   │   │   │   │   ├── parseHeaders.js
+│   │   │   │   │   ├── parseProtocol.js
+│   │   │   │   │   ├── progressEventReducer.js
+│   │   │   │   │   ├── readBlob.js
+│   │   │   │   │   ├── README.md
+│   │   │   │   │   ├── resolveConfig.js
+│   │   │   │   │   ├── speedometer.js
+│   │   │   │   │   ├── spread.js
+│   │   │   │   │   ├── throttle.js
+│   │   │   │   │   ├── toFormData.js
+│   │   │   │   │   ├── toURLEncodedForm.js
+│   │   │   │   │   ├── trackStream.js
+│   │   │   │   │   ├── validator.js
+│   │   │   │   │   └── ZlibHeaderTransformStream.js
+│   │   │   │   ├── platform
+│   │   │   │   │   ├── browser
+│   │   │   │   │   │   ├── classes
+│   │   │   │   │   │   │   ├── Blob.js
+│   │   │   │   │   │   │   ├── FormData.js
+│   │   │   │   │   │   │   └── URLSearchParams.js
+│   │   │   │   │   │   └── index.js
+│   │   │   │   │   ├── common
+│   │   │   │   │   │   └── utils.js
+│   │   │   │   │   ├── index.js
+│   │   │   │   │   └── node
+│   │   │   │   │       ├── classes
+│   │   │   │   │       │   ├── FormData.js
+│   │   │   │   │       │   └── URLSearchParams.js
+│   │   │   │   │       └── index.js
+│   │   │   │   └── utils.js
+│   │   │   ├── LICENSE
+│   │   │   ├── MIGRATION_GUIDE.md
+│   │   │   ├── package.json
+│   │   │   └── README.md
 │   │   ├── babel-jest
 │   │   │   ├── build
 │   │   │   │   ├── index.d.ts
@@ -3578,6 +3692,30 @@
 │   │   │   ├── LICENSE
 │   │   │   ├── package.json
 │   │   │   └── readme.md
+│   │   ├── busboy
+│   │   │   ├── bench
+│   │   │   │   ├── bench-multipart-fields-100mb-big.js
+│   │   │   │   ├── bench-multipart-fields-100mb-small.js
+│   │   │   │   ├── bench-multipart-files-100mb-big.js
+│   │   │   │   ├── bench-multipart-files-100mb-small.js
+│   │   │   │   ├── bench-urlencoded-fields-100pairs-small.js
+│   │   │   │   └── bench-urlencoded-fields-900pairs-small-alt.js
+│   │   │   ├── lib
+│   │   │   │   ├── index.js
+│   │   │   │   ├── types
+│   │   │   │   │   ├── multipart.js
+│   │   │   │   │   └── urlencoded.js
+│   │   │   │   └── utils.js
+│   │   │   ├── LICENSE
+│   │   │   ├── package.json
+│   │   │   ├── README.md
+│   │   │   └── test
+│   │   │       ├── common.js
+│   │   │       ├── test-types-multipart-charsets.js
+│   │   │       ├── test-types-multipart-stream-pause.js
+│   │   │       ├── test-types-multipart.js
+│   │   │       ├── test-types-urlencoded.js
+│   │   │       └── test.js
 │   │   ├── bytes
 │   │   │   ├── History.md
 │   │   │   ├── index.js
@@ -4590,6 +4728,11 @@
 │   │   │   ├── README.markdown
 │   │   │   └── test
 │   │   │       └── map.js
+│   │   ├── concat-stream
+│   │   │   ├── index.js
+│   │   │   ├── LICENSE
+│   │   │   ├── package.json
+│   │   │   └── readme.md
 │   │   ├── content-disposition
 │   │   │   ├── HISTORY.md
 │   │   │   ├── index.js
@@ -5144,6 +5287,14 @@
 │   │   │   ├── package.json
 │   │   │   ├── README.md
 │   │   │   └── test.js
+│   │   ├── follow-redirects
+│   │   │   ├── debug.js
+│   │   │   ├── http.js
+│   │   │   ├── https.js
+│   │   │   ├── index.js
+│   │   │   ├── LICENSE
+│   │   │   ├── package.json
+│   │   │   └── README.md
 │   │   ├── form-data
 │   │   │   ├── index.d.ts
 │   │   │   ├── lib
@@ -5327,6 +5478,13 @@
 │   │   │   ├── package.json
 │   │   │   ├── polyfills.js
 │   │   │   └── README.md
+│   │   ├── hamming-distance
+│   │   │   ├── index.js
+│   │   │   ├── LICENSE
+│   │   │   ├── package.json
+│   │   │   ├── README.md
+│   │   │   └── test
+│   │   │       └── test.js
 │   │   ├── has-flag
 │   │   │   ├── index.d.ts
 │   │   │   ├── index.js
@@ -5437,6 +5595,177 @@
 │   │   │   │   ├── index.js
 │   │   │   │   └── streams.js
 │   │   │   ├── LICENSE
+│   │   │   ├── package.json
+│   │   │   └── README.md
+│   │   ├── imagekit
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── dist
+│   │   │   │   ├── index.d.ts
+│   │   │   │   ├── index.js
+│   │   │   │   ├── libs
+│   │   │   │   │   ├── constants
+│   │   │   │   │   │   ├── errorMessages.d.ts
+│   │   │   │   │   │   ├── errorMessages.js
+│   │   │   │   │   │   ├── supportedTransforms.d.ts
+│   │   │   │   │   │   └── supportedTransforms.js
+│   │   │   │   │   ├── interfaces
+│   │   │   │   │   │   ├── BulkDeleteFiles.d.ts
+│   │   │   │   │   │   ├── BulkDeleteFiles.js
+│   │   │   │   │   │   ├── CopyFile.d.ts
+│   │   │   │   │   │   ├── CopyFile.js
+│   │   │   │   │   │   ├── CopyFolder.d.ts
+│   │   │   │   │   │   ├── CopyFolder.js
+│   │   │   │   │   │   ├── CreateFolder.d.ts
+│   │   │   │   │   │   ├── CreateFolder.js
+│   │   │   │   │   │   ├── CustomMetatadaField.d.ts
+│   │   │   │   │   │   ├── CustomMetatadaField.js
+│   │   │   │   │   │   ├── FileDetails.d.ts
+│   │   │   │   │   │   ├── FileDetails.js
+│   │   │   │   │   │   ├── FileFormat.d.ts
+│   │   │   │   │   │   ├── FileFormat.js
+│   │   │   │   │   │   ├── FileMetadata.d.ts
+│   │   │   │   │   │   ├── FileMetadata.js
+│   │   │   │   │   │   ├── FileType.d.ts
+│   │   │   │   │   │   ├── FileType.js
+│   │   │   │   │   │   ├── FileVersion.d.ts
+│   │   │   │   │   │   ├── FileVersion.js
+│   │   │   │   │   │   ├── IKCallback.d.ts
+│   │   │   │   │   │   ├── IKCallback.js
+│   │   │   │   │   │   ├── IKResponse.d.ts
+│   │   │   │   │   │   ├── IKResponse.js
+│   │   │   │   │   │   ├── ImageKitOptions.d.ts
+│   │   │   │   │   │   ├── ImageKitOptions.js
+│   │   │   │   │   │   ├── index.d.ts
+│   │   │   │   │   │   ├── index.js
+│   │   │   │   │   │   ├── ListFile.d.ts
+│   │   │   │   │   │   ├── ListFile.js
+│   │   │   │   │   │   ├── MoveFile.d.ts
+│   │   │   │   │   │   ├── MoveFile.js
+│   │   │   │   │   │   ├── MoveFolder.d.ts
+│   │   │   │   │   │   ├── MoveFolder.js
+│   │   │   │   │   │   ├── PurgeCache.d.ts
+│   │   │   │   │   │   ├── PurgeCache.js
+│   │   │   │   │   │   ├── Rename.d.ts
+│   │   │   │   │   │   ├── Rename.js
+│   │   │   │   │   │   ├── Transformation.d.ts
+│   │   │   │   │   │   ├── Transformation.js
+│   │   │   │   │   │   ├── UploadOptions.d.ts
+│   │   │   │   │   │   ├── UploadOptions.js
+│   │   │   │   │   │   ├── UploadResponse.d.ts
+│   │   │   │   │   │   ├── UploadResponse.js
+│   │   │   │   │   │   ├── UrlOptions.d.ts
+│   │   │   │   │   │   ├── UrlOptions.js
+│   │   │   │   │   │   ├── webhookEvent.d.ts
+│   │   │   │   │   │   └── webhookEvent.js
+│   │   │   │   │   ├── manage
+│   │   │   │   │   │   ├── cache.d.ts
+│   │   │   │   │   │   ├── cache.js
+│   │   │   │   │   │   ├── custom-metadata-field.d.ts
+│   │   │   │   │   │   ├── custom-metadata-field.js
+│   │   │   │   │   │   ├── file.d.ts
+│   │   │   │   │   │   ├── file.js
+│   │   │   │   │   │   ├── index.d.ts
+│   │   │   │   │   │   └── index.js
+│   │   │   │   │   ├── signature
+│   │   │   │   │   │   ├── index.d.ts
+│   │   │   │   │   │   └── index.js
+│   │   │   │   │   ├── upload
+│   │   │   │   │   │   ├── index.d.ts
+│   │   │   │   │   │   └── index.js
+│   │   │   │   │   └── url
+│   │   │   │   │       ├── builder.d.ts
+│   │   │   │   │       ├── builder.js
+│   │   │   │   │       ├── index.d.ts
+│   │   │   │   │       └── index.js
+│   │   │   │   └── utils
+│   │   │   │       ├── authorization.d.ts
+│   │   │   │       ├── authorization.js
+│   │   │   │       ├── phash.d.ts
+│   │   │   │       ├── phash.js
+│   │   │   │       ├── request.d.ts
+│   │   │   │       ├── request.js
+│   │   │   │       ├── respond.d.ts
+│   │   │   │       ├── respond.js
+│   │   │   │       ├── transformation.d.ts
+│   │   │   │       ├── transformation.js
+│   │   │   │       ├── urlFormatter.d.ts
+│   │   │   │       ├── urlFormatter.js
+│   │   │   │       ├── webhook-signature.d.ts
+│   │   │   │       └── webhook-signature.js
+│   │   │   ├── LICENSE.txt
+│   │   │   ├── node_modules
+│   │   │   │   └── uuid
+│   │   │   │       ├── CHANGELOG.md
+│   │   │   │       ├── CONTRIBUTING.md
+│   │   │   │       ├── dist
+│   │   │   │       │   ├── bin
+│   │   │   │       │   │   └── uuid
+│   │   │   │       │   ├── esm-browser
+│   │   │   │       │   │   ├── index.js
+│   │   │   │       │   │   ├── md5.js
+│   │   │   │       │   │   ├── nil.js
+│   │   │   │       │   │   ├── parse.js
+│   │   │   │       │   │   ├── regex.js
+│   │   │   │       │   │   ├── rng.js
+│   │   │   │       │   │   ├── sha1.js
+│   │   │   │       │   │   ├── stringify.js
+│   │   │   │       │   │   ├── v1.js
+│   │   │   │       │   │   ├── v3.js
+│   │   │   │       │   │   ├── v35.js
+│   │   │   │       │   │   ├── v4.js
+│   │   │   │       │   │   ├── v5.js
+│   │   │   │       │   │   ├── validate.js
+│   │   │   │       │   │   └── version.js
+│   │   │   │       │   ├── esm-node
+│   │   │   │       │   │   ├── index.js
+│   │   │   │       │   │   ├── md5.js
+│   │   │   │       │   │   ├── nil.js
+│   │   │   │       │   │   ├── parse.js
+│   │   │   │       │   │   ├── regex.js
+│   │   │   │       │   │   ├── rng.js
+│   │   │   │       │   │   ├── sha1.js
+│   │   │   │       │   │   ├── stringify.js
+│   │   │   │       │   │   ├── v1.js
+│   │   │   │       │   │   ├── v3.js
+│   │   │   │       │   │   ├── v35.js
+│   │   │   │       │   │   ├── v4.js
+│   │   │   │       │   │   ├── v5.js
+│   │   │   │       │   │   ├── validate.js
+│   │   │   │       │   │   └── version.js
+│   │   │   │       │   ├── index.js
+│   │   │   │       │   ├── md5-browser.js
+│   │   │   │       │   ├── md5.js
+│   │   │   │       │   ├── nil.js
+│   │   │   │       │   ├── parse.js
+│   │   │   │       │   ├── regex.js
+│   │   │   │       │   ├── rng-browser.js
+│   │   │   │       │   ├── rng.js
+│   │   │   │       │   ├── sha1-browser.js
+│   │   │   │       │   ├── sha1.js
+│   │   │   │       │   ├── stringify.js
+│   │   │   │       │   ├── umd
+│   │   │   │       │   │   ├── uuid.min.js
+│   │   │   │       │   │   ├── uuidNIL.min.js
+│   │   │   │       │   │   ├── uuidParse.min.js
+│   │   │   │       │   │   ├── uuidStringify.min.js
+│   │   │   │       │   │   ├── uuidv1.min.js
+│   │   │   │       │   │   ├── uuidv3.min.js
+│   │   │   │       │   │   ├── uuidv4.min.js
+│   │   │   │       │   │   ├── uuidv5.min.js
+│   │   │   │       │   │   ├── uuidValidate.min.js
+│   │   │   │       │   │   └── uuidVersion.min.js
+│   │   │   │       │   ├── uuid-bin.js
+│   │   │   │       │   ├── v1.js
+│   │   │   │       │   ├── v3.js
+│   │   │   │       │   ├── v35.js
+│   │   │   │       │   ├── v4.js
+│   │   │   │       │   ├── v5.js
+│   │   │   │       │   ├── validate.js
+│   │   │   │       │   └── version.js
+│   │   │   │       ├── LICENSE.md
+│   │   │   │       ├── package.json
+│   │   │   │       ├── README.md
+│   │   │   │       └── wrapper.mjs
 │   │   │   ├── package.json
 │   │   │   └── README.md
 │   │   ├── import-local
@@ -7472,6 +7801,38 @@
 │   │   │   ├── minimatch.js
 │   │   │   ├── package.json
 │   │   │   └── README.md
+│   │   ├── minimist
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── example
+│   │   │   │   └── parse.js
+│   │   │   ├── index.js
+│   │   │   ├── LICENSE
+│   │   │   ├── package.json
+│   │   │   ├── README.md
+│   │   │   └── test
+│   │   │       ├── all_bool.js
+│   │   │       ├── bool.js
+│   │   │       ├── dash.js
+│   │   │       ├── default_bool.js
+│   │   │       ├── dotted.js
+│   │   │       ├── kv_short.js
+│   │   │       ├── long.js
+│   │   │       ├── num.js
+│   │   │       ├── parse_modified.js
+│   │   │       ├── parse.js
+│   │   │       ├── proto.js
+│   │   │       ├── short.js
+│   │   │       ├── stop_early.js
+│   │   │       ├── unknown.js
+│   │   │       └── whitespace.js
+│   │   ├── mkdirp
+│   │   │   ├── bin
+│   │   │   │   ├── cmd.js
+│   │   │   │   └── usage.txt
+│   │   │   ├── index.js
+│   │   │   ├── LICENSE
+│   │   │   ├── package.json
+│   │   │   └── readme.markdown
 │   │   ├── mongodb
 │   │   │   ├── etc
 │   │   │   │   └── prepare.js
@@ -8332,6 +8693,46 @@
 │   │   │   ├── license.md
 │   │   │   ├── package.json
 │   │   │   └── readme.md
+│   │   ├── multer
+│   │   │   ├── index.js
+│   │   │   ├── lib
+│   │   │   │   ├── counter.js
+│   │   │   │   ├── file-appender.js
+│   │   │   │   ├── make-middleware.js
+│   │   │   │   ├── multer-error.js
+│   │   │   │   └── remove-uploaded-files.js
+│   │   │   ├── LICENSE
+│   │   │   ├── node_modules
+│   │   │   │   ├── media-typer
+│   │   │   │   │   ├── HISTORY.md
+│   │   │   │   │   ├── index.js
+│   │   │   │   │   ├── LICENSE
+│   │   │   │   │   ├── package.json
+│   │   │   │   │   └── README.md
+│   │   │   │   ├── mime-db
+│   │   │   │   │   ├── db.json
+│   │   │   │   │   ├── HISTORY.md
+│   │   │   │   │   ├── index.js
+│   │   │   │   │   ├── LICENSE
+│   │   │   │   │   ├── package.json
+│   │   │   │   │   └── README.md
+│   │   │   │   ├── mime-types
+│   │   │   │   │   ├── HISTORY.md
+│   │   │   │   │   ├── index.js
+│   │   │   │   │   ├── LICENSE
+│   │   │   │   │   ├── package.json
+│   │   │   │   │   └── README.md
+│   │   │   │   └── type-is
+│   │   │   │       ├── HISTORY.md
+│   │   │   │       ├── index.js
+│   │   │   │       ├── LICENSE
+│   │   │   │       ├── package.json
+│   │   │   │       └── README.md
+│   │   │   ├── package.json
+│   │   │   ├── README.md
+│   │   │   └── storage
+│   │   │       ├── disk.js
+│   │   │       └── memory.js
 │   │   ├── natural-compare
 │   │   │   ├── index.js
 │   │   │   ├── package.json
@@ -8875,6 +9276,12 @@
 │   │   │   ├── LICENSE
 │   │   │   ├── package.json
 │   │   │   └── README.md
+│   │   ├── proxy-from-env
+│   │   │   ├── index.js
+│   │   │   ├── LICENSE
+│   │   │   ├── package.json
+│   │   │   ├── README.md
+│   │   │   └── test.js
 │   │   ├── punycode
 │   │   │   ├── LICENSE-MIT.txt
 │   │   │   ├── package.json
@@ -10001,6 +10408,14 @@
 │   │   │   ├── LICENSE
 │   │   │   ├── package.json
 │   │   │   └── README.md
+│   │   ├── streamsearch
+│   │   │   ├── lib
+│   │   │   │   └── sbmh.js
+│   │   │   ├── LICENSE
+│   │   │   ├── package.json
+│   │   │   ├── README.md
+│   │   │   └── test
+│   │   │       └── test.js
 │   │   ├── string_decoder
 │   │   │   ├── lib
 │   │   │   │   └── string_decoder.js
@@ -10142,6 +10557,22 @@
 │   │   │   ├── LICENSE
 │   │   │   ├── package.json
 │   │   │   └── README.md
+│   │   ├── tslib
+│   │   │   ├── CopyrightNotice.txt
+│   │   │   ├── LICENSE.txt
+│   │   │   ├── modules
+│   │   │   │   ├── index.d.ts
+│   │   │   │   ├── index.js
+│   │   │   │   └── package.json
+│   │   │   ├── package.json
+│   │   │   ├── README.md
+│   │   │   ├── SECURITY.md
+│   │   │   ├── tslib.d.ts
+│   │   │   ├── tslib.es6.html
+│   │   │   ├── tslib.es6.js
+│   │   │   ├── tslib.es6.mjs
+│   │   │   ├── tslib.html
+│   │   │   └── tslib.js
 │   │   ├── type-detect
 │   │   │   ├── index.js
 │   │   │   ├── LICENSE
@@ -10203,6 +10634,17 @@
 │   │   │   ├── LICENSE
 │   │   │   ├── package.json
 │   │   │   └── README.md
+│   │   ├── typedarray
+│   │   │   ├── example
+│   │   │   │   └── tarray.js
+│   │   │   ├── index.js
+│   │   │   ├── LICENSE
+│   │   │   ├── package.json
+│   │   │   ├── readme.markdown
+│   │   │   └── test
+│   │   │       ├── server
+│   │   │       │   └── undef_globals.js
+│   │   │       └── tarray.js
 │   │   ├── undici-types
 │   │   │   ├── agent.d.ts
 │   │   │   ├── api.d.ts
@@ -10850,6 +11292,13 @@
 │   │   │   ├── LICENSE.md
 │   │   │   ├── package.json
 │   │   │   └── README.md
+│   │   ├── xtend
+│   │   │   ├── immutable.js
+│   │   │   ├── LICENSE
+│   │   │   ├── mutable.js
+│   │   │   ├── package.json
+│   │   │   ├── README.md
+│   │   │   └── test.js
 │   │   ├── y18n
 │   │   │   ├── build
 │   │   │   │   ├── index.cjs
@@ -10964,55 +11413,56 @@
 │   ├── package.json
 │   ├── prisma
 │   │   └── schema.prisma
-│   └── src
-│       ├── application
-│       │   ├── database.js
-│       │   ├── logging.js
-│       │   └── web.js
-│       ├── controller
-│       │   ├── admin-controller.js
-│       │   ├── keranjangBelanja-controller.js
-│       │   ├── laporan-controller.js
-│       │   ├── pelanggan-controller.js
-│       │   ├── pembatalan-controller.js
-│       │   ├── pesanan-controller.js
-│       │   ├── produk-controller.js
-│       │   └── upload-controller.js
-│       ├── error
-│       │   └── response-error.js
-│       ├── main.js
-│       ├── middleware
-│       │   ├── admin-middleware.js
-│       │   ├── auth-both-middleware.js
-│       │   ├── auth-middleware.js
-│       │   └── error-middleware.js
-│       ├── route
-│       │   ├── admin-api.js
-│       │   ├── keranjangBelanja-api.js
-│       │   ├── laporan-api.js
-│       │   ├── pelanggan-api.js
-│       │   ├── pembatalan-api.js
-│       │   ├── pesanan-api.js
-│       │   ├── produk-api.js
-│       │   ├── public-api.js
-│       │   └── upload-api.js
-│       ├── service
-│       │   ├── admin-service.js
-│       │   ├── keranjangBelanja-service.js
-│       │   ├── laporan-service.js
-│       │   ├── pelanggan-service.js
-│       │   ├── pembatalan-service.js
-│       │   ├── pesanan-service.js
-│       │   └── produk-service.js
-│       └── validation
-│           ├── admin-validation.js
-│           ├── keranjangBelanja-validation.js
-│           ├── laporan-validation.js
-│           ├── pelanggan-validation.js
-│           ├── pembatalan-validation.js
-│           ├── pesanan-validation.js
-│           ├── produk-validation.js
-│           └── validation.js
+│   ├── src
+│   │   ├── application
+│   │   │   ├── database.js
+│   │   │   ├── logging.js
+│   │   │   └── web.js
+│   │   ├── controller
+│   │   │   ├── admin-controller.js
+│   │   │   ├── keranjangBelanja-controller.js
+│   │   │   ├── laporan-controller.js
+│   │   │   ├── pelanggan-controller.js
+│   │   │   ├── pembatalan-controller.js
+│   │   │   ├── pesanan-controller.js
+│   │   │   ├── produk-controller.js
+│   │   │   └── upload-controller.js
+│   │   ├── error
+│   │   │   └── response-error.js
+│   │   ├── main.js
+│   │   ├── middleware
+│   │   │   ├── admin-middleware.js
+│   │   │   ├── auth-both-middleware.js
+│   │   │   ├── auth-middleware.js
+│   │   │   └── error-middleware.js
+│   │   ├── route
+│   │   │   ├── admin-api.js
+│   │   │   ├── keranjangBelanja-api.js
+│   │   │   ├── laporan-api.js
+│   │   │   ├── pelanggan-api.js
+│   │   │   ├── pembatalan-api.js
+│   │   │   ├── pesanan-api.js
+│   │   │   ├── produk-api.js
+│   │   │   ├── public-api.js
+│   │   │   └── upload-api.js
+│   │   ├── service
+│   │   │   ├── admin-service.js
+│   │   │   ├── keranjangBelanja-service.js
+│   │   │   ├── laporan-service.js
+│   │   │   ├── pelanggan-service.js
+│   │   │   ├── pembatalan-service.js
+│   │   │   ├── pesanan-service.js
+│   │   │   └── produk-service.js
+│   │   └── validation
+│   │       ├── admin-validation.js
+│   │       ├── keranjangBelanja-validation.js
+│   │       ├── laporan-validation.js
+│   │       ├── pelanggan-validation.js
+│   │       ├── pembatalan-validation.js
+│   │       ├── pesanan-validation.js
+│   │       ├── produk-validation.js
+│   │       └── validation.js
+│   └── struktur_projek.txt
 ├── Customer copy
 │   ├── CSS
 │   │   ├── cart.css
@@ -35624,12 +36074,27 @@
 │   │       │   │   │   │   ├── orderModal.module.css
 │   │       │   │   │   │   └── orderModal.tsx
 │   │       │   │   │   └── page.tsx
+│   │       │   │   ├── order
+│   │       │   │   │   ├── components
+│   │       │   │   │   │   ├── CancelModal.Module.css
+│   │       │   │   │   │   └── CancelModal.tsx
+│   │       │   │   │   ├── order.module.css
+│   │       │   │   │   └── page.tsx
 │   │       │   │   └── produk
 │   │       │   │       ├── components
 │   │       │   │       │   └── ProductModal.tsx
 │   │       │   │       ├── page.tsx
 │   │       │   │       ├── popupProduk.module.css
 │   │       │   │       └── produk.module.css
+│   │       │   └── auth
+│   │       │       ├── login
+│   │       │       │   ├── login.module.css
+│   │       │       │   └── page.tsx
+│   │       │       └── signup
+│   │       │           ├── page.tsx
+│   │       │           └── signup.module.css
+│   │       ├── admin
+│   │       │   ├── (dashboard)
 │   │       │   └── auth
 │   │       │       ├── login
 │   │       │       │   ├── login.module.css
@@ -35652,399 +36117,10 @@
 │   │       ├── home.css
 │   │       ├── layout.tsx
 │   │       └── page.tsx
-│   └── tsconfig.json
-├── node_modules
-│   ├── asynckit
-│   │   ├── bench.js
-│   │   ├── index.js
-│   │   ├── lib
-│   │   │   ├── abort.js
-│   │   │   ├── async.js
-│   │   │   ├── defer.js
-│   │   │   ├── iterate.js
-│   │   │   ├── readable_asynckit.js
-│   │   │   ├── readable_parallel.js
-│   │   │   ├── readable_serial_ordered.js
-│   │   │   ├── readable_serial.js
-│   │   │   ├── state.js
-│   │   │   ├── streamify.js
-│   │   │   └── terminator.js
-│   │   ├── LICENSE
-│   │   ├── package.json
-│   │   ├── parallel.js
-│   │   ├── README.md
-│   │   ├── serial.js
-│   │   ├── serialOrdered.js
-│   │   └── stream.js
-│   ├── axios
-│   │   ├── CHANGELOG.md
-│   │   ├── dist
-│   │   │   ├── axios.js
-│   │   │   ├── axios.js.map
-│   │   │   ├── axios.min.js
-│   │   │   ├── axios.min.js.map
-│   │   │   ├── browser
-│   │   │   │   ├── axios.cjs
-│   │   │   │   └── axios.cjs.map
-│   │   │   ├── esm
-│   │   │   │   ├── axios.js
-│   │   │   │   ├── axios.js.map
-│   │   │   │   ├── axios.min.js
-│   │   │   │   └── axios.min.js.map
-│   │   │   └── node
-│   │   │       ├── axios.cjs
-│   │   │       └── axios.cjs.map
-│   │   ├── index.d.cts
-│   │   ├── index.d.ts
-│   │   ├── index.js
-│   │   ├── lib
-│   │   │   ├── adapters
-│   │   │   │   ├── adapters.js
-│   │   │   │   ├── fetch.js
-│   │   │   │   ├── http.js
-│   │   │   │   ├── README.md
-│   │   │   │   └── xhr.js
-│   │   │   ├── axios.js
-│   │   │   ├── cancel
-│   │   │   │   ├── CanceledError.js
-│   │   │   │   ├── CancelToken.js
-│   │   │   │   └── isCancel.js
-│   │   │   ├── core
-│   │   │   │   ├── Axios.js
-│   │   │   │   ├── AxiosError.js
-│   │   │   │   ├── AxiosHeaders.js
-│   │   │   │   ├── buildFullPath.js
-│   │   │   │   ├── dispatchRequest.js
-│   │   │   │   ├── InterceptorManager.js
-│   │   │   │   ├── mergeConfig.js
-│   │   │   │   ├── README.md
-│   │   │   │   ├── settle.js
-│   │   │   │   └── transformData.js
-│   │   │   ├── defaults
-│   │   │   │   ├── index.js
-│   │   │   │   └── transitional.js
-│   │   │   ├── env
-│   │   │   │   ├── classes
-│   │   │   │   │   └── FormData.js
-│   │   │   │   ├── data.js
-│   │   │   │   └── README.md
-│   │   │   ├── helpers
-│   │   │   │   ├── AxiosTransformStream.js
-│   │   │   │   ├── AxiosURLSearchParams.js
-│   │   │   │   ├── bind.js
-│   │   │   │   ├── buildURL.js
-│   │   │   │   ├── callbackify.js
-│   │   │   │   ├── combineURLs.js
-│   │   │   │   ├── composeSignals.js
-│   │   │   │   ├── cookies.js
-│   │   │   │   ├── deprecatedMethod.js
-│   │   │   │   ├── formDataToJSON.js
-│   │   │   │   ├── formDataToStream.js
-│   │   │   │   ├── fromDataURI.js
-│   │   │   │   ├── HttpStatusCode.js
-│   │   │   │   ├── isAbsoluteURL.js
-│   │   │   │   ├── isAxiosError.js
-│   │   │   │   ├── isURLSameOrigin.js
-│   │   │   │   ├── null.js
-│   │   │   │   ├── parseHeaders.js
-│   │   │   │   ├── parseProtocol.js
-│   │   │   │   ├── progressEventReducer.js
-│   │   │   │   ├── readBlob.js
-│   │   │   │   ├── README.md
-│   │   │   │   ├── resolveConfig.js
-│   │   │   │   ├── speedometer.js
-│   │   │   │   ├── spread.js
-│   │   │   │   ├── throttle.js
-│   │   │   │   ├── toFormData.js
-│   │   │   │   ├── toURLEncodedForm.js
-│   │   │   │   ├── trackStream.js
-│   │   │   │   ├── validator.js
-│   │   │   │   └── ZlibHeaderTransformStream.js
-│   │   │   ├── platform
-│   │   │   │   ├── browser
-│   │   │   │   │   ├── classes
-│   │   │   │   │   │   ├── Blob.js
-│   │   │   │   │   │   ├── FormData.js
-│   │   │   │   │   │   └── URLSearchParams.js
-│   │   │   │   │   └── index.js
-│   │   │   │   ├── common
-│   │   │   │   │   └── utils.js
-│   │   │   │   ├── index.js
-│   │   │   │   └── node
-│   │   │   │       ├── classes
-│   │   │   │       │   ├── FormData.js
-│   │   │   │       │   └── URLSearchParams.js
-│   │   │   │       └── index.js
-│   │   │   └── utils.js
-│   │   ├── LICENSE
-│   │   ├── MIGRATION_GUIDE.md
-│   │   ├── package.json
-│   │   └── README.md
-│   ├── call-bind-apply-helpers
-│   │   ├── actualApply.d.ts
-│   │   ├── actualApply.js
-│   │   ├── applyBind.d.ts
-│   │   ├── applyBind.js
-│   │   ├── CHANGELOG.md
-│   │   ├── functionApply.d.ts
-│   │   ├── functionApply.js
-│   │   ├── functionCall.d.ts
-│   │   ├── functionCall.js
-│   │   ├── index.d.ts
-│   │   ├── index.js
-│   │   ├── LICENSE
-│   │   ├── package.json
-│   │   ├── README.md
-│   │   ├── reflectApply.d.ts
-│   │   ├── reflectApply.js
-│   │   ├── test
-│   │   │   └── index.js
-│   │   └── tsconfig.json
-│   ├── combined-stream
-│   │   ├── lib
-│   │   │   └── combined_stream.js
-│   │   ├── License
-│   │   ├── package.json
-│   │   ├── Readme.md
-│   │   └── yarn.lock
-│   ├── delayed-stream
-│   │   ├── lib
-│   │   │   └── delayed_stream.js
-│   │   ├── License
-│   │   ├── Makefile
-│   │   ├── package.json
-│   │   └── Readme.md
-│   ├── dunder-proto
-│   │   ├── CHANGELOG.md
-│   │   ├── get.d.ts
-│   │   ├── get.js
-│   │   ├── LICENSE
-│   │   ├── package.json
-│   │   ├── README.md
-│   │   ├── set.d.ts
-│   │   ├── set.js
-│   │   ├── test
-│   │   │   ├── get.js
-│   │   │   ├── index.js
-│   │   │   └── set.js
-│   │   └── tsconfig.json
-│   ├── es-define-property
-│   │   ├── CHANGELOG.md
-│   │   ├── index.d.ts
-│   │   ├── index.js
-│   │   ├── LICENSE
-│   │   ├── package.json
-│   │   ├── README.md
-│   │   ├── test
-│   │   │   └── index.js
-│   │   └── tsconfig.json
-│   ├── es-errors
-│   │   ├── CHANGELOG.md
-│   │   ├── eval.d.ts
-│   │   ├── eval.js
-│   │   ├── index.d.ts
-│   │   ├── index.js
-│   │   ├── LICENSE
-│   │   ├── package.json
-│   │   ├── range.d.ts
-│   │   ├── range.js
-│   │   ├── README.md
-│   │   ├── ref.d.ts
-│   │   ├── ref.js
-│   │   ├── syntax.d.ts
-│   │   ├── syntax.js
-│   │   ├── test
-│   │   │   └── index.js
-│   │   ├── tsconfig.json
-│   │   ├── type.d.ts
-│   │   ├── type.js
-│   │   ├── uri.d.ts
-│   │   └── uri.js
-│   ├── es-object-atoms
-│   │   ├── CHANGELOG.md
-│   │   ├── index.d.ts
-│   │   ├── index.js
-│   │   ├── isObject.d.ts
-│   │   ├── isObject.js
-│   │   ├── LICENSE
-│   │   ├── package.json
-│   │   ├── README.md
-│   │   ├── RequireObjectCoercible.d.ts
-│   │   ├── RequireObjectCoercible.js
-│   │   ├── test
-│   │   │   └── index.js
-│   │   ├── ToObject.d.ts
-│   │   ├── ToObject.js
-│   │   └── tsconfig.json
-│   ├── es-set-tostringtag
-│   │   ├── CHANGELOG.md
-│   │   ├── index.d.ts
-│   │   ├── index.js
-│   │   ├── LICENSE
-│   │   ├── package.json
-│   │   ├── README.md
-│   │   ├── test
-│   │   │   └── index.js
-│   │   └── tsconfig.json
-│   ├── follow-redirects
-│   │   ├── debug.js
-│   │   ├── http.js
-│   │   ├── https.js
-│   │   ├── index.js
-│   │   ├── LICENSE
-│   │   ├── package.json
-│   │   └── README.md
-│   ├── form-data
-│   │   ├── index.d.ts
-│   │   ├── lib
-│   │   │   ├── browser.js
-│   │   │   ├── form_data.js
-│   │   │   └── populate.js
-│   │   ├── License
-│   │   ├── package.json
-│   │   ├── Readme.md
-│   │   └── README.md.bak
-│   ├── function-bind
-│   │   ├── CHANGELOG.md
-│   │   ├── implementation.js
-│   │   ├── index.js
-│   │   ├── LICENSE
-│   │   ├── package.json
-│   │   ├── README.md
-│   │   └── test
-│   │       └── index.js
-│   ├── get-intrinsic
-│   │   ├── CHANGELOG.md
-│   │   ├── index.js
-│   │   ├── LICENSE
-│   │   ├── package.json
-│   │   ├── README.md
-│   │   └── test
-│   │       └── GetIntrinsic.js
-│   ├── get-proto
-│   │   ├── CHANGELOG.md
-│   │   ├── index.d.ts
-│   │   ├── index.js
-│   │   ├── LICENSE
-│   │   ├── Object.getPrototypeOf.d.ts
-│   │   ├── Object.getPrototypeOf.js
-│   │   ├── package.json
-│   │   ├── README.md
-│   │   ├── Reflect.getPrototypeOf.d.ts
-│   │   ├── Reflect.getPrototypeOf.js
-│   │   ├── test
-│   │   │   └── index.js
-│   │   └── tsconfig.json
-│   ├── gopd
-│   │   ├── CHANGELOG.md
-│   │   ├── gOPD.d.ts
-│   │   ├── gOPD.js
-│   │   ├── index.d.ts
-│   │   ├── index.js
-│   │   ├── LICENSE
-│   │   ├── package.json
-│   │   ├── README.md
-│   │   ├── test
-│   │   │   └── index.js
-│   │   └── tsconfig.json
-│   ├── has-symbols
-│   │   ├── CHANGELOG.md
-│   │   ├── index.d.ts
-│   │   ├── index.js
-│   │   ├── LICENSE
-│   │   ├── package.json
-│   │   ├── README.md
-│   │   ├── shams.d.ts
-│   │   ├── shams.js
-│   │   ├── test
-│   │   │   ├── index.js
-│   │   │   ├── shams
-│   │   │   │   ├── core-js.js
-│   │   │   │   └── get-own-property-symbols.js
-│   │   │   └── tests.js
-│   │   └── tsconfig.json
-│   ├── has-tostringtag
-│   │   ├── CHANGELOG.md
-│   │   ├── index.d.ts
-│   │   ├── index.js
-│   │   ├── LICENSE
-│   │   ├── package.json
-│   │   ├── README.md
-│   │   ├── shams.d.ts
-│   │   ├── shams.js
-│   │   ├── test
-│   │   │   ├── index.js
-│   │   │   ├── shams
-│   │   │   │   ├── core-js.js
-│   │   │   │   └── get-own-property-symbols.js
-│   │   │   └── tests.js
-│   │   └── tsconfig.json
-│   ├── hasown
-│   │   ├── CHANGELOG.md
-│   │   ├── index.d.ts
-│   │   ├── index.js
-│   │   ├── LICENSE
-│   │   ├── package.json
-│   │   ├── README.md
-│   │   └── tsconfig.json
-│   ├── math-intrinsics
-│   │   ├── abs.d.ts
-│   │   ├── abs.js
-│   │   ├── CHANGELOG.md
-│   │   ├── constants
-│   │   │   ├── maxArrayLength.d.ts
-│   │   │   ├── maxArrayLength.js
-│   │   │   ├── maxSafeInteger.d.ts
-│   │   │   ├── maxSafeInteger.js
-│   │   │   ├── maxValue.d.ts
-│   │   │   └── maxValue.js
-│   │   ├── floor.d.ts
-│   │   ├── floor.js
-│   │   ├── isFinite.d.ts
-│   │   ├── isFinite.js
-│   │   ├── isInteger.d.ts
-│   │   ├── isInteger.js
-│   │   ├── isNaN.d.ts
-│   │   ├── isNaN.js
-│   │   ├── isNegativeZero.d.ts
-│   │   ├── isNegativeZero.js
-│   │   ├── LICENSE
-│   │   ├── max.d.ts
-│   │   ├── max.js
-│   │   ├── min.d.ts
-│   │   ├── min.js
-│   │   ├── mod.d.ts
-│   │   ├── mod.js
-│   │   ├── package.json
-│   │   ├── pow.d.ts
-│   │   ├── pow.js
-│   │   ├── README.md
-│   │   ├── round.d.ts
-│   │   ├── round.js
-│   │   ├── sign.d.ts
-│   │   ├── sign.js
-│   │   ├── test
-│   │   │   └── index.js
-│   │   └── tsconfig.json
-│   ├── mime-db
-│   │   ├── db.json
-│   │   ├── HISTORY.md
-│   │   ├── index.js
-│   │   ├── LICENSE
-│   │   ├── package.json
-│   │   └── README.md
-│   ├── mime-types
-│   │   ├── HISTORY.md
-│   │   ├── index.js
-│   │   ├── LICENSE
-│   │   ├── package.json
-│   │   └── README.md
-│   └── proxy-from-env
-│       ├── index.js
-│       ├── LICENSE
-│       ├── package.json
-│       ├── README.md
-│       └── test.js
+│   ├── tsconfig.json
+│   └── utils
+│       └── data
+│           └── bank.json
 ├── package-lock.json
 ├── package.json
 ├── README.md
@@ -36058,4 +36134,4 @@
     ├── pesanana.http
     └── produk.http
 
-3422 directories, 32637 files
+3441 directories, 32694 files

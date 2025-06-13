@@ -8,40 +8,73 @@ import {
 } from "../validation/laporan-validation.js";
 
 // Ambil semua laporan
-// Ambil semua laporan (support filter month & year)
-const getAll = async (month, year) => {
+const getAll = async (requestQuery) => {
+  const { month, year } = requestQuery;
   const whereClause = {};
 
-  // Jika ada filter month & year
-  if (month && year) {
-    const parsedMonth = parseInt(month);
+  if (year) {
     const parsedYear = parseInt(year);
-
-    // Validasi month & year sederhana
-    if (isNaN(parsedMonth) || parsedMonth < 1 || parsedMonth > 12) {
-      throw new ResponseError(400, "Parameter 'month' harus antara 1-12");
-    }
-
     if (isNaN(parsedYear) || parsedYear < 2000) {
       throw new ResponseError(400, "Parameter 'year' tidak valid");
     }
 
-    const startDate = new Date(parsedYear, parsedMonth - 1, 1);
-    const endDate = new Date(parsedYear, parsedMonth, 1);
+    const startDate = new Date(parsedYear, 0, 1); // Awal tahun
+    const endDate = new Date(parsedYear + 1, 0, 1); // Awal tahun berikutnya
 
     whereClause.tanggalLaporan = {
       gte: startDate,
-      lt: endDate
+      lt: endDate,
     };
+    
+    // Jika bulan juga disertakan
+    if (month) {
+        const parsedMonth = parseInt(month);
+         if (isNaN(parsedMonth) || parsedMonth < 1 || parsedMonth > 12) {
+          throw new ResponseError(400, "Parameter 'month' harus antara 1-12");
+        }
+        const monthStartDate = new Date(parsedYear, parsedMonth - 1, 1);
+        const monthEndDate = new Date(parsedYear, parsedMonth, 1);
+        
+        whereClause.tanggalLaporan = {
+            gte: monthStartDate,
+            lt: monthEndDate
+        };
+    }
   }
-
+  
+  // ==================== PERBAIKAN UTAMA DI SINI ====================
+  // Menambahkan nested include untuk mengambil semua data relasional
   const laporan = await prismaClient.laporanPenjualan.findMany({
     where: whereClause,
     include: {
-      pesanan: true,
-      admin: true
+      admin: true, // Optional, jika butuh info admin
+      pesanan: {
+        include: {
+          user: {
+            select: { // Hanya ambil data yang diperlukan
+              id: true,
+              nama: true
+            }
+          },
+          keranjang: {
+            include: {
+              produkVarian: {
+                include: {
+                  produk: {
+                    select: {
+                      id: true,
+                      namaProduk: true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   });
+  // ================================================================
 
   return laporan;
 };
@@ -58,9 +91,14 @@ const create = async (request, adminId) => {
       adminId: adminId,
       keterangan: data.keterangan
     },
+    // Pastikan include juga lengkap di sini jika diperlukan
     include: {
-      pesanan: true,
-      admin: true
+      pesanan: {
+        include: {
+          user: true,
+          keranjang: { include: { produkVarian: { include: { produk: true } } } }
+        }
+      }
     }
   });
 };
@@ -71,9 +109,14 @@ const getById = async (id) => {
 
   const laporan = await prismaClient.laporanPenjualan.findUnique({
     where: { id: validId },
+    // Pastikan include juga lengkap di sini
     include: {
-      pesanan: true,
-      admin: true
+      pesanan: {
+        include: {
+          user: true,
+          keranjang: { include: { produkVarian: { include: { produk: true } } } }
+        }
+      }
     }
   });
 
@@ -103,9 +146,14 @@ const update = async (id, request) => {
       totalPenjualan: data.totalPenjualan ?? laporan.totalPenjualan,
       keterangan: data.keterangan ?? laporan.keterangan
     },
+    // Pastikan include juga lengkap di sini
     include: {
-      pesanan: true,
-      admin: true
+       pesanan: {
+        include: {
+          user: true,
+          keranjang: { include: { produkVarian: { include: { produk: true } } } }
+        }
+      }
     }
   });
 };

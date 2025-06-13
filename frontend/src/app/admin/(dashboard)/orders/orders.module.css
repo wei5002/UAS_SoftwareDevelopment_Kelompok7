@@ -1,0 +1,260 @@
+.order-list {
+    padding-top: 150px;
+    padding-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+    background: rgba(49, 59, 70, 1);
+}
+
+.order-card {
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    box-shadow:
+      10px 0px 20px rgba(0,0,0,0.3),
+      -10px 0px 20px rgba(0,0,0,0.3),
+      0px 10px 20px rgba(0,0,0,0.3),
+      0px -10px 20px rgba(0,0,0,0.3);
+    padding: 30px 30px;
+    border-radius: 16px;
+    background: #232b36;
+    transition: border 0.2s, background 0.2s;
+    position: relative;
+}
+
+.rejectedOrderCard {
+    background: #fff4f4 !important;
+    border: 2.5px solid #e57373 !important;
+    box-shadow: 0 0 8px 0 #e57373cc;
+    /* badge & alasan pakai inline style di React */
+}
+
+.order-card-img {
+    margin-right: 20px;
+}
+
+.order-card-img img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    background: #eaeaea;
+}
+
+.order-card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
+    width: 100%;
+}
+
+.order-card-desc {
+    color: white;
+    display: flex;
+    width: 390px;
+    flex-direction: column;
+    line-height: 1.95rem;
+    gap: 2px;
+}
+
+.order-card-desc p {
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0 0 2px 0;
+}
+
+.button-wrap {
+    display: flex;
+    justify-content: right;
+}
+
+.detail-btn {
+    height: 35px;
+    width: 100px;
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    border-radius: 20px;
+    border: none;
+    background: #f5f5f5;
+    color: #29324a;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 16px;
+    transition: background 0.15s, color 0.15s;
+}
+.detail-btn:hover {
+    background: #2d3640;
+    color: #fff;
+}
+
+.badge-confirmed {
+  background: #2196f3;
+  color: #fff;
+  border-radius: 7px;
+  font-size: 13px;
+  padding: 3px 14px;
+  margin-left: 12px;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+.badge-rejected {
+  background: #e57373;
+  color: #fff;
+  border-radius: 7px;
+  font-size: 13px;
+  padding: 3px 14px;
+  margin-left: 12px;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+.alasan-rejected {
+    color: #c00;
+    font-size: 14px;
+    margin-top: 4px;
+    background: #ffeaea;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-style: italic;
+}
+
+.popup-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.popup-line-one {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.popup-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+    font-size: 1.3em;
+}
+
+.popup-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.popup-content {
+    background-color: #2d3640;
+    color: white;
+    border-radius: 10px;
+    padding: 30px;
+    width: 900px;
+    max-width: 90vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+    line-height: 25px;
+    box-sizing: border-box;
+}
+
+.popup-img img {
+    width: 250px;
+    margin-right: 20px;
+    border-radius: 8px;
+    background: #eaeaea;
+}
+
+.close-popup {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 25px;
+    cursor: pointer;
+    color: white;
+    z-index: 2;
+}
+
+.popup-cusinfo {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.popup-productinfo {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.text-type {
+    padding: 5px;
+    width: 80%;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+}
+
+.popup-confirm-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+}
+
+.confirm-btn {
+    background-color: limegreen;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.decline-btn {
+    background-color: crimson;
+    color: white;
+    padding: 10px 17px;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.see-receipt-btn {
+    width: 100px;
+    border-radius: 5px;
+    border: none;
+}
+
+.popup-decline-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+}
+
+@media (max-width: 700px) {
+  .order-card, .popup-content {
+    width: 98vw;
+    padding: 12px;
+  }
+  .popup-img img {
+    width: 100px;
+    margin-right: 8px;
+  }
+  .order-card-img img {
+    width: 100px;
+    height: 100px;
+  }
+}

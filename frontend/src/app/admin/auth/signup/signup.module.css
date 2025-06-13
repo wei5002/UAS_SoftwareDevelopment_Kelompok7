@@ -1,0 +1,148 @@
+/* File: src/app/admin/auth/signup/signup.module.css */
+
+/* Pengaturan dasar untuk layout utama */
+.main {
+  background-color: rgb(255, 255, 255);
+  background-size: cover;
+  color: black;
+  background-image: url('/assets/images/barang stainless steel.png');
+  text-align: center;
+  min-height: 50vh;
+  padding: 40px 20px;
+  margin-top: 80px;
+}
+
+/* Judul Halaman */
+.title {
+  font-size: 3rem;
+  font-weight: bold;
+  letter-spacing: 8px;
+  margin-bottom: 30px;
+}
+
+/* --- BAGIAN FORM DISESUAIKAN DENGAN REFERENSI BARU --- */
+
+/* Kotak Signup */
+.kotak_signup {
+  background: white;
+  padding: 40px;
+  width: 60%;
+  max-width: 800px;
+  margin: auto;
+  border-radius: 40px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Form */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Baris yang berisi label dan input */
+.baris_form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.baris_form label {
+  flex: 1;
+  font-size: 1.5rem;
+  text-align: left;
+  letter-spacing: 5px;
+}
+
+.baris_form input {
+  flex: 2;
+  padding: 15px;
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+  font-size: 1.5rem;
+  letter-spacing: 3px;
+  color: #555;
+}
+
+/* Grup tombol */
+.btn_group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  padding: 0 20px;
+  width: 100%;
+}
+
+/* Tombol Kembali & Selanjutnya (Daftar) */
+.btn_back,
+.btn_next {
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  background-color: #fff;
+  color: #000;
+  border: 2px solid #000;
+  transition: all 0.3s ease;
+}
+
+.btn_back:hover,
+.btn_next:hover {
+  background-color: #f0f0f0;
+}
+
+/* --- AKHIR BAGIAN PENYESUAIAN --- */
+
+/* Pesan Notifikasi (dari file signup asli) */
+.errorMessage, .successMessage {
+  border-radius: 8px;
+  padding: 15px;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.errorMessage {
+  color: #dc3545;
+  background-color: #f8d7da;
+  border: 1px solid #f5c2c7;
+}
+
+.successMessage {
+  color: #0f5132;
+  background-color: #d1e7dd;
+  border: 1px solid #badbcc;
+}
+
+/* Desain Responsif (dari file signup asli) */
+@media (max-width: 768px) {
+  .title {
+    font-size: 1.8rem;
+  }
+  .kotak_signup {
+    width: 95%;
+    padding: 30px;
+  }
+  .baris_form {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .baris_form label {
+    text-align: left;
+    margin-bottom: 5px;
+  }
+  .btn_group {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .btn_back, .btn_next {
+    width: 100%;
+  }
+}

@@ -2,8 +2,9 @@ import Joi from "joi";
 
 // Daftar enum kategori numerik sebagai string
 const kategoriEnum = ["201", "304", "316"];
+const statusEnum = ["AKTIF", "NONAKTIF"]; // <--- ENUM status produk
 
-// Validasi untuk menambahkan Produk + array varian
+// Validasi untuk menambahkan/mengedit Produk + array varian
 const createProdukValidation = Joi.object({
     namaProduk: Joi.string()
         .max(100)
@@ -31,6 +32,14 @@ const createProdukValidation = Joi.object({
             'string.uri': "Gambar harus berupa URL yang valid",
         }),
 
+    status: Joi.string()
+        .valid(...statusEnum)
+        .optional()
+        .messages({
+            'string.base': "Status harus berupa string",
+            'any.only': `Status hanya boleh 'AKTIF' atau 'NONAKTIF'`,
+        }),
+
     // Validasi untuk array varian
     varian: Joi.array().items(
         Joi.object({
@@ -41,9 +50,6 @@ const createProdukValidation = Joi.object({
                     'string.base': "ID varian harus berupa string",
                     'string.length': "ID varian harus 24 karakter (ObjectId)"
                 }),
-            
-            // --- PERBAIKAN DI SINI ---
-            // Izinkan 'produKId' ada saat update, karena data diambil dari database
             produkId: Joi.string()
                 .length(24)
                 .optional()
@@ -51,7 +57,6 @@ const createProdukValidation = Joi.object({
                     'string.base': "ID produk harus berupa string",
                     'string.length': "ID produk harus 24 karakter (ObjectId)"
                 }),
-
             size: Joi.string()
                 .max(50)
                 .allow(null, '') // nullable
@@ -60,7 +65,6 @@ const createProdukValidation = Joi.object({
                     'string.base': "Size harus berupa string",
                     'string.max': "Size maksimal 50 karakter",
                 }),
-
             thickness: Joi.number()
                 .positive()
                 .allow(null) // nullable
@@ -69,7 +73,6 @@ const createProdukValidation = Joi.object({
                     'number.base': "Thickness harus berupa angka",
                     'number.positive': "Thickness harus bernilai positif",
                 }),
-
             hole: Joi.number()
                 .min(0)
                 .allow(null) // nullable
@@ -78,7 +81,6 @@ const createProdukValidation = Joi.object({
                     'number.base': "Hole harus berupa angka",
                     'number.min': "Hole minimal 0",
                 }),
-
             harga: Joi.number()
                 .positive()
                 .required()
@@ -87,7 +89,6 @@ const createProdukValidation = Joi.object({
                     'number.positive': "Harga harus bernilai positif",
                     'any.required': "Harga wajib diisi",
                 }),
-
             stok: Joi.number()
                 .integer()
                 .min(0)
@@ -116,7 +117,6 @@ const createProdukVarianValidation = Joi.object({
             'string.length': "ID Produk harus 24 karakter (ObjectId)",
             'any.required': "ID Produk wajib diisi",
         }),
-
     size: Joi.string()
         .max(50)
         .allow(null, '') // nullable
@@ -125,7 +125,6 @@ const createProdukVarianValidation = Joi.object({
             'string.base': "Size harus berupa string",
             'string.max': "Size maksimal 50 karakter",
         }),
-
     thickness: Joi.number()
         .positive()
         .allow(null) // nullable
@@ -134,7 +133,6 @@ const createProdukVarianValidation = Joi.object({
             'number.base': "Thickness harus berupa angka",
             'number.positive': "Thickness harus bernilai positif",
         }),
-
     hole: Joi.number()
         .min(0)
         .allow(null) // nullable
@@ -143,7 +141,6 @@ const createProdukVarianValidation = Joi.object({
             'number.base': "Hole harus berupa angka",
             'number.min': "Hole minimal 0",
         }),
-
     harga: Joi.number()
         .positive()
         .required()
@@ -152,7 +149,6 @@ const createProdukVarianValidation = Joi.object({
             'number.positive': "Harga harus bernilai positif",
             'any.required': "Harga wajib diisi",
         }),
-
     stok: Joi.number()
         .integer()
         .min(0)
