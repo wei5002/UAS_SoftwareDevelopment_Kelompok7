@@ -3,9 +3,10 @@ import laporanService from "../service/laporan-service.js";
 // Ambil semua laporan
 const getAll = async (req, res, next) => {
   try {
-    const { month, year } = req.query;
-
-    const result = await laporanService.getAll(month, year);
+    // ==================== PERBAIKAN DI SINI ====================
+    // Mengirimkan seluruh object req.query ke service
+    const result = await laporanService.getAll(req.query);
+    // =========================================================
 
     res.status(200).json({
       message: "Data laporan penjualan berhasil diambil",
@@ -42,7 +43,7 @@ const create = async (req, res, next) => {
       });
     }
 
-    const result = await laporanService.create(req.body, req.admin.id); // 🟢 adminId dipassing dari token
+    const result = await laporanService.create(req.body, req.admin.id); // adminId dipassing dari token
 
     res.status(201).json({
       message: "Laporan penjualan berhasil dibuat",

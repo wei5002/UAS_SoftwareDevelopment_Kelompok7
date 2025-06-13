@@ -31,10 +31,10 @@ export default function LoginPage() {
         throw new Error(result.errors || result.message || 'Login gagal');
       }
 
-      // Simpan token, nama, email ke localStorage
-      localStorage.setItem('token', result.data.token);
-      localStorage.setItem('nama', result.data.nama);
-      localStorage.setItem('email', result.data.email);
+      // Simpan token, nama, email ke localStorage PAKAI KEY KHUSUS CUSTOMER
+      localStorage.setItem('customer_token', result.data.token);
+      localStorage.setItem('customer_nama', result.data.nama);
+      localStorage.setItem('customer_email', result.data.email);
 
       // Redirect ke halaman Home (atau halaman setelah login)
       router.push('/produk');

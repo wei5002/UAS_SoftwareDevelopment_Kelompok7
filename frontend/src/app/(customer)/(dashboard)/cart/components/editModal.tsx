@@ -4,29 +4,20 @@ import { useEffect, useState } from 'react';
 import styles from './editModal.module.css';
 import { useRouter } from 'next/navigation';
 
-/**
- * Prop untuk komponen ProductModal.
- * @param id - ID dari produk utama (bukan varian).
- * @param cartItemId - ID unik dari item yang sudah ada di keranjang. Bersifat opsional. Jika ada, modal akan masuk ke mode edit.
- * @param onClose - Fungsi untuk menutup modal.
- */
 export default function ProductModal({ id, cartItemId, onClose }: { id: string; cartItemId?: string; onClose: () => void }) {
   const router = useRouter();
 
-  // State untuk data produk & UI
   const [produk, setProduk] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [showLoginAlert, setShowLoginAlert] = useState(false);
 
-  // State untuk varian yang dipilih pengguna
   const [selectedSize, setSelectedSize] = useState<any>(null);
   const [selectedThickness, setSelectedThickness] = useState<any>(null);
   const [selectedHole, setSelectedHole] = useState<any>(null);
   const [jumlah, setJumlah] = useState(1);
   
-  // Hook untuk mengambil data awal saat komponen dimuat
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('customer_token');
     if (!token) {
       setShowLoginAlert(true);
       setTimeout(() => {
@@ -38,7 +29,7 @@ export default function ProductModal({ id, cartItemId, onClose }: { id: string; 
     const fetchInitialData = async () => {
       setLoading(true);
       try {
-        // 1. Selalu ambil data detail produk
+        // Detail produk
         const productRes = await fetch(`http://localhost:5001/api/produk/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -52,7 +43,7 @@ export default function ProductModal({ id, cartItemId, onClose }: { id: string; 
           return;
         }
 
-        // 2. Jika ini mode EDIT (cartItemId tersedia), ambil data item keranjang yang spesifik
+        // Jika edit mode (cartItemId tersedia)
         if (cartItemId) {
           const cartItemRes = await fetch(`http://localhost:5001/api/keranjang/item/${cartItemId}`, {
              headers: { Authorization: `Bearer ${token}` },
@@ -60,7 +51,6 @@ export default function ProductModal({ id, cartItemId, onClose }: { id: string; 
           if(cartItemRes.ok) {
             const cartItemData = await cartItemRes.json();
             const item = cartItemData.data;
-            // Set state modal sesuai data item yang sudah ada di keranjang
             setSelectedSize(item.produkVarian.size);
             setSelectedThickness(item.produkVarian.thickness);
             setSelectedHole(item.produkVarian.hole);
@@ -79,12 +69,10 @@ export default function ProductModal({ id, cartItemId, onClose }: { id: string; 
     fetchInitialData();
   }, [id, cartItemId, router]);
 
-  // Kumpulan opsi varian yang unik dari data produk
   const thicknessSet = Array.from(new Set(produk?.varian.map((v: any) => v.thickness).filter((v: any) => v != null)) || []);
   const holeSet = Array.from(new Set(produk?.varian.map((v: any) => v.hole).filter((v: any) => v != null)) || []);
   const sizeSet = Array.from(new Set(produk?.varian.map((v: any) => v.size).filter((v: any) => v != null && v !== '')) || []);
 
-  // Mencari varian yang cocok berdasarkan pilihan pengguna
   const selectedVarian = produk?.varian.find((v: any) => {
     const matchSize = sizeSet.length === 0 || v.size === selectedSize;
     const matchThickness = thicknessSet.length === 0 || v.thickness === selectedThickness;
@@ -92,7 +80,6 @@ export default function ProductModal({ id, cartItemId, onClose }: { id: string; 
     return matchSize && matchThickness && matchHole;
   });
 
-  // Validasi jumlah agar tidak melebihi stok
   useEffect(() => {
     if (selectedVarian) {
       if (jumlah > selectedVarian.stok) {
@@ -107,7 +94,6 @@ export default function ProductModal({ id, cartItemId, onClose }: { id: string; 
   const isVariantSelected = selectedVarian !== undefined;
   const hargaTotal = selectedVarian ? selectedVarian.harga * jumlah : 0;
   
-  // Fungsi utama untuk menyimpan ke keranjang (bisa untuk menambah atau mengedit)
   const handleSaveToCart = async () => {
     if (!isVariantSelected) {
       alert('Pilih varian produk yang valid terlebih dahulu.');
@@ -119,10 +105,14 @@ export default function ProductModal({ id, cartItemId, onClose }: { id: string; 
       return;
     }
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('customer_token');
+    if (!token) {
+      alert('Anda harus login terlebih dahulu.');
+      router.replace('/auth/login');
+      return;
+    }
     const isEditing = cartItemId !== undefined;
 
-    // Menentukan URL, method, dan body request berdasarkan mode (edit/tambah)
     const apiUrl = isEditing
       ? `http://localhost:5001/api/keranjang/${cartItemId}/spesifikasi`
       : 'http://localhost:5001/api/keranjang';
@@ -130,13 +120,13 @@ export default function ProductModal({ id, cartItemId, onClose }: { id: string; 
     const method = isEditing ? 'PATCH' : 'POST';
 
     const body = isEditing
-      ? { // Body untuk PATCH (update spesifikasi)
+      ? {
           size: selectedSize,
           thickness: selectedThickness,
           hole: selectedHole,
           jumlah: jumlah
         }
-      : { // Body untuk POST (tambah baru)
+      : {
           produkVarianId: selectedVarian.id,
           jumlah: jumlah
         };
@@ -153,7 +143,7 @@ export default function ProductModal({ id, cartItemId, onClose }: { id: string; 
 
       if (response.ok) {
         alert(isEditing ? 'Item keranjang berhasil diperbarui!' : 'Produk berhasil ditambahkan ke keranjang!');
-        onClose(); // Menutup modal dan memicu refresh di halaman sebelumnya
+        onClose();
       } else {
         const errorData = await response.json();
         console.error('API Error:', errorData);
@@ -165,7 +155,6 @@ export default function ProductModal({ id, cartItemId, onClose }: { id: string; 
     }
   };
 
-  // Tampilan saat loading atau perlu login
   if (showLoginAlert) {
     return (
       <div className={styles.popup_produk} style={{ display: 'block' }}>

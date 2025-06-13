@@ -1,0 +1,339 @@
+.order, .batal {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  background-color: #2f3943;
+  color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 1px 5px 20px rgba(0, 0, 0, 0.8);
+  width: 60%;
+  max-width: 900px;
+  margin: 60px auto;
+  position: relative;
+  overflow: hidden;
+  transition: opacity 0.3s ease, border-left 0.3s ease;
+}
+
+.order img, .batal img {
+  width: 200px;
+  height: 200px;
+  border-radius: 5px;
+  background: #fff;
+  object-fit: cover;
+}
+
+.detailOrder {
+  flex: 1;
+}
+
+.detailOrder h2 {
+  font-size: 20px;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
+}
+
+.detailOrder p {
+  margin: 10px 0;
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+
+.detailUkuran {
+  display: flex;
+  gap: 35px;
+  margin: 15px 0;
+  color: black;
+}
+
+.box {
+  border: 1px solid white;
+  background-color: white;
+  padding: 6px 12px;
+  border-radius: 5px;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.statusPesanan {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.statusPesanan button {
+  background-color: white;
+  color: black;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 16px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-weight: 500;
+}
+
+.statusPesanan button:disabled {
+  background-color: #a9a9a9;
+  cursor: not-allowed;
+  color: #555;
+}
+
+.statusPesanan button.active {
+  background-color: wheat;
+  font-weight: bold;
+}
+
+.doneBtn {
+  background-color: #28a745;
+  color: white;
+  font-weight: bold !important;
+}
+
+.doneBtn:hover {
+  background-color: #218838;
+}
+
+/* ==================== STYLE BARU ==================== */
+
+/* Style untuk kartu pesanan yang sudah selesai */
+.order.done {
+  opacity: 0.75;
+  border-left: 8px solid #28a745;
+}
+
+/* Badge 'SELESAI' */
+.doneBadge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: #28a745;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  z-index: 2;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Tombol untuk melihat detail */
+.detailBtn {
+  background-color: #17a2b8;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 16px;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.detailBtn:hover {
+  background-color: #138496;
+}
+
+/* Style spesifik untuk popup detail */
+.detailPopupContent {
+  max-width: 800px !important;
+  width: 95% !important;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.detailGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  text-align: left;
+  color: white;
+}
+
+.detailSection {
+  background-color: #3a4551;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.detailSection h4 {
+  border-bottom: 2px solid #17a2b8;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  color: #17a2b8;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.detailSection p {
+  margin: 10px 0;
+  font-size: 16px;
+  letter-spacing: normal;
+  line-height: 1.6;
+}
+
+.detailSection p strong {
+    color: #e0e0e0;
+    min-width: 120px;
+    display: inline-block;
+}
+
+.detailSection a {
+  color: #58c6d8;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+}
+
+.detailSection a:hover {
+  text-decoration: underline;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ====================================================== */
+
+/* (Sisa style dari file asli Anda) */
+
+.popup, .cancelPopup {
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.popupContent, .cancelPopupContent {
+  background-color: #2c333b;
+  color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 90%;
+  position: relative;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.closeBtn, .closeCancel {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #aaa;
+  cursor: pointer;
+}
+.closeBtn:hover, .closeCancel:hover {
+  color: red;
+}
+
+/* Responsive */
+@media (max-width: 1150px) {
+  .order, .batal {
+    width: 50%;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  .order img, .batal img {
+    width: 180px;
+    height: 180px;
+  }
+  .detailUkuran {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .statusPesanan {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+@media (max-width: 768px) {
+  .order, .batal {
+    width: 90%;
+    padding: 20px;
+  }
+  .order img, .batal img {
+    width: 150px;
+    height: 150px;
+  }
+  .detailOrder h2 {
+    font-size: 18px;
+    text-align: center;
+  }
+  .detailOrder p {
+    font-size: 16px;
+  }
+  .box {
+    font-size: 16px;
+    padding: 5px 10px;
+  }
+  .cancelBtn {
+    width: 35px;
+    height: 35px;
+    font-size: 18px;
+  }
+  .popupContent,
+  .cancelPopupContent {
+    width: 95%;
+    padding: 20px;
+  }
+  .popupContent h3,
+  .cancelPopupContent h2 {
+    font-size: 16px;
+  }
+  .infoItem {
+    flex-direction: column;
+  }
+  .label {
+    width: 100%;
+  }
+  .cancelReason textarea {
+    font-size: 13px;
+  }
+  .acceptBtn, .declineBtn {
+    font-size: 12px;
+    padding: 8px 16px;
+  }
+}
+@media (max-width: 480px) {
+  .order img, .batal img {
+    width: 120px;
+    height: 120px;
+  }
+  .detailOrder h2 {
+    font-size: 16px;
+  }
+  .detailOrder p {
+    font-size: 14px;
+  }
+  .box {
+    font-size: 14px;
+    padding: 4px 8px;
+  }
+  .statusPesanan button {
+    font-size: 14px;
+    padding: 8px 14px;
+  }
+  .popupContent button {
+    width: 80px;
+    font-size: 13px;
+  }
+  .cancelBtn {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+  }
+}

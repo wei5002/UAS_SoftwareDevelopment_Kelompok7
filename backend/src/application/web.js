@@ -11,6 +11,7 @@ import { router as pesananRouter } from "../route/pesanan-api.js";
 import { router as pembatalanRouter } from "../route/pembatalan-api.js";
 import { router as laporanRouter } from "../route/laporan-api.js";
 import uploadRouter from "../route/upload-api.js";
+import { uploadProdukRouter } from "../route/upload-produk-api.js";
 
 export const web = express();
 
@@ -26,6 +27,7 @@ web.use(publicRouter);
 
 // Protected routes
 web.use(uploadRouter);
+web.use(uploadProdukRouter); // Gunakan router baru untuk gambar produk
 web.use("/api/admin", adminRouter);
 web.use("/api/pelanggan", pelangganRouter);
 web.use(produkRouter);

@@ -15,7 +15,6 @@ const createPesananValidation = Joi.object({
       'any.required': "Status wajib diisi",
     }),
 
-  // --- TAMBAHKAN VALIDASI UNTUK ONGKOS KIRIM ---
   ongkosKirim: Joi.number()
     .min(0)
     .optional()
@@ -122,8 +121,17 @@ const updatePesananValidation = Joi.object({
       'string.base': "Status harus berupa string",
       'any.only': `Status hanya boleh salah satu dari: ${allowedUpdateStatus.join(", ")}`,
     }),
-  
-  ongkosKirim: Joi.number().min(0).optional(), // Juga tambahkan di sini jika perlu diupdate
+
+  ongkosKirim: Joi.number().min(0).optional(),
+
+  alasanPenolakan: Joi.string()
+    .max(500)
+    .optional()
+    .allow('')
+    .messages({
+      'string.base': "Alasan penolakan harus berupa string",
+      'string.max': "Alasan penolakan maksimal 500 karakter"
+    }),
 
   alamatDetail: Joi.string().optional().messages({ 'string.base': "Alamat detail harus berupa string" }),
   provinsi: Joi.string().max(100).optional().messages({ 'string.base': "Provinsi harus berupa string" }),

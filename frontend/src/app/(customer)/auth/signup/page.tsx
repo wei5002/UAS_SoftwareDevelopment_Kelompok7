@@ -12,14 +12,14 @@ export default function SignupPage() {
   const [nama, setNama] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState(''); // ✅ tambahkan state confirm password
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // ✅ Validasi: password harus sama dengan confirmPassword
+    // Validasi password & confirm
     if (password !== confirmPassword) {
       setError('Password dan Confirm Password harus sama');
       setSuccess('');
@@ -106,7 +106,6 @@ export default function SignupPage() {
               />
             </div>
 
-            {/* ✅ Field Confirm Password */}
             <div className={styles.baris_form}>
               <label className={styles.label}>Confirm Password</label>
               <input

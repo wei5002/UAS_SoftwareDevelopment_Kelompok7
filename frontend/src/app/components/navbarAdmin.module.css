@@ -1,0 +1,64 @@
+/* Styling untuk Navbar Admin */
+.navbar {
+  /* Ditempatkan di bawah header, asumsi header punya tinggi 80px */
+  position: sticky;
+  top: 80px;
+  width: 100%;
+  background: #fff;
+  height: 60px;
+  display: flex;
+  justify-content: space-around; /* Menyebar link secara merata */
+  align-items: center;
+  padding: 0 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 998; /* Di bawah header (1000) tapi di atas konten lain */
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.navbar a {
+  position: relative;
+  display: inline-block;
+  font-size: 1em;
+  font-weight: 600; /* Sedikit lebih tebal */
+  color: #333;
+  text-decoration: none;
+  padding: 10px 20px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  border-radius: 8px;
+}
+
+/* Style untuk link yang sedang aktif */
+.navbar a.active {
+  background-color: #1a2c41; /* Warna biru gelap admin */
+  color: #fff;
+}
+
+/* Efek hover untuk link yang tidak aktif */
+.navbar a:not(.active):hover {
+  background-color: #f0f0f0;
+  color: #000;
+}
+
+/* Kontainer untuk link dengan notifikasi */
+.notifContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Simbol notifikasi */
+.notifSymbol {
+  position: absolute;
+  top: 0px;
+  right: 5px;
+  background: red;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  width: 22px;
+  height: 22px;
+  text-align: center;
+  border-radius: 50%;
+  line-height: 22px;
+  border: 2px solid white;
+}

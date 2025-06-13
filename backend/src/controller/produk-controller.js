@@ -1,6 +1,6 @@
 import produkService from "../service/produk-service.js";
 
-// Ambil semua produk (dengan query: search, kategori)
+// Ambil semua produk (dengan query: search, kategori, status)
 const getAll = async (req, res, next) => {
   try {
     const result = await produkService.getAll(req.query);
@@ -39,7 +39,7 @@ const create = async (req, res, next) => {
   }
 };
 
-// Update produk + update / create / hapus variannya
+// Update produk + update / create / hapus variannya, termasuk status (soft delete)
 const update = async (req, res, next) => {
   try {
     const result = await produkService.update(req.params.id, req.body);
@@ -52,7 +52,7 @@ const update = async (req, res, next) => {
   }
 };
 
-// Hapus produk + seluruh variannya
+// Hapus produk + seluruh variannya (hanya jika belum pernah dipesan)
 const remove = async (req, res, next) => {
   try {
     await produkService.remove(req.params.id);
@@ -60,7 +60,14 @@ const remove = async (req, res, next) => {
       message: "Produk berhasil dihapus"
     });
   } catch (error) {
-    next(error);
+    // Tampilkan pesan lebih informatif jika produk tidak bisa dihapus karena pernah dipesan
+    if (error.status === 400 && error.message.includes("pernah masuk ke dalam pesanan")) {
+      res.status(400).json({
+        message: "Produk tidak dapat dihapus karena pernah masuk ke dalam pesanan pelanggan. Silakan nonaktifkan produk jika ingin menghilangkan dari katalog.",
+      });
+    } else {
+      next(error);
+    }
   }
 };
 

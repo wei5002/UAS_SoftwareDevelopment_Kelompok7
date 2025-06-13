@@ -17,7 +17,7 @@ export default function ProductModal({ id, onClose }: { id: string; onClose: () 
   const [jumlah, setJumlah] = useState(1);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('customer_token');
     if (!token) {
       setShowLoginAlert(true);
       setTimeout(() => {
@@ -45,7 +45,7 @@ export default function ProductModal({ id, onClose }: { id: string; onClose: () 
     };
 
     fetchProdukDetail();
-  }, [id, router]); // Added router to dependency array
+  }, [id, router]);
 
   const thicknessSet = Array.from(
     new Set(produk?.varian.map((v: any) => v.thickness).filter((v: any) => v != null)) || []
@@ -64,22 +64,16 @@ export default function ProductModal({ id, onClose }: { id: string; onClose: () 
     return matchSize && matchThickness && matchHole;
   });
 
-  // MODIFICATION 2: useEffect to handle stock changes when variant changes
-  // This ensures the quantity is valid if the user selects a new variant
-  // with less stock than the current quantity.
   useEffect(() => {
     if (selectedVarian) {
-      // If the current quantity is greater than the new variant's stock, reset to 1
       if (jumlah > selectedVarian.stok) {
         setJumlah(1);
       }
-      // If the variant is out of stock, set quantity to 0 (or 1 and disable buttons)
       if (selectedVarian.stok === 0) {
         setJumlah(0);
       }
     }
   }, [selectedVarian, jumlah]);
-
 
   const isVariantSelected =
     (sizeSet.length === 0 || selectedSize !== null) &&
@@ -94,14 +88,19 @@ export default function ProductModal({ id, onClose }: { id: string; onClose: () 
       alert('Pilih varian produk terlebih dahulu.');
       return;
     }
-    
-    // Also check if stock is available
+
     if (selectedVarian.stok < jumlah || jumlah === 0) {
       alert('Stok tidak mencukupi atau jumlah tidak valid.');
       return;
     }
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('customer_token');
+    if (!token) {
+      alert('Anda harus login terlebih dahulu.');
+      router.replace('/auth/login');
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost:5001/api/keranjang', {
         method: 'POST',
@@ -165,13 +164,11 @@ export default function ProductModal({ id, onClose }: { id: string; onClose: () 
                   -
                 </button>
                 <span id="jumlah_produk" className={styles.jumlah_produk}>
-                    {/* If stock is 0, show 0, otherwise show the selected amount */}
                     {selectedVarian && selectedVarian.stok === 0 ? 0 : jumlah}
                 </span>
                 <button
                   className={styles.tambah_btn}
                   onClick={() => setJumlah(jumlah + 1)}
-                  // MODIFICATION 1: Disable button if quantity meets or exceeds stock
                   disabled={
                     !isVariantSelected ||
                     (selectedVarian && jumlah >= selectedVarian.stok)
@@ -183,7 +180,6 @@ export default function ProductModal({ id, onClose }: { id: string; onClose: () 
               <button
                 className={styles.keranjang_btn}
                 onClick={handleAddToCart}
-                // Also disable if stock is 0
                 disabled={!isVariantSelected || (selectedVarian && selectedVarian.stok === 0)}
               >
                 Add to Cart
@@ -248,7 +244,6 @@ export default function ProductModal({ id, onClose }: { id: string; onClose: () 
                 <p>
                   Stock:{' '}
                   <span id="popup_stock" className={styles.nilai_stock}>
-                     {/* If a variant is out of stock, show a more obvious message */}
                     {selectedVarian?.stok === 0 ? 'Habis' : selectedVarian?.stok ?? '-'}
                   </span>
                 </p>

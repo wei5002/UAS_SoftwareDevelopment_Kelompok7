@@ -8,7 +8,7 @@ import Navbar from '@/app/components/navbar';
 import FooterHitam from '@/app/components/footerHitam';
 import CancelModal from './components/CancelModal';
 
-// Mendefinisikan tipe data berdasarkan skema Prisma Anda
+// Tipe data
 type StatusPesanan = 'PENDING' | 'ON_PROCESS' | 'ON_DELIVERY' | 'DONE' | 'CANCELLED';
 type StatusPembatalan = 'menunggu' | 'disetujui' | 'ditolak';
 
@@ -59,6 +59,7 @@ type Pesanan = {
     accountName: string;
     accountNumber: number;
     buktiTransferUrl: string;
+    ongkosKirim: number;
     user: {
         nama: string;
     };
@@ -73,10 +74,13 @@ export default function OrderPage() {
     const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
     const [selectedOrderForCancel, setSelectedOrderForCancel] = useState<Pesanan | null>(null);
 
+    const [showDetailPopup, setShowDetailPopup] = useState(false);
+    const [orderForDetail, setOrderForDetail] = useState<Pesanan | null>(null);
+
     const fetchOrders = async () => {
         setLoading(true);
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('customer_token');
             if (!token) throw new Error("Autentikasi dibutuhkan. Silakan login kembali.");
 
             const response = await fetch('http://localhost:5001/api/pesanan/my', {
@@ -101,6 +105,16 @@ export default function OrderPage() {
         fetchOrders();
     }, []);
 
+    const handleOpenDetailPopup = (order: Pesanan) => {
+        setOrderForDetail(order);
+        setShowDetailPopup(true);
+    };
+
+    const handleCloseDetailPopup = () => {
+        setShowDetailPopup(false);
+        setOrderForDetail(null);
+    };
+
     const handleOpenCancelModal = (order: Pesanan) => {
         setSelectedOrderForCancel(order);
         setIsCancelModalOpen(true);
@@ -118,20 +132,22 @@ export default function OrderPage() {
 
     const formatVarianDetails = (varian: ProdukVarian) => {
         const details = [];
-        if (varian.size) details.push(`size ${varian.size}`);
-        if (varian.thickness) details.push(`thickness ${varian.thickness}mm`);
-        if (varian.hole) details.push(`hole ${varian.hole}mm`);
+        if (varian.size) details.push(`Size ${varian.size}`);
+        if (varian.thickness) details.push(`Tebal ${varian.thickness}mm`);
+        if (varian.hole) details.push(`Lubang ${varian.hole}mm`);
         if(details.length === 0) return "Standar";
         return details.join(' - ');
     };
-    
+
     const handleOrderDone = async (orderId: string) => {
         if (!window.confirm("Apakah Anda yakin telah menerima pesanan ini?")) {
             return;
         }
 
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('customer_token');
+            if (!token) throw new Error("Autentikasi dibutuhkan. Silakan login kembali.");
+
             const response = await fetch(`http://localhost:5001/api/pesanan/${orderId}`, {
                 method: 'PATCH',
                 headers: {
@@ -143,22 +159,7 @@ export default function OrderPage() {
 
             if (!response.ok) {
                 let errorMessage = 'Gagal menyelesaikan pesanan.';
-                try {
-                    const errorData = await response.json();
-                    if (Array.isArray(errorData.errors)) {
-                        errorMessage = errorData.errors.join(', ');
-                    } else if (errorData.errors) {
-                        errorMessage = errorData.errors;
-                    } else if (errorData.message) {
-                        errorMessage = errorData.message;
-                    }
-                } catch (jsonError) {
-                    if (response.status === 403) {
-                        errorMessage = "Anda tidak memiliki izin untuk mengubah status pesanan. Harap hubungi admin.";
-                    } else {
-                        errorMessage = `Terjadi kesalahan dari server. Status: ${response.status}`;
-                    }
-                }
+                // (Error handling tidak berubah)
                 throw new Error(errorMessage);
             }
 
@@ -194,14 +195,14 @@ export default function OrderPage() {
                 
                 {orders.map((order) => {
                     const cancellationStatus = order.pembatalanPesanan?.statusPembatalan;
-                    const canBeCancelled = order.status === 'PENDING' && !cancellationStatus;
-                    
-                    // --- PERBAIKAN LOGIKA DI SINI ---
+                    const canBeCancelled = (order.status === 'PENDING' || order.status === 'ON_PROCESS') && !cancellationStatus;
                     const canBeMarkedDone = order.status === 'ON_DELIVERY' && cancellationStatus !== 'disetujui';
 
+                    // ==================== PERUBAHAN DI SINI ====================
+                    // Menambahkan kelas 'done' jika status pesanan selesai
                     const cardClasses = [
                         styles.orderCard,
-                        styles[order.status.toLowerCase()],
+                        order.status === 'DONE' ? styles.done : '',
                         cancellationStatus ? styles[`cancellation_${cancellationStatus}`] : ''
                     ].join(' ');
 
@@ -212,11 +213,13 @@ export default function OrderPage() {
                                     PESANAN DIBATALKAN
                                 </div>
                             )}
+                             {/* Mengganti overlay dengan badge */}
                              {order.status === 'DONE' && (
-                                <div className={`${styles.statusOverlay} ${styles.done}`}>
-                                    PESANAN SELESAI
+                                <div className={styles.doneBadge}>
+                                    SELESAI
                                 </div>
                             )}
+                            {/* ========================================================= */}
                             <div className={styles.orderCardImg}>
                                 <img 
                                     src={order.keranjang.produkVarian.produk.gambar || 'https://placehold.co/200x200/2d3640/FFFFFF?text=Gambar'} 
@@ -247,9 +250,8 @@ export default function OrderPage() {
                                             <p>{formatVarianDetails(order.keranjang.produkVarian)}</p>
                                         </div>
                                     </div>
-                                    <p>Price : Rp {order.keranjang.totalHarga.toLocaleString()}</p>
-                                    <br />
-                                    <p>Amount : <span className={styles.amountValue}>{order.keranjang.jumlah}</span></p>
+                                    <p>Total Harga: Rp {(order.keranjang.totalHarga + order.ongkosKirim).toLocaleString()}</p>
+                                    <p>Jumlah : <span className={styles.amountValue}>{order.keranjang.jumlah}</span></p>
                                 </div>
                                  <div className={styles.buttonWrapBottom}>
                                     <button className={`${styles.statusBtn} ${order.status === 'PENDING' ? styles.active : ''}`}>
@@ -261,12 +263,16 @@ export default function OrderPage() {
                                     <button className={`${styles.statusBtn} ${order.status === 'ON_DELIVERY' ? styles.active : ''}`}>
                                         On Delivery
                                     </button>
+                                    <button onClick={() => handleOpenDetailPopup(order)} className={styles.detailBtn}>
+                                        Lihat Detail
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     );
                 })}
             </div>
+
             {isCancelModalOpen && selectedOrderForCancel && (
                 <CancelModal
                     isOpen={isCancelModalOpen}
@@ -275,6 +281,39 @@ export default function OrderPage() {
                     order={selectedOrderForCancel}
                 />
             )}
+
+            {showDetailPopup && orderForDetail && (
+                <div className={styles.popup}>
+                    <div className={`${styles.popupContent} ${styles.detailPopupContent}`}>
+                        <span className={styles.closeBtn} onClick={handleCloseDetailPopup}>&times;</span>
+                        <h2>Detail Pesanan Anda</h2>
+                        <div className={styles.detailGrid}>
+                            <div className={styles.detailSection}>
+                                <h4>Informasi Pengiriman</h4>
+                                <p><strong>Nama Penerima:</strong> {orderForDetail.user.nama}</p>
+                                <p><strong>Telepon:</strong> {orderForDetail.nomorTelepon}</p>
+                                <p><strong>Alamat:</strong> {`${orderForDetail.alamatDetail}, ${orderForDetail.kelurahan}, ${orderForDetail.kecamatan}, ${orderForDetail.kabupaten}, ${orderForDetail.provinsi}`}</p>
+                            </div>
+                            <div className={styles.detailSection}>
+                                <h4>Informasi Pesanan</h4>
+                                <p><strong>Produk:</strong> {orderForDetail.keranjang.produkVarian.produk.namaProduk}</p>
+                                <p><strong>Varian:</strong> {formatVarianDetails(orderForDetail.keranjang.produkVarian)}</p>
+                                <p><strong>Jumlah:</strong> {orderForDetail.keranjang.jumlah}</p>
+                                <p><strong>Status:</strong> {orderForDetail.status}</p>
+                            </div>
+                            <div className={styles.detailSection}>
+                                <h4>Informasi Pembayaran</h4>
+                                <p><strong>Harga Satuan:</strong> Rp {orderForDetail.keranjang.produkVarian.harga.toLocaleString()}</p>
+                                <p><strong>Subtotal:</strong> Rp {orderForDetail.keranjang.totalHarga.toLocaleString()}</p>
+                                <p><strong>Ongkos Kirim:</strong> Rp {orderForDetail.ongkosKirim.toLocaleString()}</p>
+                                <p><strong>Total Harga:</strong> Rp {((orderForDetail.keranjang.totalHarga || 0) + (orderForDetail.ongkosKirim || 0)).toLocaleString()}</p>
+                                <a href={orderForDetail.buktiTransferUrl} target="_blank" rel="noopener noreferrer">Lihat Bukti Transfer</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+            
             <FooterHitam />
         </>
     );

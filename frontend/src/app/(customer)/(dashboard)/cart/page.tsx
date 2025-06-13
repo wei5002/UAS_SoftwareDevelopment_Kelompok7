@@ -9,9 +9,8 @@ import EditModal from './components/editModal'; // Ini adalah ProductModal Anda
 import OrderModal from './components/orderModal';
 import styles from './cart.module.css';
 
-// Tipe data untuk item di keranjang
 type CartItem = {
-  id: string; // ID unik dari item di keranjang
+  id: string;
   userId: string;
   produkVarianId: string;
   jumlah: number;
@@ -25,7 +24,7 @@ type CartItem = {
     harga: number;
     stok: number;
     produk: {
-      id: string; // ID dari produk utama
+      id: string;
       namaProduk: string;
       kategori: string;
       gambar?: string;
@@ -47,7 +46,9 @@ export default function CartPage() {
   const fetchCart = async () => {
     setLoading(true);
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('customer_token');
+      if (!token) throw new Error('Anda harus login sebagai customer.');
+
       const response = await fetch('http://localhost:5001/api/keranjang/my', {
         method: 'GET',
         headers: {
@@ -65,50 +66,49 @@ export default function CartPage() {
       }
     } catch (error) {
       console.error('Error fetching cart:', error);
+      setCartItems([]);
     } finally {
       setLoading(false);
     }
   };
 
-  // Ambil data saat halaman pertama kali dimuat
   useEffect(() => {
     fetchCart();
   }, []);
 
-  // Handler saat tombol 'Edit' diklik
   const handleEdit = (item: CartItem) => {
     setSelectedCartItem(item);
     setShowEditModal(true);
   };
 
-  // Handler untuk menutup modal edit
   const handleCloseEditModal = () => {
     setShowEditModal(false);
     setSelectedCartItem(null);
-    // Muat ulang data keranjang untuk melihat perubahan
     fetchCart();
   };
   
-  // Handler saat tombol 'Order' diklik
   const handleOrder = (item: CartItem) => {
     setSelectedCartItemForOrder(item);
     setShowOrderModal(true);
   };
 
-  // Handler untuk menutup modal order
   const handleCloseOrderModal = () => {
     setShowOrderModal(false);
     setSelectedCartItemForOrder(null);
     fetchCart();
   };
 
-  // Handler untuk menghapus item dari keranjang
   const handleDelete = async (itemId: string) => {
     if (!confirm('Apakah Anda yakin ingin menghapus item ini dari keranjang?')) {
       return;
     }
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('customer_token');
+    if (!token) {
+      alert('Anda harus login sebagai customer.');
+      return;
+    }
+
     try {
       const response = await fetch(`http://localhost:5001/api/keranjang/${itemId}`, {
         method: 'DELETE',
@@ -205,12 +205,10 @@ export default function CartPage() {
 
         <FooterHitam />
 
-        {/* --- PERBAIKAN UTAMA DI SINI --- */}
-        {/* Sekarang kita meneruskan 'cartItemId' ke komponen EditModal */}
         {showEditModal && selectedCartItem && (
           <EditModal
-            id={selectedCartItem.produkVarian.produk.id} // ID Produk
-            cartItemId={selectedCartItem.id} // ID unik dari item di keranjang
+            id={selectedCartItem.produkVarian.produk.id}
+            cartItemId={selectedCartItem.id}
             onClose={handleCloseEditModal}
           />
         )}

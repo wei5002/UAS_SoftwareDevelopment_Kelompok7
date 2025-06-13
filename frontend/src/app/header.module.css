@@ -3,62 +3,121 @@
   background: #333;
   color: white;
   top: 0;
+  left: 0;
   z-index: 99;
   padding: 0px 20px;
   width: 100%;
+  min-height: 80px;
+  box-shadow: 0 2px 8px #0002;
+  display: flex;
+  align-items: center;
 }
 
 .headerContent {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .logo {
   width: 200px;
   height: 80px;
-  object-fit: cover;
+  object-fit: contain;
+  cursor: pointer;
+  user-select: none;
+  transition: filter 0.2s;
+}
+.logo:hover {
+  filter: brightness(0.92);
 }
 
 .tagline {
   text-align: center;
-  font-family: "Times", sans-serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: 16px;
-  letter-spacing: 5px;
+  letter-spacing: 3px;
+  color: #dedede;
+  flex: 1;
+  margin: 0 20px;
 }
 
 .loginSignupBtn {
   display: flex;
+  align-items: center;
   gap: 12px;
 }
 
-.loginBtn {
+.loginBtn, .signupBtn, .logoutBtn {
   background: none;
-  border: 1px solid white;
+  border: 1.5px solid white;
   color: white;
-  padding: 5px 10px;
+  padding: 7px 18px;
+  border-radius: 7px;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
+  transition: background 0.17s, color 0.17s, border 0.17s;
 }
 
-.signupBtn {
-  background: none;
-  border: 1px solid white;
-  color: white;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-.logoutBtn {
-  background: none;
-  border: 1px solid white;
-  color: white;
-  padding: 5px 10px;
-  cursor: pointer;
+.loginBtn:hover, .signupBtn:hover, .logoutBtn:hover {
+  background: white;
+  color: #20232a;
+  border-color: #e57373;
 }
 
 .namaUser {
   margin-right: 10px;
   font-weight: bold;
   font-size: 1rem;
-  color: #000;
+  color: #f5e5bb;
+  letter-spacing: 1.5px;
+  background: #24292f;
+  border-radius: 6px;
+  padding: 5px 13px;
+}
+
+@media (max-width: 900px) {
+  .headerContent {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .tagline {
+    font-size: 13px;
+    margin: 0 0 5px 0;
+    letter-spacing: 1px;
+  }
+  .logo {
+    width: 130px;
+    height: 60px;
+  }
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    min-height: 60px;
+    padding: 0 7px;
+  }
+  .logo {
+    width: 95px;
+    height: 35px;
+  }
+  .tagline {
+    font-size: 10px;
+    letter-spacing: 0.7px;
+    margin: 0;
+  }
+  .loginBtn, .signupBtn, .logoutBtn {
+    padding: 4px 7px;
+    font-size: 0.93rem;
+    border-radius: 5px;
+  }
+  .namaUser {
+    padding: 4px 7px;
+    font-size: 0.92rem;
+    margin-right: 5px;
+  }
 }

@@ -1,17 +1,17 @@
-### GET semua produk
+### GET semua produk AKTIF
 GET http://localhost:5001/api/produk
 Accept: application/json
 
 ###
 
-### GET produk dengan search, kategori, paginasi
-GET http://localhost:5001/api/produk?search=plat&kategori=201&page=1&limit=5
+### GET produk dengan search, kategori, paginasi, dan status (opsional)
+GET http://localhost:5001/api/produk?search=plat&kategori=201&status=AKTIF&page=1&limit=5
 Accept: application/json
 
 ###
 
 ### GET produk berdasarkan ID
-GET http://localhost:5001/api/produk/:id
+GET http://localhost:5001/api/produk/{{PRODUK_ID}}
 Accept: application/json
 
 ###
@@ -26,123 +26,15 @@ Accept: application/json
   "kategori": "304",
   "gambar": "https://ik.imagekit.io/6iomykfjj/upload-dasar/perforated-1748664027616_w6V4kyHTI.jpg",
   "varian": [
-    {
-      "size": "1x2",
-      "thickness": 1,
-      "hole": 0,
-      "harga": 230000,
-      "stok": 50
-    },
-    {
-      "size": "2x4",
-      "thickness": 2,
-      "hole": 0,
-      "harga": 250000,
-      "stok": 30
-    }
+    { "size": "1x2", "thickness": 1, "hole": 0, "harga": 230000, "stok": 50 },
+    { "size": "2x4", "thickness": 2, "hole": 0, "harga": 250000, "stok": 30 }
   ]
 }
 
 ###
 
-{
-  "namaProduk": "Produk 2",
-  "kategori": "304",
-  "gambar": "https://ik.imagekit.io/6iomykfjj/upload-dasar/perforated_2-1748664044863_velzuwQSs.jpg",
-  "varian": [
-    {
-      "size": "1x2",
-      "thickness": 1,
-      "hole": 0,
-      "harga": 230000,
-      "stok": 50
-    },
-    {
-      "size": "2x4",
-      "thickness": 2,
-      "hole": 0,
-      "harga": 250000,
-      "stok": 30
-    }
-  ]
-}
-
-###
-
-{
-  "namaProduk": "Produk 3",
-  "kategori": "304",
-  "gambar": "https://ik.imagekit.io/6iomykfjj/upload-dasar/hollow-1748664190535_yz7LRUEs1.jpg",
-  "varian": [
-    {
-      "size": "1x2",
-      "thickness": 1,
-      "hole": 0,
-      "harga": 230000,
-      "stok": 50
-    },
-    {
-      "size": "2x4",
-      "thickness": 2,
-      "hole": 0,
-      "harga": 250000,
-      "stok": 30
-    }
-  ]
-}
-
-###
-
-{
-  "namaProduk": "Produk 4",
-  "kategori": "304",
-  "gambar": "https://ik.imagekit.io/6iomykfjj/upload-dasar/hero-1748664204167__drPCD12H.jpg",
-  "varian": [
-    {
-      "size": "1x2",
-      "thickness": 1,
-      "hole": 0,
-      "harga": 230000,
-      "stok": 50
-    },
-    {
-      "size": "2x4",
-      "thickness": 2,
-      "hole": 0,
-      "harga": 250000,
-      "stok": 30
-    }
-  ]
-}
-
-###
-
-{
-  "namaProduk": "Produk 5",
-  "kategori": "304",
-  "gambar": "https://ik.imagekit.io/6iomykfjj/upload-dasar/angle-1748664219218_FhBQmvbL1.jpg",
-  "varian": [
-    {
-      "size": "1x2",
-      "thickness": 1,
-      "hole": 0,
-      "harga": 230000,
-      "stok": 50
-    },
-    {
-      "size": "2x4",
-      "thickness": 2,
-      "hole": 0,
-      "harga": 250000,
-      "stok": 30
-    }
-  ]
-}
-
-###
-
-### PUT update produk berdasarkan ID
-PUT http://localhost:5001/api/produk/PASTE_PRODUK_ID_DI_SINI
+### PUT update produk berdasarkan ID (update data + varian + status)
+PUT http://localhost:5001/api/produk/{{PRODUK_ID}}
 Content-Type: application/json
 Accept: application/json
 
@@ -150,9 +42,10 @@ Accept: application/json
   "namaProduk": "PLAT STAINLESS AISI 304 - Edited",
   "kategori": "304",
   "gambar": "https://example.com/plat304.jpg",
+  "status": "AKTIF", // Bisa AKTIF/NONAKTIF
   "varian": [
     {
-      "id": "PASTE_VARIAN_ID_1_DI_SINI",
+      "id": "{{VARIAN_ID_1}}",
       "size": "1x2",
       "thickness": 1,
       "hole": 0,
@@ -160,7 +53,7 @@ Accept: application/json
       "stok": 40
     },
     {
-      "id": "PASTE_VARIAN_ID_2_DI_SINI",
+      "id": "{{VARIAN_ID_2}}",
       "size": "2x4",
       "thickness": 2,
       "hole": 0,
@@ -168,7 +61,7 @@ Accept: application/json
       "stok": 25
     },
     {
-      "size": "3x6", // varian baru → tanpa ID
+      "size": "3x6",
       "thickness": 3,
       "hole": 0,
       "harga": 300000,
@@ -179,6 +72,17 @@ Accept: application/json
 
 ###
 
-### DELETE produk
-DELETE http://localhost:5001/api/produk/PASTE_PRODUK_ID_DI_SINI
+### PATCH nonaktifkan produk (SOFT DELETE, alternatif PUT)
+PATCH http://localhost:5001/api/produk/{{PRODUK_ID}}/status
+Content-Type: application/json
+Accept: application/json
+
+{
+  "status": "NONAKTIF"
+}
+
+###
+
+### DELETE produk (hard delete, hanya jika belum pernah dipesan)
+DELETE http://localhost:5001/api/produk/{{PRODUK_ID}}
 Accept: application/json

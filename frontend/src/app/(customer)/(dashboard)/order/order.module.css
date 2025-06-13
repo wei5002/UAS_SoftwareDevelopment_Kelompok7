@@ -1,9 +1,6 @@
 /* General Styling */
 .pageTitle {
-    display: none; /* Menghapus judul dari tampilan */
-    color: white;
-    text-align: center;
-    margin-bottom: 2rem;
+    display: none;
 }
 
 .orderList {
@@ -29,8 +26,32 @@
     background-color: #3a4552;
     border-radius: 10px;
     transition: transform 0.2s ease-in-out, opacity 0.3s ease;
-    position: relative; /* Diperlukan untuk overlay */
+    position: relative;
 }
+
+/* ==================== PERUBAHAN DI SINI ==================== */
+/* Gaya untuk kartu pesanan yang sudah selesai */
+.orderCard.done {
+    opacity: 0.8;
+    border-left: 6px solid #5cb85c;
+}
+
+/* Badge untuk pesanan selesai */
+.doneBadge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: #5cb85c;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  z-index: 2;
+}
+/* ========================================================= */
+
 
 .orderCard:hover {
     transform: translateY(-5px);
@@ -99,6 +120,7 @@
 .buttonWrapBottom {
     display: flex;
     gap: 10px;
+    flex-wrap: wrap; /* Agar tombol responsif */
 }
 
 .buttonWrapTop {
@@ -108,11 +130,14 @@
 
 .buttonWrapBottom {
     justify-content: flex-end;
+    align-items: center;
+    margin-top: 15px;
 }
 
 .cancelBtn,
 .doneBtn,
-.statusBtn {
+.statusBtn,
+.detailBtn {
     padding: 8px 20px;
     font-size: 1rem;
     font-family: sans-serif;
@@ -160,25 +185,21 @@
     box-shadow: 0 0 10px #f0ad4e;
 }
 
+.detailBtn {
+    background-color: #17a2b8;
+    color: white;
+}
+.detailBtn:hover {
+    background-color: #138496;
+}
+
 .errorText {
     color: #d9534f;
     font-size: 1.2rem;
     font-weight: bold;
 }
 
-/* --- STYLING BARU UNTUK STATUS PEMBATALAN --- */
-
-/* Gaya untuk kartu saat permintaan pembatalan sedang menunggu */
-.cancellation_menunggu {
-    opacity: 0.7;
-}
-
-/* Gaya untuk kartu saat permintaan ditolak */
-.cancellation_ditolak .cancelBtn:disabled {
-    background-color: #7d4a48; /* Warna merah lebih gelap untuk ditolak */
-}
-
-/* Lapisan overlay untuk status pembatalan yang disetujui */
+/* Overlay Styling untuk CANCELLED */
 .statusOverlay {
     position: absolute;
     top: 0;
@@ -186,14 +207,130 @@
     width: 100%;
     height: 100%;
     background-color: rgba(40, 40, 40, 0.85);
-    color: #e53e3e;
     font-size: 1.8rem;
     font-weight: bold;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 5; /* Di bawah tombol, tapi di atas konten lain */
+    z-index: 5;
     border-radius: 10px;
     text-align: center;
-    pointer-events: all; /* Memastikan overlay bisa di-interact jika perlu */
 }
+
+.statusOverlay.cancelled {
+    color: #e53e3e;
+}
+
+/* Menghapus style .statusOverlay.done */
+
+
+/* ==================== POPUP STYLE ==================== */
+.popup {
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.popupContent {
+  background-color: #2c333b;
+  color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 90%;
+  position: relative;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.popupContent h2 {
+    text-align: center;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+    color: #fff;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #aaa;
+  cursor: pointer;
+}
+.closeBtn:hover {
+  color: red;
+}
+
+.detailPopupContent {
+  max-width: 800px !important;
+  width: 95% !important;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.detailGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  text-align: left;
+  color: white;
+}
+
+.detailSection {
+  background-color: #3a4551;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.detailSection h4 {
+  border-bottom: 2px solid #17a2b8;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  color: #17a2b8;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.detailSection p {
+  margin: 10px 0;
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: normal;
+  line-height: 1.6;
+}
+
+.detailSection p strong {
+    color: #e0e0e0;
+    min-width: 120px;
+    display: inline-block;
+}
+
+.detailSection a {
+  color: #58c6d8;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+}
+
+.detailSection a:hover {
+  text-decoration: underline;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+@media (min-width: 768px) {
+  .detailGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+/* ====================================================== */

@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+// MODIFIKASI: Path mungkin perlu disesuaikan berdasarkan struktur folder Anda
+import bankData from '../../../../../../utils/data/bank.json'; 
 import styles from './orderModal.module.css';
 
 // Type definitions for clarity and self-containment
@@ -33,12 +35,18 @@ type OrderModalProps = {
   totalPrice: number;
   shippingFee: number;
   keranjangId: string;
-  cartItem: CartItem; // Prop to receive cart item details
+  cartItem: CartItem;
 };
 
 type Wilayah = {
   id: string;
   name: string;
+};
+
+// TAMBAHKAN: Tipe data untuk bank
+type Bank = {
+    name: string;
+    code: string;
 };
 
 const PULAU_JAWA_PROVINCES = [
@@ -73,6 +81,9 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
   const [regencies, setRegencies] = useState<Wilayah[]>([]);
   const [districts, setDistricts] = useState<Wilayah[]>([]);
   const [villages, setVillages] = useState<Wilayah[]>([]);
+  
+  // TAMBAHKAN: State untuk menyimpan daftar bank
+  const [banks, setBanks] = useState<Bank[]>([]);
 
   const [selectedProvinceId, setSelectedProvinceId] = useState('');
   const [selectedRegencyId, setSelectedRegencyId] = useState('');
@@ -80,9 +91,14 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
   const [selectedVillageId, setSelectedVillageId] = useState('');
 
   const fetchProvinces = async () => {
-    const res = await fetch('http://localhost:5001/proxy/provinces');
-    const data = await res.json();
-    setProvinces(data);
+    try {
+        const res = await fetch('http://localhost:5001/proxy/provinces');
+        if (!res.ok) throw new Error('Failed to fetch provinces');
+        const data = await res.json();
+        setProvinces(data);
+    } catch (err) {
+        console.error(err);
+    }
   };
 
   const fetchRegencies = async (provinceId: string) => {
@@ -106,10 +122,12 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
   useEffect(() => {
     if (isOpen) {
       fetchProvinces();
+      // MODIFIKASI: Muat data bank ke state saat modal terbuka
+      setBanks(bankData);
     }
   }, [isOpen]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
@@ -121,25 +139,19 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
 
   const handleProvinceChange = (provinceId: string) => {
     setSelectedProvinceId(provinceId);
-
     const selectedProvince = provinces.find((p) => p.id === provinceId);
     const provinceName = selectedProvince?.name || '';
-
     setForm((prev) => ({ ...prev, provinsi: provinceName }));
-
     setSelectedRegencyId('');
     setSelectedDistrictId('');
     setSelectedVillageId('');
     setRegencies([]);
     setDistricts([]);
     setVillages([]);
-
     fetchRegencies(provinceId);
-
     const isPulauJawa = PULAU_JAWA_PROVINCES.some((jawaProv) =>
       provinceName.toLowerCase().includes(jawaProv.toLowerCase())
     );
-
     if (isPulauJawa) {
       setShippingFee(0);
     } else {
@@ -147,7 +159,7 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
     }
   };
 
-  const handleSubmit = async () => {
+ const handleSubmit = async () => {
     if (!form.buktiTransferFile) {
       setError('Mohon upload bukti transfer terlebih dahulu.');
       return;
@@ -173,7 +185,14 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
       const uploadData = await uploadRes.json();
       const buktiTransferUrl = uploadData.data.gambar;
 
-      const token = localStorage.getItem('token');
+      // ======== PAKAI CUSTOMER TOKEN =========
+      const token = localStorage.getItem('customer_token');
+      if (!token) {
+        setError('Anda harus login terlebih dahulu.');
+        setUploading(false);
+        return;
+      }
+      // =======================================
 
       const pesananRes = await fetch('http://localhost:5001/api/pesanan', {
         method: 'POST',
@@ -194,10 +213,10 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
           accountName: form.accountName,
           accountNumber: Number(form.accountNumber),
           buktiTransferUrl: buktiTransferUrl,
+          ongkosKirim: shippingFee,
         }),
       });
 
-      // MODIFICATION: Add detailed error logging
       if (!pesananRes.ok) {
         const errorBody = await pesananRes.json();
         console.error("Server error response:", errorBody);
@@ -206,8 +225,7 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
       }
 
       alert('Pesanan berhasil dikirim!');
-
-      // --- STOCK UPDATE LOGIC ---
+      
       try {
         const produkToUpdateInfo = cartItem.produkVarian.produk;
         const varianToUpdateId = cartItem.produkVarian.id;
@@ -255,10 +273,7 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
           console.error("Error during stock update:", stockUpdateError);
           alert('Terjadi kesalahan saat memperbarui stok produk.');
       }
-      // --- END STOCK UPDATE LOGIC ---
 
-
-      // Mark as ordered
       await fetch(`http://localhost:5001/api/keranjang/${keranjangId}/markAsOrdered`, {
         method: 'PATCH',
         headers: {
@@ -276,6 +291,7 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
     }
   };
 
+
   if (!isOpen) return null;
 
   return (
@@ -290,8 +306,29 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
 
         <div className={styles['order-content']}>
           <div className={styles['content-isi']}>
+            
+            {/* MODIFIKASI: Mengganti input Bank Name menjadi dropdown */}
+            <div className={styles['field-row']} key="bankName">
+              <label className={styles['field-label']} htmlFor="bankName">Bank Name</label>
+              <select
+                id="bankName"
+                name="bankName"
+                value={form.bankName}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="">-- Select Bank --</option>
+                {/* PERBAIKAN: Gunakan index untuk membuat key yang unik */}
+                {banks.map((bank, index) => (
+                  <option key={`${bank.code}-${index}`} value={bank.name}>
+                    {bank.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* MODIFIKASI: Loop hanya untuk field sisanya */}
             {[
-              { label: 'Bank Name', name: 'bankName', value: form.bankName, type: 'text' },
               { label: "Account's Holder Name", name: 'accountName', value: form.accountName, type: 'text' },
               { label: 'Bank Account Number', name: 'accountNumber', value: form.accountNumber, type: 'number' },
               { label: 'Phone Number', name: 'nomorTelepon', value: form.nomorTelepon, type: 'tel' },
@@ -312,6 +349,7 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
         </div>
 
         <div className={styles['order-content']}>
+          {/* ... Sisa JSX untuk alamat, ongkir, dll. tetap sama ... */}
           <div className={styles['content-isi']}>
             {[
               { label: 'Province', value: selectedProvinceId, onChange: (e: React.ChangeEvent<HTMLSelectElement>) => handleProvinceChange(e.target.value), options: provinces, disabled: false, id: 'province-select' },
