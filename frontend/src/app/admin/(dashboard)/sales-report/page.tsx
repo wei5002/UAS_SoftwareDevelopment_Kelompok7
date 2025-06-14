@@ -7,7 +7,10 @@ import HeaderAdmin from '@/app/headerAdmin';
 import NavbarAdmin from '@/app/components/navbarAdmin';
 import FooterHitam from '@/app/components/footerHitam';
 
-// --- Interface Definitions based on Prisma Schema ---
+// --- Pakai ENV (aman untuk production dan dev) ---
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
+
+// --- Interface Definitions ---
 type Produk = {
     id: string;
     namaProduk: string;
@@ -54,7 +57,6 @@ type LaporanPenjualan = {
     keterangan?: string;
 };
 
-// --- Main Component ---
 export default function SalesReportPage() {
     const [allReports, setAllReports] = useState<LaporanPenjualan[]>([]);
     const [filteredReports, setFilteredReports] = useState<LaporanPenjualan[]>([]);
@@ -63,7 +65,7 @@ export default function SalesReportPage() {
 
     // State for filters
     const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
-    const [selectedMonth, setSelectedMonth] = useState<number | ''>(new Date().getMonth() + 1); // Allow empty month
+    const [selectedMonth, setSelectedMonth] = useState<number | ''>(new Date().getMonth() + 1);
     const [filterUserId, setFilterUserId] = useState<string>('');
     const [filterProdukId, setFilterProdukId] = useState<string>('');
     const [filterTujuan, setFilterTujuan] = useState<string>('');
@@ -73,6 +75,7 @@ export default function SalesReportPage() {
     const [showDetailPopup, setShowDetailPopup] = useState<boolean>(false);
     const [selectedReportDetail, setSelectedReportDetail] = useState<LaporanPenjualan | null>(null);
 
+    // --- Fetch Laporan ---
     const fetchAllReportsForYear = async (year: number) => {
         setLoading(true);
         setError(null);
@@ -84,7 +87,7 @@ export default function SalesReportPage() {
             return;
         }
 
-        const url = `http://localhost:5001/api/laporan?year=${year}`;
+        const url = `${API_BASE_URL}/laporan?year=${year}`;
 
         try {
             const response = await fetch(url, { headers: { 'Authorization': `Bearer ${token}` } });
@@ -104,6 +107,7 @@ export default function SalesReportPage() {
         fetchAllReportsForYear(selectedYear);
     }, [selectedYear]);
 
+    // --- Apply Filters ---
     const applyFilters = () => {
         let reports = [...allReports];
 
@@ -123,7 +127,6 @@ export default function SalesReportPage() {
                 r.pesanan.kabupaten.toLowerCase().includes(tujuanLower)
             );
         }
-        
         setFilteredReports(reports);
     };
     
@@ -131,6 +134,7 @@ export default function SalesReportPage() {
         applyFilters();
     }, [allReports, selectedMonth, filterUserId, filterProdukId, filterTujuan]);
 
+    // --- Chart Data ---
     const processedChartData = useMemo(() => {
         const targetReports = filteredReports;
 
@@ -175,6 +179,7 @@ export default function SalesReportPage() {
 
     }, [filteredReports, viewMode, selectedYear, selectedMonth]);
 
+    // --- Summary ---
     const summaryData = useMemo(() => {
         const totalPenjualan = filteredReports.reduce((sum, report) => sum + report.totalPenjualan, 0);
         const jumlahPesanan = filteredReports.length;

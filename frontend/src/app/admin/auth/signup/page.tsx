@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 import HeaderAdmin from '@/app/headerAdmin';
 import Footer from '@/app/footer';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
+
 export default function AdminSignupPage() {
   const router = useRouter();
 
@@ -26,7 +28,7 @@ export default function AdminSignupPage() {
     }
 
     try {
-      const response = await fetch('http://localhost:5001/api/admin/register', {
+      const response = await fetch(`${API_BASE_URL}/admin/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -47,7 +49,7 @@ export default function AdminSignupPage() {
       setSuccess('Admin baru berhasil didaftarkan! Anda akan diarahkan ke halaman login.');
       setTimeout(() => {
         router.push('/admin/auth/login');
-      }, 1800); // redirect lebih cepat (opsional)
+      }, 1800);
 
     } catch (err: any) {
       setError(err.message);

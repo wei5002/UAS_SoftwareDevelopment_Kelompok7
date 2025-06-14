@@ -66,6 +66,9 @@ type Pesanan = {
     pembatalanPesanan?: Pembatalan;
 };
 
+// PENTING: Ambil base url dari ENV
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
+
 export default function OrderPage() {
     const [orders, setOrders] = useState<Pesanan[]>([]);
     const [loading, setLoading] = useState(true);
@@ -83,7 +86,7 @@ export default function OrderPage() {
             const token = localStorage.getItem('customer_token');
             if (!token) throw new Error("Autentikasi dibutuhkan. Silakan login kembali.");
 
-            const response = await fetch('http://localhost:5001/api/pesanan/my', {
+            const response = await fetch(`${API_BASE_URL}/pesanan/my`, {
                 headers: { 'Authorization': `Bearer ${token}` },
             });
 
@@ -148,7 +151,7 @@ export default function OrderPage() {
             const token = localStorage.getItem('customer_token');
             if (!token) throw new Error("Autentikasi dibutuhkan. Silakan login kembali.");
 
-            const response = await fetch(`http://localhost:5001/api/pesanan/${orderId}`, {
+            const response = await fetch(`${API_BASE_URL}/pesanan/${orderId}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -159,7 +162,6 @@ export default function OrderPage() {
 
             if (!response.ok) {
                 let errorMessage = 'Gagal menyelesaikan pesanan.';
-                // (Error handling tidak berubah)
                 throw new Error(errorMessage);
             }
 
@@ -198,8 +200,6 @@ export default function OrderPage() {
                     const canBeCancelled = (order.status === 'PENDING' || order.status === 'ON_PROCESS') && !cancellationStatus;
                     const canBeMarkedDone = order.status === 'ON_DELIVERY' && cancellationStatus !== 'disetujui';
 
-                    // ==================== PERUBAHAN DI SINI ====================
-                    // Menambahkan kelas 'done' jika status pesanan selesai
                     const cardClasses = [
                         styles.orderCard,
                         order.status === 'DONE' ? styles.done : '',
@@ -213,13 +213,11 @@ export default function OrderPage() {
                                     PESANAN DIBATALKAN
                                 </div>
                             )}
-                             {/* Mengganti overlay dengan badge */}
                              {order.status === 'DONE' && (
                                 <div className={styles.doneBadge}>
                                     SELESAI
                                 </div>
                             )}
-                            {/* ========================================================= */}
                             <div className={styles.orderCardImg}>
                                 <img 
                                     src={order.keranjang.produkVarian.produk.gambar || 'https://placehold.co/200x200/2d3640/FFFFFF?text=Gambar'} 

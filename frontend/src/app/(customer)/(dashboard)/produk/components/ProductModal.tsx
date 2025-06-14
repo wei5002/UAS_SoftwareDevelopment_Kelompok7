@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import styles from '../popupProduk.module.css';
 import { useRouter } from 'next/navigation';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
+
 export default function ProductModal({ id, onClose }: { id: string; onClose: () => void }) {
   const router = useRouter();
 
@@ -25,10 +27,9 @@ export default function ProductModal({ id, onClose }: { id: string; onClose: () 
       }, 1500);
       return;
     }
-
     const fetchProdukDetail = async () => {
       try {
-        const res = await fetch(`http://localhost:5001/api/produk/${id}`, {
+        const res = await fetch(`${API_BASE_URL}/produk/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (res.ok) {
@@ -43,7 +44,6 @@ export default function ProductModal({ id, onClose }: { id: string; onClose: () 
         setLoading(false);
       }
     };
-
     fetchProdukDetail();
   }, [id, router]);
 
@@ -88,21 +88,18 @@ export default function ProductModal({ id, onClose }: { id: string; onClose: () 
       alert('Pilih varian produk terlebih dahulu.');
       return;
     }
-
     if (selectedVarian.stok < jumlah || jumlah === 0) {
       alert('Stok tidak mencukupi atau jumlah tidak valid.');
       return;
     }
-
     const token = localStorage.getItem('customer_token');
     if (!token) {
       alert('Anda harus login terlebih dahulu.');
       router.replace('/auth/login');
       return;
     }
-
     try {
-      const response = await fetch('http://localhost:5001/api/keranjang', {
+      const response = await fetch(`${API_BASE_URL}/keranjang`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -114,7 +111,6 @@ export default function ProductModal({ id, onClose }: { id: string; onClose: () 
           totalHarga: hargaTotal,
         }),
       });
-
       if (response.ok) {
         alert('Berhasil ditambahkan ke keranjang!');
         onClose();

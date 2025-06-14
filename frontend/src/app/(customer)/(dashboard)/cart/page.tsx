@@ -5,7 +5,7 @@ import Head from 'next/head';
 import Header from '@/app/header';
 import Navbar from '@/app/components/navbar';
 import FooterHitam from '@/app/components/footerHitam';
-import EditModal from './components/editModal'; // Ini adalah ProductModal Anda
+import EditModal from './components/editModal';
 import OrderModal from './components/orderModal';
 import styles from './cart.module.css';
 
@@ -32,6 +32,8 @@ type CartItem = {
   };
 };
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
+
 export default function CartPage() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -49,7 +51,7 @@ export default function CartPage() {
       const token = localStorage.getItem('customer_token');
       if (!token) throw new Error('Anda harus login sebagai customer.');
 
-      const response = await fetch('http://localhost:5001/api/keranjang/my', {
+      const response = await fetch(`${API_BASE_URL}/keranjang/my`, {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -110,7 +112,7 @@ export default function CartPage() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5001/api/keranjang/${itemId}`, {
+      const response = await fetch(`${API_BASE_URL}/keranjang/${itemId}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,

@@ -6,6 +6,8 @@ import HeaderAdmin from '@/app/headerAdmin';
 import NavbarAdmin from '@/app/components/navbarAdmin';
 import FooterHitam from '@/app/components/footerHitam';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
+
 interface Produk {
   id: string;
   namaProduk: string;
@@ -62,11 +64,12 @@ export default function OrdersPage() {
 
   useEffect(() => {
     fetchOrders();
+    // eslint-disable-next-line
   }, []);
 
   const fetchOrders = async () => {
     const token = localStorage.getItem('token_admin');
-    fetch('http://localhost:5001/api/pesanan', {
+    fetch(`${API_BASE_URL}/pesanan`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then((res) => res.json())
@@ -77,7 +80,7 @@ export default function OrdersPage() {
   const handleConfirmOrder = async (orderId: string) => {
     const token = localStorage.getItem('token_admin');
     try {
-      const res = await fetch(`http://localhost:5001/api/pesanan/${orderId}`, {
+      const res = await fetch(`${API_BASE_URL}/pesanan/${orderId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -100,7 +103,7 @@ export default function OrdersPage() {
     }
     const token = localStorage.getItem('token_admin');
     try {
-      const res = await fetch(`http://localhost:5001/api/pesanan/${orderId}`, {
+      const res = await fetch(`${API_BASE_URL}/pesanan/${orderId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

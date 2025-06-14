@@ -7,6 +7,8 @@ import Link from 'next/link';
 import HeaderAdmin from '@/app/headerAdmin';
 import Footer from '@/app/footer';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
+
 export default function AdminLoginPage() {
   const router = useRouter();
 
@@ -21,7 +23,7 @@ export default function AdminLoginPage() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5001/api/admin/login', {
+      const response = await fetch(`${API_BASE_URL}/admin/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -37,17 +39,13 @@ export default function AdminLoginPage() {
       }
 
       if (result.data && result.data.token && result.data.username) {
-        // SIMPAN DENGAN KEY KHUSUS ADMIN
         localStorage.setItem('token_admin', result.data.token);
         localStorage.setItem('nama_admin', result.data.username);
         localStorage.setItem('role_admin', 'admin');
-
-        // Arahkan ke dashboard admin
         router.push('/admin/products');
       } else {
         throw new Error('Format respons dari server tidak valid.');
       }
-
     } catch (err: any) {
       setError(err.message);
       console.error('Login error:', err);

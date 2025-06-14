@@ -1,11 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-// MODIFIKASI: Path mungkin perlu disesuaikan berdasarkan struktur folder Anda
 import bankData from '../../../../../../utils/data/bank.json'; 
 import styles from './orderModal.module.css';
 
-// Type definitions for clarity and self-containment
 type CartItem = {
   id: string;
   userId: string;
@@ -43,7 +41,6 @@ type Wilayah = {
   name: string;
 };
 
-// TAMBAHKAN: Tipe data untuk bank
 type Bank = {
     name: string;
     code: string;
@@ -57,6 +54,9 @@ const PULAU_JAWA_PROVINCES = [
   'DI Yogyakarta',
   'Jawa Timur'
 ];
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
+const PROXY_BASE_URL = process.env.NEXT_PUBLIC_PROXY_URL || 'http://localhost:5001/proxy';
 
 export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: initialShippingFee, keranjangId, cartItem }: OrderModalProps) {
   const [form, setForm] = useState({
@@ -82,7 +82,6 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
   const [districts, setDistricts] = useState<Wilayah[]>([]);
   const [villages, setVillages] = useState<Wilayah[]>([]);
   
-  // TAMBAHKAN: State untuk menyimpan daftar bank
   const [banks, setBanks] = useState<Bank[]>([]);
 
   const [selectedProvinceId, setSelectedProvinceId] = useState('');
@@ -92,7 +91,7 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
 
   const fetchProvinces = async () => {
     try {
-        const res = await fetch('http://localhost:5001/proxy/provinces');
+        const res = await fetch(`${PROXY_BASE_URL}/provinces`);
         if (!res.ok) throw new Error('Failed to fetch provinces');
         const data = await res.json();
         setProvinces(data);
@@ -102,19 +101,19 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
   };
 
   const fetchRegencies = async (provinceId: string) => {
-    const res = await fetch(`http://localhost:5001/proxy/regencies/${provinceId}`);
+    const res = await fetch(`${PROXY_BASE_URL}/regencies/${provinceId}`);
     const data = await res.json();
     setRegencies(data);
   };
 
   const fetchDistricts = async (regencyId: string) => {
-    const res = await fetch(`http://localhost:5001/proxy/districts/${regencyId}`);
+    const res = await fetch(`${PROXY_BASE_URL}/districts/${regencyId}`);
     const data = await res.json();
     setDistricts(data);
   };
 
   const fetchVillages = async (districtId: string) => {
-    const res = await fetch(`http://localhost:5001/proxy/villages/${districtId}`);
+    const res = await fetch(`${PROXY_BASE_URL}/villages/${districtId}`);
     const data = await res.json();
     setVillages(data);
   };
@@ -122,7 +121,6 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
   useEffect(() => {
     if (isOpen) {
       fetchProvinces();
-      // MODIFIKASI: Muat data bank ke state saat modal terbuka
       setBanks(bankData);
     }
   }, [isOpen]);
@@ -173,7 +171,7 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
       uploadFormData.append('gambar', form.buktiTransferFile);
       uploadFormData.append('nama', 'buktitransfer');
 
-      const uploadRes = await fetch('http://localhost:5001/upload', {
+      const uploadRes = await fetch(`${API_BASE_URL.replace('/api', '')}/upload`, {
         method: 'POST',
         body: uploadFormData,
       });
@@ -185,16 +183,14 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
       const uploadData = await uploadRes.json();
       const buktiTransferUrl = uploadData.data.gambar;
 
-      // ======== PAKAI CUSTOMER TOKEN =========
       const token = localStorage.getItem('customer_token');
       if (!token) {
         setError('Anda harus login terlebih dahulu.');
         setUploading(false);
         return;
       }
-      // =======================================
 
-      const pesananRes = await fetch('http://localhost:5001/api/pesanan', {
+      const pesananRes = await fetch(`${API_BASE_URL}/pesanan`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -231,7 +227,7 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
         const varianToUpdateId = cartItem.produkVarian.id;
         const orderedQuantity = cartItem.jumlah;
 
-        const produkRes = await fetch(`http://localhost:5001/api/produk/${produkToUpdateInfo.id}`, {
+        const produkRes = await fetch(`${API_BASE_URL}/produk/${produkToUpdateInfo.id}`, {
             headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -254,7 +250,7 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
             varian: updatedVarianArray,
         };
 
-        const updateStockRes = await fetch(`http://localhost:5001/api/produk/${fullProduct.id}`, {
+        const updateStockRes = await fetch(`${API_BASE_URL}/produk/${fullProduct.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -274,7 +270,7 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
           alert('Terjadi kesalahan saat memperbarui stok produk.');
       }
 
-      await fetch(`http://localhost:5001/api/keranjang/${keranjangId}/markAsOrdered`, {
+      await fetch(`${API_BASE_URL}/keranjang/${keranjangId}/markAsOrdered`, {
         method: 'PATCH',
         headers: {
             Authorization: `Bearer ${token}`,
@@ -290,7 +286,6 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
       setUploading(false);
     }
   };
-
 
   if (!isOpen) return null;
 

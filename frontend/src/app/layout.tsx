@@ -5,10 +5,8 @@ import './globals.css';
 
 export default function RootLayout({
   children,
-  modal
 }: {
   children: React.ReactNode;
-  modal: React.ReactNode;
 }) {
   const pathname = usePathname();
 
@@ -23,7 +21,6 @@ export default function RootLayout({
       <body>
         <div key={pathname} className="page-container">
           <main>{children}</main>
-          {modal}
         </div>
       </body>
     </html>

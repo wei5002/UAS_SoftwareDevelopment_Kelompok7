@@ -17,6 +17,8 @@ type CancelModalProps = {
     order: Pesanan;
 };
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
+
 export default function CancelModal({ isOpen, onClose, onSuccess, order }: CancelModalProps) {
     const [reason, setReason] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -47,7 +49,7 @@ export default function CancelModal({ isOpen, onClose, onSuccess, order }: Cance
                 throw new Error("Autentikasi tidak ditemukan. Silakan login kembali.");
             }
 
-            const response = await fetch('http://localhost:5001/api/pembatalan', {
+            const response = await fetch(`${API_BASE_URL}/pembatalan`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

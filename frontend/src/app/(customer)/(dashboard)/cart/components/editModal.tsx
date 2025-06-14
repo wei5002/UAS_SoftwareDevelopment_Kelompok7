@@ -1,16 +1,18 @@
+// EditModal dengan URL sudah pakai environment variable
+
 'use client';
 
 import { useEffect, useState } from 'react';
 import styles from './editModal.module.css';
 import { useRouter } from 'next/navigation';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
+
 export default function ProductModal({ id, cartItemId, onClose }: { id: string; cartItemId?: string; onClose: () => void }) {
   const router = useRouter();
-
   const [produk, setProduk] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [showLoginAlert, setShowLoginAlert] = useState(false);
-
   const [selectedSize, setSelectedSize] = useState<any>(null);
   const [selectedThickness, setSelectedThickness] = useState<any>(null);
   const [selectedHole, setSelectedHole] = useState<any>(null);
@@ -25,15 +27,13 @@ export default function ProductModal({ id, cartItemId, onClose }: { id: string; 
       }, 1500);
       return;
     }
-
     const fetchInitialData = async () => {
       setLoading(true);
       try {
         // Detail produk
-        const productRes = await fetch(`http://localhost:5001/api/produk/${id}`, {
+        const productRes = await fetch(`${API_BASE_URL}/produk/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        
         if (productRes.ok) {
           const productData = await productRes.json();
           setProduk(productData.data);
@@ -42,10 +42,9 @@ export default function ProductModal({ id, cartItemId, onClose }: { id: string; 
           setLoading(false);
           return;
         }
-
         // Jika edit mode (cartItemId tersedia)
         if (cartItemId) {
-          const cartItemRes = await fetch(`http://localhost:5001/api/keranjang/item/${cartItemId}`, {
+          const cartItemRes = await fetch(`${API_BASE_URL}/keranjang/item/${cartItemId}`, {
              headers: { Authorization: `Bearer ${token}` },
           });
           if(cartItemRes.ok) {
@@ -65,7 +64,6 @@ export default function ProductModal({ id, cartItemId, onClose }: { id: string; 
         setLoading(false);
       }
     };
-
     fetchInitialData();
   }, [id, cartItemId, router]);
 
@@ -99,12 +97,10 @@ export default function ProductModal({ id, cartItemId, onClose }: { id: string; 
       alert('Pilih varian produk yang valid terlebih dahulu.');
       return;
     }
-    
     if (selectedVarian.stok < jumlah || jumlah === 0) {
       alert('Stok tidak mencukupi atau jumlah tidak valid.');
       return;
     }
-
     const token = localStorage.getItem('customer_token');
     if (!token) {
       alert('Anda harus login terlebih dahulu.');
@@ -112,13 +108,10 @@ export default function ProductModal({ id, cartItemId, onClose }: { id: string; 
       return;
     }
     const isEditing = cartItemId !== undefined;
-
     const apiUrl = isEditing
-      ? `http://localhost:5001/api/keranjang/${cartItemId}/spesifikasi`
-      : 'http://localhost:5001/api/keranjang';
-      
+      ? `${API_BASE_URL}/keranjang/${cartItemId}/spesifikasi`
+      : `${API_BASE_URL}/keranjang`;
     const method = isEditing ? 'PATCH' : 'POST';
-
     const body = isEditing
       ? {
           size: selectedSize,
@@ -130,7 +123,6 @@ export default function ProductModal({ id, cartItemId, onClose }: { id: string; 
           produkVarianId: selectedVarian.id,
           jumlah: jumlah
         };
-
     try {
       const response = await fetch(apiUrl, {
         method: method,
@@ -140,7 +132,6 @@ export default function ProductModal({ id, cartItemId, onClose }: { id: string; 
         },
         body: JSON.stringify(body),
       });
-
       if (response.ok) {
         alert(isEditing ? 'Item keranjang berhasil diperbarui!' : 'Produk berhasil ditambahkan ke keranjang!');
         onClose();
@@ -166,7 +157,6 @@ export default function ProductModal({ id, cartItemId, onClose }: { id: string; 
       </div>
     );
   }
-
   if (loading) {
      return (
        <div className={styles.popup_produk} style={{ display: 'block' }}>
@@ -176,7 +166,6 @@ export default function ProductModal({ id, cartItemId, onClose }: { id: string; 
        </div>
     );
   }
-  
   if (!produk) return null;
 
   return (

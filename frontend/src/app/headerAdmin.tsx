@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
+
 export default function HeaderAdmin() {
   const router = useRouter();
   const pathname = usePathname();
@@ -12,47 +14,46 @@ export default function HeaderAdmin() {
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
   const [adminName, setAdminName] = useState('');
 
- useEffect(() => {
-  const token = localStorage.getItem('token_admin');
-  const role = localStorage.getItem('role_admin');
-  const nama = localStorage.getItem('nama_admin');
+  useEffect(() => {
+    const token = localStorage.getItem('token_admin');
+    const role = localStorage.getItem('role_admin');
+    const nama = localStorage.getItem('nama_admin');
 
-  if (token && role === 'admin') {
-    setIsAdminLoggedIn(true);
-    setAdminName(nama || 'Admin');
-  } else {
-    setIsAdminLoggedIn(false);
-    setAdminName('');
-    if (!pathname.startsWith('/admin/auth')) {
-      router.push('/admin/auth/login');
+    if (token && role === 'admin') {
+      setIsAdminLoggedIn(true);
+      setAdminName(nama || 'Admin');
+    } else {
+      setIsAdminLoggedIn(false);
+      setAdminName('');
+      if (!pathname.startsWith('/admin/auth')) {
+        router.replace('/admin/auth/login');
+      }
     }
-  }
-}, [pathname, router]);
+    
+  }, [pathname]);
 
-
-const handleLogout = async () => {
-  const token = localStorage.getItem('token_admin');
-  try {
-    await fetch('http://localhost:5001/api/admin/logout', {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': token || '',
-      },
-    });
-  } catch (error) {
-    console.error("Logout API call failed:", error);
-  } finally {
-    localStorage.removeItem('token_admin');
-    localStorage.removeItem('nama_admin');
-    localStorage.removeItem('role_admin');
-    setIsAdminLoggedIn(false);
-    setAdminName('');
-    router.push('/admin/auth/login');
-  }
-};
-
+  const handleLogout = async () => {
+    const token = localStorage.getItem('token_admin');
+    try {
+      await fetch(`${API_BASE_URL}/admin/logout`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': token || '',
+        },
+      });
+    } catch (error) {
+      console.error("Logout API call failed:", error);
+    } finally {
+      localStorage.removeItem('token_admin');
+      localStorage.removeItem('nama_admin');
+      localStorage.removeItem('role_admin');
+      setIsAdminLoggedIn(false);
+      setAdminName('');
+      router.replace('/admin/auth/login');
+    }
+  };
 
   const renderAuthSection = () => {
     if (pathname === '/admin/auth/login') {
@@ -81,7 +82,7 @@ const handleLogout = async () => {
         </>
       );
     }
-    
+
     return null;
   };
 

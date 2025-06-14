@@ -8,6 +8,8 @@ import NavbarAdmin from '@/app/components/navbarAdmin';
 import Footer from '@/app/footer';
 import ProductModal from './components/ProductModal'; 
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
+
 interface Varian {
   id: string;
   size?: string;
@@ -41,8 +43,8 @@ export default function AdminProductsPage() {
     setIsLoading(true);
     setError(null);
     try {
-      const token = localStorage.getItem('token_admin'); // <-- Ganti di sini!
-      const response = await fetch('http://localhost:5001/api/produk', {
+      const token = localStorage.getItem('token_admin');
+      const response = await fetch(`${API_BASE_URL}/produk`, {
         headers: {
           'Authorization': token || ''
         }
@@ -61,14 +63,15 @@ export default function AdminProductsPage() {
 
   useEffect(() => {
     fetchProducts();
+    // eslint-disable-next-line
   }, []);
 
   const handleSubmitProduct = async (productData: any, productId?: string) => {
-    const token = localStorage.getItem('token_admin'); // <-- Ganti di sini!
+    const token = localStorage.getItem('token_admin');
     try {
       let response;
       if (productId) {
-        response = await fetch(`http://localhost:5001/api/produk/${productId}`, {
+        response = await fetch(`${API_BASE_URL}/produk/${productId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -77,7 +80,7 @@ export default function AdminProductsPage() {
           body: JSON.stringify(productData)
         });
       } else {
-        response = await fetch('http://localhost:5001/api/produk', {
+        response = await fetch(`${API_BASE_URL}/produk`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -104,9 +107,9 @@ export default function AdminProductsPage() {
   };
 
   const handleDeleteProduct = async (productId: string) => {
-    const token = localStorage.getItem('token_admin'); // <-- Ganti di sini!
+    const token = localStorage.getItem('token_admin');
     try {
-      const response = await fetch(`http://localhost:5001/api/produk/${productId}`, {
+      const response = await fetch(`${API_BASE_URL}/produk/${productId}`, {
         method: 'DELETE',
         headers: { 'Authorization': token || '' }
       });

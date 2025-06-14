@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 import Navbar from '@/app/header';
 import Footer from '@/app/footer';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
+
 export default function SignupPage() {
   const router = useRouter();
 
@@ -27,7 +29,7 @@ export default function SignupPage() {
     }
 
     try {
-      const response = await fetch('http://localhost:5001/api/pelanggan/register', {
+      const response = await fetch(`${API_BASE_URL}/pelanggan/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

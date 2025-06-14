@@ -14,17 +14,10 @@ export default function Header() {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   useEffect(() => {
-    // Gunakan key khusus customer di localStorage
     const token = localStorage.getItem('customer_token');
     const nama = localStorage.getItem('customer_nama');
-
-    if (token) {
-      setIsLoggedIn(true);
-      setNamaUser(nama || '');
-    } else {
-      setIsLoggedIn(false);
-      setNamaUser('');
-    }
+    setIsLoggedIn(!!token);
+    setNamaUser(token ? (nama || '') : '');
   }, [pathname]);
 
   const handleLogout = () => {
@@ -49,6 +42,8 @@ export default function Header() {
             width={200}
             height={80}
             className={styles.logo}
+            style={{ cursor: 'pointer' }}
+            onClick={() => router.push('/')}
           />
         </div>
 

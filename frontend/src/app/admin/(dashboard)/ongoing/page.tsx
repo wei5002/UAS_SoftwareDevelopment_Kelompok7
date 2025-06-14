@@ -6,27 +6,29 @@ import HeaderAdmin from '@/app/headerAdmin';
 import NavbarAdmin from '@/app/components/navbarAdmin';
 import FooterHitam from '@/app/components/footerHitam';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
+
 // Interface definitions
-interface Produk {
+type Produk = {
   id: string;
   namaProduk: string;
   gambar?: string;
-}
-interface ProdukVarian {
+};
+type ProdukVarian = {
   id: string;
   produk: Produk;
   size?: string;
   thickness?: number;
   hole?: number;
   harga: number;
-}
-interface KeranjangBelanja {
-  id:string;
+};
+type KeranjangBelanja = {
+  id: string;
   produkVarian: ProdukVarian;
   jumlah: number;
   totalHarga: number;
-}
-interface Pelanggan {
+};
+type Pelanggan = {
   id: string;
   nama: string;
   provinsi: string;
@@ -35,12 +37,12 @@ interface Pelanggan {
   kelurahan: string;
   alamatDetail: string;
   nomorTelepon: string;
-}
-interface PembatalanPesanan {
+};
+type PembatalanPesanan = {
   alasanPembatalan: string;
   catatanAdmin?: string;
-}
-interface Pesanan {
+};
+type Pesanan = {
   id: string;
   user: Pelanggan;
   keranjang: KeranjangBelanja;
@@ -58,7 +60,7 @@ interface Pesanan {
   buktiTransferUrl: string;
   alasanPenolakan?: string;
   pembatalanPesanan?: PembatalanPesanan;
-}
+};
 
 export default function OngoingOrdersPage() {
   const [orders, setOrders] = useState<Pesanan[]>([]);
@@ -69,34 +71,31 @@ export default function OngoingOrdersPage() {
   const [adminCancelReason, setAdminCancelReason] = useState('');
   const [uploadRefund, setUploadRefund] = useState(false);
 
-  // ==================== STATE BARU UNTUK POPUP DETAIL ====================
+  // State untuk popup detail
   const [showDetailPopup, setShowDetailPopup] = useState(false);
   const [orderForDetail, setOrderForDetail] = useState<Pesanan | null>(null);
-  // =======================================================================
 
   const fetchOrders = async () => {
     const token = localStorage.getItem('token_admin');
     if (!token) return;
     try {
-        const res = await fetch('http://localhost:5001/api/pesanan', {
-            headers: { Authorization: `Bearer ${token}` }
-        });
-        if (!res.ok) throw new Error('Gagal mengambil data pesanan.');
-        
-        const data = await res.json();
-        setOrders(
-            Array.isArray(data.data)
-              ? data.data.filter(
-                  // Menampilkan pesanan ON_PROCESS, ON_DELIVERY, dan DONE
-                  (p: Pesanan) => ['ON_PROCESS', 'ON_DELIVERY', 'DONE'].includes(p.status)
-                )
-              : []
-        );
-    } catch(error) {
-        console.error("Fetch error:", error);
-        setOrders([]);
+      const res = await fetch(`${API_BASE_URL}/pesanan`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (!res.ok) throw new Error('Gagal mengambil data pesanan.');
+      const data = await res.json();
+      setOrders(
+        Array.isArray(data.data)
+          ? data.data.filter(
+              (p: Pesanan) => ['ON_PROCESS', 'ON_DELIVERY', 'DONE'].includes(p.status)
+            )
+          : []
+      );
+    } catch (error) {
+      console.error('Fetch error:', error);
+      setOrders([]);
     }
-  }
+  };
 
   useEffect(() => {
     fetchOrders();
@@ -105,7 +104,7 @@ export default function OngoingOrdersPage() {
   const handleStatusChange = async (orderId: string, newStatus: string) => {
     const token = localStorage.getItem('token_admin');
     try {
-      const res = await fetch(`http://localhost:5001/api/pesanan/${orderId}`, {
+      const res = await fetch(`${API_BASE_URL}/pesanan/${orderId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -114,15 +113,12 @@ export default function OngoingOrdersPage() {
         body: JSON.stringify({ status: newStatus })
       });
       if (!res.ok) throw new Error('Gagal update status');
-      
-      await fetchOrders(); // Fetch ulang untuk memperbarui UI
-
+      await fetchOrders();
     } catch (e: any) {
       alert(e.message || 'Error update order');
     }
   };
-  
-  // ==================== FUNGSI UNTUK POPUP DETAIL ====================
+
   const handleOpenDetailPopup = (order: Pesanan) => {
     setOrderForDetail(order);
     setShowDetailPopup(true);
@@ -132,59 +128,31 @@ export default function OngoingOrdersPage() {
     setShowDetailPopup(false);
     setOrderForDetail(null);
   };
-  
+
   const formatVarianDetails = (varian: ProdukVarian) => {
     const details = [];
     if (varian.size) details.push(`Size ${varian.size}`);
     if (varian.thickness) details.push(`Tebal ${varian.thickness}mm`);
     if (varian.hole) details.push(`Lubang ${varian.hole}mm`);
-    if (details.length === 0) return "Standar";
+    if (details.length === 0) return 'Standar';
     return details.join(' - ');
   };
-  // ===================================================================
 
-  const handleOpenCancelPopup = (order: Pesanan) => {
-    setSelectedOrder(order);
-    setShowCancelPopup(true);
-  };
-
-  const handleAcceptCancel = async () => {
-    if (!selectedOrder) return;
-    setShowCancelPopup(false);
-    setUploadRefund(true);
-  };
-
-  const handleDeclineCancel = async () => {
-    if (!selectedOrder) return;
-    const token = localStorage.getItem('token_admin');
-    try {
-      // ... (logika decline tidak berubah)
-      await fetchOrders();
-
-    } catch (e: any) {
-      alert(e.message || 'Error decline cancel');
-    }
-  };
+  // (Popup pembatalan dan upload refund tetap diabaikan/placeholder)
 
   return (
     <div>
       <HeaderAdmin />
       <NavbarAdmin />
       <main style={{ minHeight: 700, background: '#2f3943', paddingTop: 90, paddingBottom: 100 }}>
-        {orders.length === 0 && <p style={{ color: "#fff", textAlign: "center" }}>No ongoing or completed orders.</p>}
+        {orders.length === 0 && <p style={{ color: '#fff', textAlign: 'center' }}>No ongoing or completed orders.</p>}
         {orders.map((order) => (
           <div className={`${styles.order} ${order.status === 'DONE' ? styles.done : ''}`} key={order.id}>
             {/* Tanda Selesai */}
             {order.status === 'DONE' && <div className={styles.doneBadge}>SELESAI</div>}
-            
-            <img
-              src={order.keranjang?.produkVarian?.produk?.gambar || '/no-img.png'}
-              alt={order.keranjang?.produkVarian?.produk?.namaProduk || ''}
-            />
+            <img src={order.keranjang?.produkVarian?.produk?.gambar || '/no-img.png'} alt={order.keranjang?.produkVarian?.produk?.namaProduk || ''} />
             <div className={styles.detailOrder}>
-              <h2>
-                {order.keranjang?.produkVarian?.produk?.namaProduk || '-'}
-              </h2>
+              <h2>{order.keranjang?.produkVarian?.produk?.namaProduk || '-'}</h2>
               <div className={styles.detailUkuran}>
                 <span className={styles.box}>
                   <b>Varian:</b> {formatVarianDetails(order.keranjang.produkVarian)}
@@ -192,7 +160,6 @@ export default function OngoingOrdersPage() {
               </div>
               <p><b>Jumlah: {order.keranjang?.jumlah}</b></p>
               <p>Total Harga: Rp {((order.keranjang?.totalHarga || 0) + (order.ongkosKirim || 0)).toLocaleString()}</p>
-              
               <div className={styles.statusPesanan}>
                 <button
                   className={order.status === 'ON_PROCESS' ? styles.active : ''}
@@ -216,63 +183,50 @@ export default function OngoingOrdersPage() {
                   DONE
                 </button>
               </div>
-
               {/* Tombol Lihat Detail */}
               <button onClick={() => handleOpenDetailPopup(order)} className={styles.detailBtn}>
                 Lihat Detail
               </button>
-
-              {order.pembatalanPesanan && (
-                // ... (tampilan request cancel tidak berubah)
-                <></>
-              )}
+              {order.pembatalanPesanan && <></>}
             </div>
           </div>
         ))}
-
         {/* ==================== POPUP DETAIL PESANAN ==================== */}
         {showDetailPopup && orderForDetail && (
-            <div className={styles.popup}>
-                <div className={`${styles.popupContent} ${styles.detailPopupContent}`}>
-                    <span className={styles.closeBtn} onClick={handleCloseDetailPopup}>&times;</span>
-                    <h2>Detail Pesanan</h2>
-                    <div className={styles.detailGrid}>
-                        <div className={styles.detailSection}>
-                            <h4>Informasi Pelanggan</h4>
-                            <p><strong>Nama:</strong> {orderForDetail.user.nama}</p>
-                            <p><strong>Telepon:</strong> {orderForDetail.nomorTelepon}</p>
-                            <p><strong>Alamat:</strong> {`${orderForDetail.alamatDetail}, ${orderForDetail.kelurahan}, ${orderForDetail.kecamatan}, ${orderForDetail.kabupaten}, ${orderForDetail.provinsi}`}</p>
-                        </div>
-                        <div className={styles.detailSection}>
-                            <h4>Informasi Pesanan</h4>
-                            <p><strong>Produk:</strong> {orderForDetail.keranjang.produkVarian.produk.namaProduk}</p>
-                            <p><strong>Varian:</strong> {formatVarianDetails(orderForDetail.keranjang.produkVarian)}</p>
-                            <p><strong>Jumlah:</strong> {orderForDetail.keranjang.jumlah}</p>
-                            <p><strong>Status:</strong> {orderForDetail.status}</p>
-                        </div>
-                        <div className={styles.detailSection}>
-                            <h4>Informasi Pembayaran</h4>
-                            <p><strong>Harga Satuan:</strong> Rp {orderForDetail.keranjang.produkVarian.harga.toLocaleString()}</p>
-                            <p><strong>Subtotal:</strong> Rp {orderForDetail.keranjang.totalHarga.toLocaleString()}</p>
-                            <p><strong>Ongkos Kirim:</strong> Rp {orderForDetail.ongkosKirim.toLocaleString()}</p>
-                            <p><strong>Total Harga:</strong> Rp {((orderForDetail.keranjang.totalHarga || 0) + (orderForDetail.ongkosKirim || 0)).toLocaleString()}</p>
-                            <p><strong>Bank:</strong> {orderForDetail.bankName} - {orderForDetail.accountName} ({orderForDetail.accountNumber})</p>
-                            <a href={orderForDetail.buktiTransferUrl} target="_blank" rel="noopener noreferrer">Lihat Bukti Transfer</a>
-                        </div>
-                    </div>
+          <div className={styles.popup}>
+            <div className={`${styles.popupContent} ${styles.detailPopupContent}`}>
+              <span className={styles.closeBtn} onClick={handleCloseDetailPopup}>&times;</span>
+              <h2>Detail Pesanan</h2>
+              <div className={styles.detailGrid}>
+                <div className={styles.detailSection}>
+                  <h4>Informasi Pelanggan</h4>
+                  <p><strong>Nama:</strong> {orderForDetail.user.nama}</p>
+                  <p><strong>Telepon:</strong> {orderForDetail.nomorTelepon}</p>
+                  <p><strong>Alamat:</strong> {`${orderForDetail.alamatDetail}, ${orderForDetail.kelurahan}, ${orderForDetail.kecamatan}, ${orderForDetail.kabupaten}, ${orderForDetail.provinsi}`}</p>
                 </div>
+                <div className={styles.detailSection}>
+                  <h4>Informasi Pesanan</h4>
+                  <p><strong>Produk:</strong> {orderForDetail.keranjang.produkVarian.produk.namaProduk}</p>
+                  <p><strong>Varian:</strong> {formatVarianDetails(orderForDetail.keranjang.produkVarian)}</p>
+                  <p><strong>Jumlah:</strong> {orderForDetail.keranjang.jumlah}</p>
+                  <p><strong>Status:</strong> {orderForDetail.status}</p>
+                </div>
+                <div className={styles.detailSection}>
+                  <h4>Informasi Pembayaran</h4>
+                  <p><strong>Harga Satuan:</strong> Rp {orderForDetail.keranjang.produkVarian.harga.toLocaleString()}</p>
+                  <p><strong>Subtotal:</strong> Rp {orderForDetail.keranjang.totalHarga.toLocaleString()}</p>
+                  <p><strong>Ongkos Kirim:</strong> Rp {orderForDetail.ongkosKirim.toLocaleString()}</p>
+                  <p><strong>Total Harga:</strong> Rp {((orderForDetail.keranjang.totalHarga || 0) + (orderForDetail.ongkosKirim || 0)).toLocaleString()}</p>
+                  <p><strong>Bank:</strong> {orderForDetail.bankName} - {orderForDetail.accountName} ({orderForDetail.accountNumber})</p>
+                  <a href={orderForDetail.buktiTransferUrl} target="_blank" rel="noopener noreferrer">Lihat Bukti Transfer</a>
+                </div>
+              </div>
             </div>
+          </div>
         )}
         {/* ================================================================= */}
-
-        {showCancelPopup && selectedOrder && (
-            // ... (popup cancel tidak berubah)
-            <></>
-        )}
-        {uploadRefund && (
-            // ... (popup upload refund tidak berubah)
-            <></>
-        )}
+        {showCancelPopup && selectedOrder && <></>}
+        {uploadRefund && <></>}
       </main>
       <FooterHitam />
     </div>

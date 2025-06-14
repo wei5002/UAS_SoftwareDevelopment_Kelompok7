@@ -4,6 +4,8 @@ import { useState, useEffect, useRef, ChangeEvent, FormEvent } from 'react';
 import Image from 'next/image';
 import styles from './productModal.module.css';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
+
 interface Varian {
   id: string;
   size?: string;
@@ -174,7 +176,7 @@ export default function ProductModal({ product, isNew, onClose, onSubmitProduct,
       uploadFormData.append('image', selectedFile);
       uploadFormData.append('namaProduk', formData.namaProduk);
       try {
-        const response = await fetch('http://localhost:5001/api/upload-produk', {
+        const response = await fetch(`${API_BASE_URL}/upload-produk`, {
           method: 'POST',
           headers: { 'Authorization': localStorage.getItem('token_admin') || '' },
           body: uploadFormData,
