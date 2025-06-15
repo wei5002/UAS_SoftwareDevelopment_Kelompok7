@@ -10,7 +10,6 @@ export default function NavbarAdmin() {
   const router = useRouter();
   const [hasNewOrders, setHasNewOrders] = useState(false);
 
-  // Cek autentikasi admin
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const token = localStorage.getItem('token_admin');
@@ -20,7 +19,6 @@ export default function NavbarAdmin() {
     }
   }, [router]);
 
-  // Simulasi ada notifikasi order baru
   useEffect(() => {
     setHasNewOrders(true);
   }, []);

@@ -1,4 +1,3 @@
-/* --- Overlay & Modal --- */
 .popupOverlay {
   position: fixed;
   z-index: 1200;
@@ -6,12 +5,12 @@
   top: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(30, 32, 37, 0.55); /* lebih gelap, soft */
+  background: rgba(30, 32, 37, 0.55); 
   display: flex;
   justify-content: center;
   align-items: center;
   overflow-y: auto;
-  backdrop-filter: blur(2.5px); /* efek blur premium */
+  backdrop-filter: blur(2.5px); 
 }
 
 .popupContent {
@@ -34,7 +33,6 @@
   to { opacity: 1; transform: translateY(0);}
 }
 
-/* --- Close Button --- */
 .closeBtn {
   position: absolute;
   right: 24px;
@@ -48,7 +46,6 @@
 }
 .closeBtn:hover { color: #222; }
 
-/* --- Header --- */
 .header {
   display: flex;
   justify-content: space-between;
@@ -70,7 +67,6 @@
   gap: 8px;
 }
 
-/* --- Action Buttons --- */
 .editBtn,
 .deleteBtn,
 .saveBtn,
@@ -93,7 +89,6 @@
 .cancelBtn { background: #eaeaea; color: #444;}
 .cancelBtn:hover { background: #dadada; color: #111; }
 
-/* --- Form Layout --- */
 .formContainer {
   display: flex;
   flex-direction: row;
@@ -109,7 +104,6 @@
 .leftPanel { flex-basis: 31%; min-width: 210px;}
 .rightPanel { flex-basis: 67%;}
 
-/* --- Image & Upload --- */
 .imageWrapper {
   position: relative;
   width: 100%;
@@ -151,7 +145,6 @@
   font-size: 1rem;
 }
 
-/* --- Form Inputs --- */
 .formContainer label {
   font-weight: 600;
   color: #363636;
@@ -177,7 +170,6 @@
   outline: none;
 }
 
-/* --- Kategori dan Status --- */
 .statusSelect {
   background: #f5faf6;
   border: 1.2px solid #dbf3ea;
@@ -185,7 +177,6 @@
   font-weight: 600;
 }
 
-/* --- Varian Produk --- */
 .rightPanel h4 {
   font-size: 1.14rem;
   font-weight: 600;
@@ -229,7 +220,6 @@
   letter-spacing: 0.5px;
 }
 
-/* --- Detail Box --- */
 .detailBox {
   background: #f8fafb;
   border-radius: 9px;
@@ -250,13 +240,12 @@
 }
 .detailItem p { margin: 0; color: #282a2d; text-align: right; }
 
-/* --- Table Header/Row --- */
 .variantsHeader, .variantRow {
  display: grid;
   grid-template-columns: minmax(80px,1.7fr) minmax(80px,1.2fr) minmax(80px,1.2fr) minmax(110px,1.5fr) minmax(80px,1.2fr) 36px;
-  gap: 40px;           /* Tambah gap antar kolom */
+  gap: 40px;        
   align-items: center;
-  padding: 0 30px;     /* Lebarkan padding kiri-kanan */
+  padding: 0 30px;  
 }
 .variantsHeader {
   font-weight: 700; font-size: 0.91rem;
@@ -322,7 +311,6 @@
   align-items: center;
 }
 
-/* --- Konfirmasi Modal --- */
 .confirmModalOverlay {
   position: fixed;
   z-index: 1300;
@@ -361,7 +349,6 @@
 .confirmModalActions .cancelBtn:hover { background: #ebebeb; }
 .confirmModalActions .deleteBtn:hover { background: #e14646; color: #fff; }
 
-/* --- Responsive --- */
 @media (max-width: 1024px) {
   .formContainer { flex-direction: column; gap: 22px;}
   .leftPanel, .rightPanel { flex-basis: auto; width: 100%; }
@@ -374,7 +361,6 @@
   .formActions { flex-direction: column; gap: 9px;}
   .formActions button { width: 100%;}
   .variantsHeader, .variantRow { grid-template-columns: 1fr 0.7fr 0.7fr 1fr 0.7fr 23px;}
-  .placeholderImage { height: 110px;}
 }
 @media (max-width: 480px) {
   .confirmModalContent { padding: 14px; max-width: 90vw;}

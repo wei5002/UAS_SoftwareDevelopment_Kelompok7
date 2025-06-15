@@ -1,64 +1,159 @@
-.navbar {
-  position: fixed;
-  background: #333;
-  color: white;
-  top: 0;
-  z-index: 99;
-  padding: 0px 20px;
-  width: 100%;
-}
+.bodyScrollLock { overflow: hidden !important; }
 
+.topHeader {
+  position: fixed; 
+  top: 0; 
+  left: 0;
+  background: #333; color: white; z-index: 100;
+  padding: 0 20px; width: 100%;
+  min-height: 80px; box-shadow: 0 2px 8px #0002;
+  display: flex; align-items: center; transition: min-height 0.2s;
+}
 .headerContent {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; max-width: 1400px; margin: 0 auto;
 }
-
-.logo {
-  width: 200px;
-  height: 80px;
-  object-fit: cover;
-}
-
+.logoContainer { flex-shrink: 0; }
+.logo { width: 200px; height: 80px; object-fit: contain; cursor: pointer; }
+.logo:hover { filter: brightness(0.92); }
 .tagline {
-  text-align: center;
-  font-family: "Times", sans-serif;
-  font-size: 16px;
-  letter-spacing: 5px;
+  text-align: center; font-family: "Times New Roman", Times, serif;
+  font-size: 16px; letter-spacing: 3px; color: #dedede;
+  max-width: 500px; margin: 0 20px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  flex-grow: 1; flex-shrink: 1;
 }
 
-.loginSignupBtn {
-  display: flex;
-  gap: 12px;
+.actionsContainer { display: flex; align-items: center; }
+.loginBtn, .signupBtn, .logoutBtn {
+  background: none; border: 1.5px solid white; color: white;
+  padding: 7px 18px; border-radius: 7px;
+  font-size: 1rem; font-weight: 600; cursor: pointer;
+  transition: background 0.17s, color 0.17s, border 0.17s;
+  white-space: nowrap;
+  margin-left: 10px;
 }
-
-.loginBtn {
-  background: none;
-  border: 1px solid white;
-  color: white;
-  padding: 5px 10px;
-  cursor: pointer;
+.loginBtn:hover, .signupBtn:hover, .logoutBtn:hover {
+  background: transparent; color: #f5e5bb; border-color: #f5e5bb;
 }
-
-.signupBtn {
-  background: none;
-  border: 1px solid white;
-  color: white;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-.logoutBtn {
-  background: none;
-  border: 1px solid white;
-  color: white;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
 .namaUser {
-  margin-right: 10px;
-  font-weight: bold;
-  font-size: 1rem;
-  color: #000;
+  margin-right: 10px; font-weight: bold; font-size: 1rem;
+  color: #f5e5bb; letter-spacing: 1.5px;
+  background: #24292f; border-radius: 6px; padding: 5px 13px;
+  cursor: pointer; user-select: none;
+}
+
+.hamburgerBtn {
+  display: none; align-items: center; background: #1b2c41;
+  border: none; border-radius: 16px; padding: 10px 18px;
+  cursor: pointer; z-index: 200; margin-left: 18px;
+  transition: background 0.17s;
+}
+.hamburgerBtn:hover { background: #283c5a; }
+.hamburgerIcon {
+  display: inline-block; vertical-align: middle; margin-right: 13px;
+}
+.hamburgerIcon span {
+  display: block; width: 27px; height: 4px;
+  background: #fff; margin: 5px 0; border-radius: 3px;
+}
+.hamburgerText {
+  font-size: 1.4em; font-weight: 700; color: #fff;
+  letter-spacing: 2px; vertical-align: middle;
+  display: inline-block;
+}
+
+.sidebar {
+  position: fixed; top: 0; left: -260px; height: 100vh; width: 250px;
+  background: #15243b; box-shadow: 3px 0 12px #0003;
+  z-index: 210; transition: left 0.27s cubic-bezier(.7,.02,.28,.99);
+  display: flex; flex-direction: column; padding: 0;
+}
+.sidebarOpen { left: 0; }
+.sidebarContent { width: 100%; height: 100%; display: flex; flex-direction: column; }
+.sidebarHeader {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 18px 15px 18px; background: none; color: #fff;
+  font-size: 1.2em; font-weight: bold;
+  border-bottom: 1px solid #21304d;
+}
+.sidebarTitle { font-size: 1.1em; }
+.sidebarCloseBtn {
+  background: none; border: none; color: #fff; font-size: 2em;
+  cursor: pointer; line-height: 1; margin-left: 10px;
+  transition: color 0.18s;
+}
+.sidebarCloseBtn:hover { color: #ffeec0; }
+.sidebarSection {
+  display: flex; flex-direction: column; gap: 0; padding: 24px 18px 12px 18px;
+  border-bottom: 1px solid #21304d;
+}
+.sidebarLinks {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 22px 14px 14px 18px;
+}
+.sidebarLinks a {
+  width: 100%; display: block; font-size: 1.07em;
+  padding: 15px 12px; color: #fff; font-weight: bold;
+  border-radius: 7px; text-decoration: none; margin-bottom: 2px;
+  transition: background 0.18s, color 0.18s;
+  letter-spacing: 1px;
+}
+.sidebarLinks a.active { background: #253d5e; color: #ffeec0; }
+.sidebarLinks a:not(.active):hover { background: #2e466b; color: #ffeec0; }
+.notifContainer { position: relative; }
+.notifSymbol {
+  position: absolute; top: 9px; right: 12px;
+  background: red; color: white; font-weight: bold; font-size: 14px;
+  width: 20px; height: 20px; text-align: center;
+  border-radius: 50%; line-height: 20px; border: 2px solid #fff;
+}
+.sidebarOverlay {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.36); z-index: 208;
+}
+
+.secondaryNavWrapper { width: 100vw; position: relative; z-index: 99; }
+.secondaryNavbar {
+  position: fixed; top: 85px; left: 0; width: 100vw;
+  background: #fff; height: 60px; z-index: 99;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  display: flex; justify-content: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+.secondaryNavbarContent {
+  width: 100%; height: 100%; max-width: 1400px; padding: 0 20px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.secondaryNavbar a {
+  position: relative; display: inline-block; font-size: 1em;
+  font-weight: 600; color: #333; text-decoration: none;
+  padding: 10px 20px; border-radius: 8px;
+  transition: color 0.3s, background 0.3s;
+}
+.secondaryNavbar a.active { background: #1a2c41; color: #fff; }
+.secondaryNavbar a:not(.active):hover { background: #f0f0f0; color: #000; }
+.notifContainer { position: relative; display: flex; align-items: center; }
+.notifSymbol {
+  position: absolute; top: 0; right: 5px; background: red; color: white;
+  font-weight: bold; font-size: 14px; width: 22px; height: 22px;
+  text-align: center; border-radius: 50%; line-height: 22px; border: 2px solid white;
+}
+
+.contentSpacer { height: 80px; }
+.contentSpacerWithNavbar { height: calc(80px + 60px); }
+
+@media (max-width: 1100px) {
+  .tagline { display: none; }
+}
+@media (max-width: 900px) {
+  .tagline { display: none; }
+  .actionsContainer { display: none; }
+  .hamburgerBtn { display: flex; }
+  .secondaryNavWrapper, .secondaryNavbar { display: none; }
+  .contentSpacer, .contentSpacerWithNavbar { height: 54px; }
+}
+@media (max-width: 600px) {
+  .logo { width: 130px; height: 46px; }
+  .topHeader { min-height: 46px; padding: 0 8px; }
 }

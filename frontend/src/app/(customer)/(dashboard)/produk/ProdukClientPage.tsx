@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import styles from './produk.module.css';
 import Header from '@/app/header';
-import Navbar from '@/app/components/navbar';
 import Footer from '@/app/footer';
 import ProductModal from './components/ProductModal';
 
@@ -43,7 +42,6 @@ export default function ProdukClientPage() {
   return (
     <>
       <Header />
-      <Navbar />
       <main>
         {/* Hero Section */}
         <section className={styles.hero}>

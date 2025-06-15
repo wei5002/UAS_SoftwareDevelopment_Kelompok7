@@ -5,33 +5,86 @@
     font-family: sans-serif;
 }
 
+@keyframes slideInFromTop {
+    from {
+        top: 0px;
+        opacity: 0;
+    }
+    to {
+        top: 100px;
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.notification {
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    color: white;
+    z-index: 1001;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    animation: slideInFromTop 0.5s ease-out forwards, fadeOut 0.5s ease-out 2.5s forwards;
+    min-width: 250px;
+    text-align: center;
+}
+
+.notification.success {
+    background-color: #4CAF50;
+}
+
+.notification.error {
+    background-color: #f44336;
+}
+
 .orderList {
-    padding-top: 55px;
-    padding-bottom: 55px;
+    padding: 40px 20px;
     margin-top: 140px;
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 30px;
     align-items: center;
-    min-height: 55vh;
+    min-height: 60vh;
 }
 
 .orderCard {
-    width: 60%;
+    width: 100%;
+    max-width: 900px;
     display: flex;
     flex-direction: row;
-    box-shadow:
-        10px 0px 20px rgba(0,0,0,0.3),
-        -10px 0px 20px rgba(0,0,0,0.3),
-        0px 10px 20px rgba(0,0,0,0.3),
-        0px -10px 20px rgba(0,0,0,0.3);
-    padding: 30px 30px;
+    gap: 30px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    padding: 25px;
     background-color: #3a4450;
-    border-radius: 10px;
+    border-radius: 12px;
 }
 
 .orderCardImg {
-    margin-right: 20px;
+    flex-shrink: 0;
 }
 
 .orderCardImg img {
@@ -39,63 +92,76 @@
     height: 200px;
     object-fit: cover;
     border-radius: 10px;
+    display: block;
 }
 
 .orderCardContent {
     display: flex;
     flex-direction: column;
-    justify-content: right;
-    width: 670px;
+    justify-content: space-between;
+    flex-grow: 1;
+    width: auto;
 }
 
 .orderCardDesc {
     color: white;
     display: flex;
-    width: 390px;
     flex-direction: column;
+    width: auto;
 }
 
 .orderCardDesc p {
-    font-size: 20px;
+    font-size: 1.1rem;
     font-family: 'Times New Roman', Times, serif;
-    margin: 2px;
+    margin: 2px 0;
 }
 
 .orderCardSizeWrap {
-    padding: 5px 0px;
+    padding: 10px 0px;
     display: flex;
     flex-direction: row;
-    gap: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .orderCardSize {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 5px 15px;
     background: #ffffff;
     border-radius: 20px;
 }
 
 .orderCardSize p {
     color: black !important;
+    font-size: 0.9rem;
+    margin: 0;
 }
 
 .buttonWrap {
     display: flex;
-    justify-content: right;
-    gap: 5px;
+    justify-content: flex-end;
+    gap: 10px;
+    align-items: center;
 }
 
 .produk,
 .orderBtn,
 .deleteCartBtn {
-    height: 35px;
-    width: 100px;
-    font-size: 20px;
+    height: 38px;
+    width: auto;
+    padding: 0 20px;
+    font-size: 1rem;
     font-family: 'Times New Roman', Times, serif;
     border-radius: 20px;
     border: none;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-weight: 600;
+}
+
+.produk:hover,
+.orderBtn:hover,
+.deleteCartBtn:hover {
+    transform: scale(1.05);
 }
 
 .orderBtn {
@@ -127,6 +193,162 @@
 
 .amountValue {
     font-weight: bold;
-    font-size: 18px;
+    font-size: 1.2rem;
+    color: white;
+    margin-right: 15px;
 }
 
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background: #3a4450;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 90%;
+    max-width: 450px;
+    color: white;
+    position: relative;
+    animation: fadeInScale 0.3s ease-out forwards;
+}
+
+.modalContent h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #ffffff;
+    font-size: 1.8rem;
+}
+
+.modalContent p {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.modalActions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.cancelBtn,
+.deleteConfirmBtn {
+    padding: 12px 25px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cancelBtn {
+    background-color: #6c757d;
+    color: white;
+}
+
+.cancelBtn:hover {
+    background-color: #5a6268;
+    transform: scale(1.05);
+}
+
+.deleteConfirmBtn {
+    background-color: crimson;
+    color: white;
+}
+
+.deleteConfirmBtn:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+}
+
+@media (max-width: 900px) {
+    .orderList {
+        margin-top: 120px;
+    }
+
+    .orderCard {
+        max-width: 700px;
+    }
+}
+
+@media (max-width: 650px) {
+    .orderList {
+        margin-top: 130px;
+        gap: 20px;
+    }
+
+    .orderCard {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .orderCardImg img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .orderCardContent {
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .orderCardSizeWrap {
+        justify-content: center;
+    }
+
+    .buttonWrap {
+        justify-content: center;
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .modalContent {
+        padding: 25px;
+    }
+    .modalContent h2 {
+        font-size: 1.5rem;
+    }
+    .modalContent p {
+        font-size: 1rem;
+    }
+    .cancelBtn,
+    .deleteConfirmBtn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+
+    .notification {
+        top: 80px; 
+        width: 80%;
+    }
+}
+
+@media (max-width: 400px) {
+    .orderCardDesc p {
+        font-size: 1rem;
+    }
+
+    .produk,
+    .orderBtn,
+    .deleteCartBtn {
+        font-size: 0.9rem;
+        padding: 0 15px;
+        height: 35px;
+    }
+}

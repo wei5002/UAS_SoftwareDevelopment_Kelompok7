@@ -1,4 +1,3 @@
-/* Semua elemen di dalam .main pakai box-sizing border-box */
 .main * {
   box-sizing: border-box;
 }
@@ -6,15 +5,19 @@
 .main {
   background-color: rgb(255, 255, 255);
   background-size: cover;
+  background-position: center;
   color: black;
   background-image: url('/assets/images/barang stainless steel.png');
   text-align: center;
   min-height: 50vh;
   padding: 40px 20px;
   margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Title */
 .title {
   font-size: 3rem;
   font-weight: bold;
@@ -22,7 +25,6 @@
   margin-bottom: 30px;
 }
 
-/* Kotak Login */
 .kotak_login {
   background: white;
   padding: 40px;
@@ -32,23 +34,21 @@
   border-radius: 40px;
   box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
   position: relative;
-  overflow: hidden; /* supaya sudut tetap rapi */
+  overflow: hidden;
 }
 
-/* Form */
 .form {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-/* Label dan Input */
 .baris_form {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  flex-wrap: wrap; /* supaya responsif di layar kecil */
+  flex-wrap: wrap;
 }
 
 .baris_form label {
@@ -62,52 +62,139 @@
   flex: 2;
   padding: 15px;
   border-radius: 15px;
-  border: none;
-  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  box-shadow: none;
   font-size: 1.5rem;
   letter-spacing: 3px;
   color: #555;
+  width: 100%;
 }
 
-/* Button Group */
 .btn_group {
   display: flex;
   justify-content: space-between;
   margin-top: 40px;
+  gap: 20px;
   padding: 0 20px;
   width: 100%;
 }
 
-/* Button Back */
-.btn_back {
-  padding: 15px 40px;
-  font-size: 1.2rem;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  background-color: #fff;
-  color: #000;
-  border: 2px solid #000;
-  transition: all 0.3s ease;
-}
 
-.btn_back:hover {
-  background-color: #f0f0f0;
-}
-
-/* Button Next */
+.btn_back,
 .btn_next {
   padding: 15px 40px;
   font-size: 1.2rem;
   border: none;
   border-radius: 20px;
   cursor: pointer;
-  background-color: #fff;
-  color: #000;
   border: 2px solid #000;
   transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.btn_back {
+  background-color: #fff;
+  color: #000;
+}
+
+.btn_next {
+  background-color: #000;
+  color: #fff;
+}
+
+.btn_back:hover {
+  background-color: #f0f0f0;
 }
 
 .btn_next:hover {
-  background-color: #f0f0f0;
+  background-color: #333;
+}
+
+.btn_back:disabled,
+.btn_next:disabled {
+  background-color: #ccc;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
+
+.error {
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 10px;
+  font-weight: 500;
+  background-color: #fdecea;
+  color: #a02c2c;
+  border: 1px solid #f9c5c5;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.5rem;
+    letter-spacing: 6px;
+  }
+
+  .kotak_login {
+    width: 85%;
+    padding: 30px;
+  }
+
+  .baris_form label,
+  .baris_form input {
+    font-size: 1.2rem;
+  }
+
+  .btn_group {
+    padding: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    padding: 20px 15px;
+    margin-top: 80px;
+    min-height: 50vh;
+  }
+
+  .title {
+    font-size: 1.8rem;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+  }
+
+  .kotak_login {
+    width: 100%;
+    padding: 25px 20px;
+    border-radius: 20px;
+  }
+
+  .baris_form {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .baris_form label {
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-align: left;
+  }
+
+  .baris_form input {
+    font-size: 1rem;
+    padding: 12px;
+    letter-spacing: 1px;
+  }
+
+  .btn_group {
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 30px;
+  }
+
+  .btn_back,
+  .btn_next {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+  }
 }

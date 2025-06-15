@@ -1,5 +1,3 @@
-// EditModal dengan URL sudah pakai environment variable
-
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -10,14 +8,21 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/a
 
 export default function ProductModal({ id, cartItemId, onClose }: { id: string; cartItemId?: string; onClose: () => void }) {
   const router = useRouter();
+  
   const [produk, setProduk] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [showLoginAlert, setShowLoginAlert] = useState(false);
   const [selectedSize, setSelectedSize] = useState<any>(null);
   const [selectedThickness, setSelectedThickness] = useState<any>(null);
   const [selectedHole, setSelectedHole] = useState<any>(null);
   const [jumlah, setJumlah] = useState(1);
   
+  // UI State
+  const [loading, setLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+  const [showLoginAlert, setShowLoginAlert] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
   useEffect(() => {
     const token = localStorage.getItem('customer_token');
     if (!token) {
@@ -27,10 +32,10 @@ export default function ProductModal({ id, cartItemId, onClose }: { id: string; 
       }, 1500);
       return;
     }
+
     const fetchInitialData = async () => {
       setLoading(true);
       try {
-        // Detail produk
         const productRes = await fetch(`${API_BASE_URL}/produk/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -38,11 +43,9 @@ export default function ProductModal({ id, cartItemId, onClose }: { id: string; 
           const productData = await productRes.json();
           setProduk(productData.data);
         } else {
-          console.error('Gagal mengambil detail produk');
-          setLoading(false);
-          return;
+          throw new Error('Gagal mengambil detail produk');
         }
-        // Jika edit mode (cartItemId tersedia)
+
         if (cartItemId) {
           const cartItemRes = await fetch(`${API_BASE_URL}/keranjang/item/${cartItemId}`, {
              headers: { Authorization: `Bearer ${token}` },
@@ -58,12 +61,13 @@ export default function ProductModal({ id, cartItemId, onClose }: { id: string; 
              console.error('Gagal mengambil data item keranjang');
           }
         }
-      } catch (err) {
-        console.error(err);
+      } catch (err: any) {
+        setErrorMessage(err.message);
       } finally {
         setLoading(false);
       }
     };
+
     fetchInitialData();
   }, [id, cartItemId, router]);
 
@@ -93,64 +97,58 @@ export default function ProductModal({ id, cartItemId, onClose }: { id: string; 
   const hargaTotal = selectedVarian ? selectedVarian.harga * jumlah : 0;
   
   const handleSaveToCart = async () => {
+    setErrorMessage('');
     if (!isVariantSelected) {
-      alert('Pilih varian produk yang valid terlebih dahulu.');
+      setErrorMessage('Pilih varian produk yang valid terlebih dahulu.');
       return;
     }
     if (selectedVarian.stok < jumlah || jumlah === 0) {
-      alert('Stok tidak mencukupi atau jumlah tidak valid.');
+      setErrorMessage('Stok tidak mencukupi atau jumlah tidak valid.');
       return;
     }
     const token = localStorage.getItem('customer_token');
     if (!token) {
-      alert('Anda harus login terlebih dahulu.');
       router.replace('/auth/login');
       return;
     }
+    
+    setIsSaving(true);
     const isEditing = cartItemId !== undefined;
-    const apiUrl = isEditing
-      ? `${API_BASE_URL}/keranjang/${cartItemId}/spesifikasi`
-      : `${API_BASE_URL}/keranjang`;
+    const apiUrl = isEditing ? `${API_BASE_URL}/keranjang/${cartItemId}/spesifikasi` : `${API_BASE_URL}/keranjang`;
     const method = isEditing ? 'PATCH' : 'POST';
-    const body = isEditing
-      ? {
-          size: selectedSize,
-          thickness: selectedThickness,
-          hole: selectedHole,
-          jumlah: jumlah
-        }
-      : {
-          produkVarianId: selectedVarian.id,
-          jumlah: jumlah
-        };
+    const body = isEditing ? { size: selectedSize, thickness: selectedThickness, hole: selectedHole, jumlah: jumlah } : { produkVarianId: selectedVarian.id, jumlah: jumlah };
+    
     try {
       const response = await fetch(apiUrl, {
         method: method,
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify(body),
       });
+
       if (response.ok) {
-        alert(isEditing ? 'Item keranjang berhasil diperbarui!' : 'Produk berhasil ditambahkan ke keranjang!');
-        onClose();
+        setSuccessMessage(isEditing ? 'Item keranjang berhasil diperbarui!' : 'Produk berhasil ditambahkan ke keranjang!');
+        setShowSuccessPopup(true);
       } else {
         const errorData = await response.json();
-        console.error('API Error:', errorData);
-        alert(isEditing ? 'Gagal memperbarui item keranjang.' : 'Gagal menambahkan produk.');
+        throw new Error(errorData.message || (isEditing ? 'Gagal memperbarui item.' : 'Gagal menambahkan produk.'));
       }
-    } catch (err) {
-      console.error('Network/Client Error:', err);
-      alert('Terjadi kesalahan. Silakan coba lagi.');
+    } catch (err: any) {
+      setErrorMessage(err.message);
+    } finally {
+      setIsSaving(false);
     }
+  };
+
+  const handleCloseSuccessPopup = () => {
+    setShowSuccessPopup(false);
+    onClose();
   };
 
   if (showLoginAlert) {
     return (
-      <div className={styles.popup_produk} style={{ display: 'block' }}>
-        <div className={styles.popup_isi}>
-          <h2 style={{ color: 'white', textAlign: 'center' }}>
+      <div className={styles.popup_produk}>
+        <div className={styles.popup_isi_loading}>
+          <h2>
             Anda harus login terlebih dahulu. Mengarahkan ke halaman login...
           </h2>
         </div>
@@ -159,9 +157,9 @@ export default function ProductModal({ id, cartItemId, onClose }: { id: string; 
   }
   if (loading) {
      return (
-       <div className={styles.popup_produk} style={{ display: 'block' }}>
-        <div className={styles.popup_isi}>
-            <p style={{color: 'white', textAlign: 'center'}}>Memuat data...</p>
+       <div className={styles.popup_produk}>
+        <div className={styles.popup_isi_loading}>
+            <p>Memuat data...</p>
         </div>
        </div>
     );
@@ -169,118 +167,83 @@ export default function ProductModal({ id, cartItemId, onClose }: { id: string; 
   if (!produk) return null;
 
   return (
-    <div id="popup_produk" className={styles.popup_produk} style={{ display: 'block' }} onClick={onClose}>
-      <div className={styles.popup_isi} onClick={(e) => e.stopPropagation()}>
-        <span className={styles.close} onClick={onClose}>&times;</span>
-        <div className={styles.popup_container}>
-          <div className={styles.popup_header}>
-            <h2 id="judul_produk" className={styles.judul_produk}>{produk.namaProduk}</h2>
-            <br />
-            <h2 id="jenis_produk" className={styles.jenis_produk}>{produk.kategori}</h2>
-            <img id="gambar_produk" src={produk.gambar} alt={produk.namaProduk} className={styles.gambar_produk}/>
-            <div className={styles['kurang-tambah-btn']}>
-              <div className={styles.jumlah_wrapper}>
-                <button
-                  className={styles.kurang_btn}
-                  onClick={() => setJumlah(Math.max(1, jumlah - 1))}
-                  disabled={!isVariantSelected || selectedVarian?.stok === 0 || jumlah <= 1}
-                >
-                  -
-                </button>
-                <span id="jumlah_produk" className={styles.jumlah_produk}>
-                    {isVariantSelected && selectedVarian.stok === 0 ? 0 : jumlah}
-                </span>
-                <button
-                  className={styles.tambah_btn}
-                  onClick={() => setJumlah(jumlah + 1)}
-                  disabled={!isVariantSelected || (selectedVarian && jumlah >= selectedVarian.stok)}
-                >
-                  +
+    <>
+      <div id="popup_produk" className={styles.popup_produk} onClick={onClose}>
+        <div className={styles.popup_isi} onClick={(e) => e.stopPropagation()}>
+          <span className={styles.close} onClick={onClose}>&times;</span>
+          <div className={styles.popup_container}>
+            <div className={styles.popup_header}>
+              <h2 id="judul_produk" className={styles.judul_produk}>{produk.namaProduk}</h2>
+              <h2 id="jenis_produk" className={styles.jenis_produk}>{produk.kategori}</h2>
+              <img id="gambar_produk" src={produk.gambar} alt={produk.namaProduk} className={styles.gambar_produk}/>
+              <div className={styles['kurang-tambah-btn']}>
+                <div className={styles.jumlah_wrapper}>
+                  <button className={styles.kurang_btn} onClick={() => setJumlah(Math.max(1, jumlah - 1))} disabled={!isVariantSelected || selectedVarian?.stok === 0 || jumlah <= 1}>-</button>
+                  <span id="jumlah_produk" className={styles.jumlah_produk}>
+                      {isVariantSelected && selectedVarian.stok === 0 ? 0 : jumlah}
+                  </span>
+                  <button className={styles.tambah_btn} onClick={() => setJumlah(jumlah + 1)} disabled={!isVariantSelected || (selectedVarian && jumlah >= selectedVarian.stok)}>+</button>
+                </div>
+                <button className={styles.keranjang_btn} onClick={handleSaveToCart} disabled={!isVariantSelected || (selectedVarian && selectedVarian.stok === 0) || isSaving}>
+                  {isSaving ? 'Menyimpan...' : (cartItemId ? 'Update Keranjang' : 'Add to Cart')}
                 </button>
               </div>
-              <button
-                className={styles.keranjang_btn}
-                onClick={handleSaveToCart}
-                disabled={!isVariantSelected || (selectedVarian && selectedVarian.stok === 0)}
-              >
-                {cartItemId ? 'Update Keranjang' : 'Add to Cart'}
-              </button>
             </div>
-          </div>
-          <div className={styles.popup_detail}>
-             {thicknessSet.length > 0 && (
-              <div className={styles.bagian_kanan} id="detail_thickness">
-                <h3 id="judul_thickness">THICKNESS (mm)</h3>
-                <div id="popup_thickness" className={styles.thickness_buttons}>
-                  {thicknessSet.map((t: any) => (
-                    <button
-                      key={t}
-                      className={`${styles.thickness_btn} ${selectedThickness === t ? styles.active : ''}`}
-                      onClick={() => setSelectedThickness(t)}
-                    >
-                      {t}
-                    </button>
-                  ))}
+            <div className={styles.popup_detail}>
+               {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
+              
+              {thicknessSet.length > 0 && (
+                <div className={styles.bagian_kanan} id="detail_thickness">
+                  <h3>THICKNESS (mm)</h3>
+                  <div className={styles.thickness_buttons}>
+                    {thicknessSet.map((t: any) => (
+                      <button key={t} className={`${styles.thickness_btn} ${selectedThickness === t ? styles.active : ''}`} onClick={() => setSelectedThickness(t)}>{t}</button>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
-            {holeSet.length > 0 && (
-              <div className={styles.bagian_kanan} id="detail_hole">
-                <h3 id="judul_hole">HOLE DIAMETER (mm)</h3>
-                <div id="popup_hole" className={styles.hole_buttons}>
-                  {holeSet.map((h: any) => (
-                    <button
-                      key={h}
-                      className={`${styles.hole_btn} ${selectedHole === h ? styles.active : ''}`}
-                      onClick={() => setSelectedHole(h)}
-                    >
-                      {h}
-                    </button>
-                  ))}
+              )}
+              {holeSet.length > 0 && (
+                <div className={styles.bagian_kanan} id="detail_hole">
+                  <h3>HOLE DIAMETER (mm)</h3>
+                  <div className={styles.hole_buttons}>
+                    {holeSet.map((h: any) => (
+                      <button key={h} className={`${styles.hole_btn} ${selectedHole === h ? styles.active : ''}`} onClick={() => setSelectedHole(h)}>{h}</button>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
-            {sizeSet.length > 0 && (
-              <div className={styles.bagian_kanan} id="detail_size">
-                <h3 id="judul_size">SIZE (mm)</h3>
-                <div id="popup_size" className={styles.size_buttons}>
-                  {sizeSet.map((s: any) => (
-                    <button
-                      key={s}
-                      className={`${styles.size_btn} ${selectedSize === s ? styles.active : ''}`}
-                      onClick={() => setSelectedSize(s)}
-                    >
-                      {s}
-                    </button>
-                  ))}
+              )}
+              {sizeSet.length > 0 && (
+                <div className={styles.bagian_kanan} id="detail_size">
+                  <h3>SIZE (mm)</h3>
+                  <div className={styles.size_buttons}>
+                    {sizeSet.map((s: any) => (
+                      <button key={s} className={`${styles.size_btn} ${selectedSize === s ? styles.active : ''}`} onClick={() => setSelectedSize(s)}>{s}</button>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
-            <div className={styles.popup_action}>
-              <div className={styles.stock_price}>
-                <p>
-                  Stok:{' '}
-                  <span id="popup_stock" className={styles.nilai_stock}>
-                    {isVariantSelected ? (selectedVarian.stok === 0 ? 'Habis' : selectedVarian.stok) : '-'}
-                  </span>
-                </p>
-                <p>
-                  Harga:{' '}
-                  <span id="popup_price" className={styles.nilai_price}>
-                    Rp {isVariantSelected ? selectedVarian.harga.toLocaleString('id-ID') : '-'}
-                  </span>
-                </p>
-                <p>
-                  Total:{' '}
-                  <span className={styles.nilai_price}>
-                    Rp {hargaTotal.toLocaleString('id-ID')}
-                  </span>
-                </p>
+              )}
+              
+              <div className={styles.popup_action}>
+                <div className={styles.stock_price}>
+                  <p>Stok: <span id="popup_stock" className={styles.nilai_stock}>{isVariantSelected ? (selectedVarian.stok === 0 ? 'Habis' : selectedVarian.stok) : '-'}</span></p>
+                  <p>Harga: <span id="popup_price" className={styles.nilai_price}>Rp {isVariantSelected ? selectedVarian.harga.toLocaleString('id-ID') : '-'}</span></p>
+                  <p>Total: <span className={styles.nilai_price}>Rp {hargaTotal.toLocaleString('id-ID')}</span></p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+
+      {showSuccessPopup && (
+        <div className={styles.popup_produk}>
+          <div className={styles.popup_isi_sukses}>
+            <h2 className={styles.popup_sukses_title}>Berhasil!</h2>
+            <p className={styles.popup_sukses_text}>{successMessage}</p>
+            <button className={styles.popup_sukses_btn} onClick={handleCloseSuccessPopup}>OK</button>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

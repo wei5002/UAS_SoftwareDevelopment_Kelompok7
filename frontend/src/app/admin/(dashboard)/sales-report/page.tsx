@@ -4,13 +4,10 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import styles from './sales.report.module.css';
 import HeaderAdmin from '@/app/headerAdmin';
-import NavbarAdmin from '@/app/components/navbarAdmin';
 import FooterHitam from '@/app/components/footerHitam';
 
-// --- Pakai ENV (aman untuk production dan dev) ---
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
 
-// --- Interface Definitions ---
 type Produk = {
     id: string;
     namaProduk: string;
@@ -63,19 +60,16 @@ export default function SalesReportPage() {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
-    // State for filters
     const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
     const [selectedMonth, setSelectedMonth] = useState<number | ''>(new Date().getMonth() + 1);
     const [filterUserId, setFilterUserId] = useState<string>('');
     const [filterProdukId, setFilterProdukId] = useState<string>('');
     const [filterTujuan, setFilterTujuan] = useState<string>('');
 
-    // State for chart and popup
     const [viewMode, setViewMode] = useState<'monthly' | 'daily'>('monthly');
     const [showDetailPopup, setShowDetailPopup] = useState<boolean>(false);
     const [selectedReportDetail, setSelectedReportDetail] = useState<LaporanPenjualan | null>(null);
 
-    // --- Fetch Laporan ---
     const fetchAllReportsForYear = async (year: number) => {
         setLoading(true);
         setError(null);
@@ -107,7 +101,6 @@ export default function SalesReportPage() {
         fetchAllReportsForYear(selectedYear);
     }, [selectedYear]);
 
-    // --- Apply Filters ---
     const applyFilters = () => {
         let reports = [...allReports];
 
@@ -134,7 +127,6 @@ export default function SalesReportPage() {
         applyFilters();
     }, [allReports, selectedMonth, filterUserId, filterProdukId, filterTujuan]);
 
-    // --- Chart Data ---
     const processedChartData = useMemo(() => {
         const targetReports = filteredReports;
 
@@ -157,7 +149,6 @@ export default function SalesReportPage() {
             }));
         }
         
-        // Daily view for the selected month
         const dailySales: { [key: string]: number } = {};
         const daysInMonth = selectedMonth ? new Date(selectedYear, selectedMonth, 0).getDate() : 31;
 
@@ -179,7 +170,6 @@ export default function SalesReportPage() {
 
     }, [filteredReports, viewMode, selectedYear, selectedMonth]);
 
-    // --- Summary ---
     const summaryData = useMemo(() => {
         const totalPenjualan = filteredReports.reduce((sum, report) => sum + report.totalPenjualan, 0);
         const jumlahPesanan = filteredReports.length;
@@ -195,7 +185,6 @@ export default function SalesReportPage() {
     return (
         <div className={styles.pageContainer}>
             <HeaderAdmin />
-            <NavbarAdmin />
             <main className={styles.mainContent}>
                 <h1 className={styles.pageTitle}>Laporan Penjualan</h1>
 

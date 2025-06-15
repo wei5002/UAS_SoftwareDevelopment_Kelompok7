@@ -96,15 +96,11 @@
   background-color: #218838;
 }
 
-/* ==================== STYLE BARU ==================== */
-
-/* Style untuk kartu pesanan yang sudah selesai */
 .order.done {
   opacity: 0.75;
   border-left: 8px solid #28a745;
 }
 
-/* Badge 'SELESAI' */
 .doneBadge {
   position: absolute;
   top: 15px;
@@ -120,7 +116,6 @@
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-/* Tombol untuk melihat detail */
 .detailBtn {
   background-color: #17a2b8;
   color: white;
@@ -139,7 +134,6 @@
   background-color: #138496;
 }
 
-/* Style spesifik untuk popup detail */
 .detailPopupContent {
   max-width: 800px !important;
   width: 95% !important;
@@ -199,10 +193,6 @@
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-/* ====================================================== */
-
-/* (Sisa style dari file asli Anda) */
-
 .popup, .cancelPopup {
   position: fixed;
   z-index: 9999;
@@ -239,7 +229,6 @@
   color: red;
 }
 
-/* Responsive */
 @media (max-width: 1150px) {
   .order, .batal {
     width: 50%;

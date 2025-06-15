@@ -8,7 +8,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1001; /* Pastikan di atas konten lain */
+    z-index: 1001;
 }
 
 .popupContent {
@@ -19,6 +19,7 @@
     max-width: 550px;
     color: white;
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
+    position: relative;
 }
 
 .popupWrapper {
@@ -124,9 +125,81 @@
     cursor: not-allowed;
 }
 
-.errorText {
-    color: #f56565;
-    margin-top: 15px;
-    text-align: center;
+.notificationPopup {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
     font-weight: bold;
+    color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1002;
+    opacity: 0;
+    animation: fadeInSlideDown 0.3s forwards;
+    white-space: nowrap;
+}
+
+.notificationPopup.success {
+    background-color: #28a745; 
+}
+
+.notificationPopup.error {
+    background-color: #dc3545;
+}
+
+.notificationPopup.info {
+    background-color: #007bff;
+}
+
+@keyframes fadeInSlideDown {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -20px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+@media (max-width: 600px) {
+    .popupContent {
+        padding: 20px 25px;
+    }
+    .popupTitle h2 {
+        font-size: 1.5rem;
+    }
+    .popupDatacus {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px 0;
+    }
+    .popupDatacusTitle, .popupDatacusContent {
+        flex-basis: auto;
+    }
+    .popupButtonsYesno {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 400px) {
+    .popupContent {
+        padding: 15px 20px;
+    }
+    .popupReason textarea {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+    .popupButtonsYesno button {
+        font-size: 0.9rem;
+        padding: 10px 15px;
+    }
+    .notificationPopup {
+        font-size: 0.8rem;
+        padding: 8px 15px;
+    }
 }

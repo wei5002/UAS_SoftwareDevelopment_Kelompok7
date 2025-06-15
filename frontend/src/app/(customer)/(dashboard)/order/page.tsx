@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import styles from './order.module.css';
 import Header from '@/app/header';
-import Navbar from '@/app/components/navbar';
 import FooterHitam from '@/app/components/footerHitam';
 import CancelModal from './components/CancelModal';
 
@@ -40,7 +39,8 @@ type KeranjangBelanja = {
 type Pembatalan = {
     id: string;
     statusPembatalan: StatusPembatalan;
-}
+    catatanAdmin?: string;
+};
 
 type Pesanan = {
     id: string;
@@ -63,10 +63,10 @@ type Pesanan = {
     user: {
         nama: string;
     };
+    alasanPenolakan?: string; 
     pembatalanPesanan?: Pembatalan;
 };
 
-// PENTING: Ambil base url dari ENV
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
 
 export default function OrderPage() {
@@ -176,10 +176,10 @@ export default function OrderPage() {
 
     const getCancelButtonText = (status?: StatusPembatalan) => {
         switch (status) {
-            case 'menunggu': return 'Cancel Pending';
-            case 'disetujui': return 'Cancelled';
-            case 'ditolak': return 'Cancel Rejected';
-            default: return 'Cancel';
+            case 'menunggu': return 'Batal Menunggu';
+            case 'disetujui': return 'Dibatalkan';
+            case 'ditolak': return 'Batal Ditolak';
+            default: return 'Batalkan';
         }
     };
 
@@ -189,7 +189,6 @@ export default function OrderPage() {
                 <title>Pesanan Saya</title>
             </Head>
             <Header />
-            <Navbar />
             <div className={styles.orderList}>
                 {loading && <p>Memuat pesanan...</p>}
                 {error && <p className={styles.errorText}>{error}</p>}
@@ -200,10 +199,15 @@ export default function OrderPage() {
                     const canBeCancelled = (order.status === 'PENDING' || order.status === 'ON_PROCESS') && !cancellationStatus;
                     const canBeMarkedDone = order.status === 'ON_DELIVERY' && cancellationStatus !== 'disetujui';
 
+                    const isRejectedByAdminDueToInvalidMutation = 
+                        order.status === 'CANCELLED' && 
+                        order.alasanPenolakan?.includes('mutasi tidak valid'); 
+
                     const cardClasses = [
                         styles.orderCard,
                         order.status === 'DONE' ? styles.done : '',
-                        cancellationStatus ? styles[`cancellation_${cancellationStatus}`] : ''
+                        cancellationStatus ? styles[`cancellation_${cancellationStatus}`] : '',
+                        isRejectedByAdminDueToInvalidMutation ? styles.rejectedInvalidMutation : '' 
                     ].join(' ');
 
                     return (
@@ -218,6 +222,13 @@ export default function OrderPage() {
                                     SELESAI
                                 </div>
                             )}
+                            {/* NEW: Badge for Rejected Due to Invalid Mutation */}
+                            {isRejectedByAdminDueToInvalidMutation && (
+                                <div className={`${styles.statusOverlay} ${styles.rejectedInvalidMutationOverlay}`}>
+                                    <p>PEMBAYARAN DITOLAK: Mutasi Tidak Valid</p>
+                                </div>
+                            )}
+
                             <div className={styles.orderCardImg}>
                                 <img 
                                     src={order.keranjang.produkVarian.produk.gambar || 'https://placehold.co/200x200/2d3640/FFFFFF?text=Gambar'} 
@@ -250,6 +261,17 @@ export default function OrderPage() {
                                     </div>
                                     <p>Total Harga: Rp {(order.keranjang.totalHarga + order.ongkosKirim).toLocaleString()}</p>
                                     <p>Jumlah : <span className={styles.amountValue}>{order.keranjang.jumlah}</span></p>
+                                    {/* NEW: Display reason for rejection */}
+                                    {order.status === 'CANCELLED' && order.alasanPenolakan && !isRejectedByAdminDueToInvalidMutation && (
+                                        <p className={styles.rejectionReason}>
+                                            <span className={styles.rejectionLabel}>Pesan Ditolak:</span> {order.alasanPenolakan}
+                                        </p>
+                                    )}
+                                    {cancellationStatus === 'ditolak' && order.pembatalanPesanan?.catatanAdmin && (
+                                        <p className={styles.rejectionReason}>
+                                            <span className={styles.rejectionLabel}>Pesan Pembatalan:</span> {order.pembatalanPesanan.catatanAdmin}
+                                        </p>
+                                    )}
                                 </div>
                                  <div className={styles.buttonWrapBottom}>
                                     <button className={`${styles.statusBtn} ${order.status === 'PENDING' ? styles.active : ''}`}>
@@ -298,6 +320,18 @@ export default function OrderPage() {
                                 <p><strong>Varian:</strong> {formatVarianDetails(orderForDetail.keranjang.produkVarian)}</p>
                                 <p><strong>Jumlah:</strong> {orderForDetail.keranjang.jumlah}</p>
                                 <p><strong>Status:</strong> {orderForDetail.status}</p>
+                                {/* NEW: Display order rejection reason in detail popup */}
+                                {orderForDetail.status === 'CANCELLED' && orderForDetail.alasanPenolakan && (
+                                    <p className={styles.rejectionReason}>
+                                        <span className={styles.rejectionLabel}>Alasan Penolakan:</span> {orderForDetail.alasanPenolakan}
+                                    </p>
+                                )}
+                                {/* NEW: Display cancellation rejection reason in detail popup */}
+                                {orderForDetail.pembatalanPesanan?.statusPembatalan === 'ditolak' && orderForDetail.pembatalanPesanan?.catatanAdmin && (
+                                    <p className={styles.rejectionReason}>
+                                        <span className={styles.rejectionLabel}>Pembatalan Ditolak Oleh Admin:</span> {orderForDetail.pembatalanPesanan.catatanAdmin}
+                                    </p>
+                                )}
                             </div>
                             <div className={styles.detailSection}>
                                 <h4>Informasi Pembayaran</h4>

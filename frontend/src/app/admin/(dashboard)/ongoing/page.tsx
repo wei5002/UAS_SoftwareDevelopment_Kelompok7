@@ -3,12 +3,10 @@
 import { useState, useEffect } from 'react';
 import styles from './ongoing.module.css';
 import HeaderAdmin from '@/app/headerAdmin';
-import NavbarAdmin from '@/app/components/navbarAdmin';
 import FooterHitam from '@/app/components/footerHitam';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
 
-// Interface definitions
 type Produk = {
   id: string;
   namaProduk: string;
@@ -66,12 +64,10 @@ export default function OngoingOrdersPage() {
   const [orders, setOrders] = useState<Pesanan[]>([]);
   const [selectedOrder, setSelectedOrder] = useState<Pesanan | null>(null);
 
-  // State untuk popup pembatalan
   const [showCancelPopup, setShowCancelPopup] = useState(false);
   const [adminCancelReason, setAdminCancelReason] = useState('');
   const [uploadRefund, setUploadRefund] = useState(false);
 
-  // State untuk popup detail
   const [showDetailPopup, setShowDetailPopup] = useState(false);
   const [orderForDetail, setOrderForDetail] = useState<Pesanan | null>(null);
 
@@ -138,12 +134,9 @@ export default function OngoingOrdersPage() {
     return details.join(' - ');
   };
 
-  // (Popup pembatalan dan upload refund tetap diabaikan/placeholder)
-
   return (
     <div>
       <HeaderAdmin />
-      <NavbarAdmin />
       <main style={{ minHeight: 700, background: '#2f3943', paddingTop: 90, paddingBottom: 100 }}>
         {orders.length === 0 && <p style={{ color: '#fff', textAlign: 'center' }}>No ongoing or completed orders.</p>}
         {orders.map((order) => (
@@ -191,7 +184,6 @@ export default function OngoingOrdersPage() {
             </div>
           </div>
         ))}
-        {/* ==================== POPUP DETAIL PESANAN ==================== */}
         {showDetailPopup && orderForDetail && (
           <div className={styles.popup}>
             <div className={`${styles.popupContent} ${styles.detailPopupContent}`}>
@@ -224,7 +216,6 @@ export default function OngoingOrdersPage() {
             </div>
           </div>
         )}
-        {/* ================================================================= */}
         {showCancelPopup && selectedOrder && <></>}
         {uploadRefund && <></>}
       </main>

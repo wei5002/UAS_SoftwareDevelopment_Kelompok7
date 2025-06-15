@@ -22,28 +22,41 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/a
 export default function CancelModal({ isOpen, onClose, onSuccess, order }: CancelModalProps) {
     const [reason, setReason] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-    const [customerName, setCustomerName] = useState(''); // State untuk nama pelanggan
 
-    // Ambil nama pelanggan dari localStorage (KHUSUS CUSTOMER)
+    const [customerName, setCustomerName] = useState('');
+
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationMessage, setNotificationMessage] = useState('');
+    const [notificationType, setNotificationType] = useState<'success' | 'error' | 'info'>('info');
+
+    const showCustomNotification = (message: string, type: 'success' | 'error' | 'info') => {
+        setNotificationMessage(message);
+        setNotificationType(type);
+        setShowNotification(true);
+        setTimeout(() => {
+            setShowNotification(false);
+        }, 3000);
+    };
+
     useEffect(() => {
         if (isOpen) {
             const nama = localStorage.getItem('customer_nama');
             setCustomerName(nama || 'Nama tidak ditemukan');
+            setReason('');
+            setShowNotification(false);
         }
     }, [isOpen]);
 
     const handleSubmit = async () => {
         if (!reason.trim()) {
-            setError('Alasan pembatalan wajib diisi.');
+            showCustomNotification('Alasan pembatalan wajib diisi.', 'info');
             return;
         }
 
         setIsSubmitting(true);
-        setError(null);
+        setShowNotification(false);
 
         try {
-            // AMBIL TOKEN KHUSUS CUSTOMER
             const token = localStorage.getItem('customer_token');
             if (!token) {
                 throw new Error("Autentikasi tidak ditemukan. Silakan login kembali.");
@@ -67,12 +80,14 @@ export default function CancelModal({ isOpen, onClose, onSuccess, order }: Cance
                 throw new Error(errorData.errors || 'Gagal mengirim permintaan pembatalan.');
             }
 
-            alert('Permintaan pembatalan berhasil dikirim.');
-            onSuccess(); // Refresh list pesanan
-            onClose(); // Tutup modal
+            showCustomNotification('Permintaan pembatalan berhasil dikirim.', 'success');
+            onSuccess();
+            setTimeout(() => {
+                onClose();
+            }, 1000);
 
         } catch (err: any) {
-            setError(err.message);
+            showCustomNotification(err.message, 'error');
         } finally {
             setIsSubmitting(false);
         }
@@ -112,7 +127,7 @@ export default function CancelModal({ isOpen, onClose, onSuccess, order }: Cance
                             placeholder="Type here ..."
                         />
                     </div>
-                    {error && <p className={styles.errorText}>{error}</p>}
+                    {/* Error text moved to custom notification */}
                     <div className={styles.popupButtonsYesno}>
                         <button
                             className={styles.yesBtn}
@@ -127,6 +142,13 @@ export default function CancelModal({ isOpen, onClose, onSuccess, order }: Cance
                     </div>
                 </div>
             </div>
+
+            {/* Custom Notification Popup */}
+            {showNotification && (
+                <div className={`${styles.notificationPopup} ${styles[notificationType]}`}>
+                    <p>{notificationMessage}</p>
+                </div>
+            )}
         </div>
     );
 }

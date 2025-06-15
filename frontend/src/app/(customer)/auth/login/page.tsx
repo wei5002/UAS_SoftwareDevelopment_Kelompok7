@@ -3,7 +3,7 @@
 import styles from './login.module.css';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Navbar from '@/app/header';
+import Header from '@/app/header';
 import Footer from '@/app/footer';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
@@ -14,9 +14,12 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+    setIsLoading(true); 
 
     try {
       const response = await fetch(`${API_BASE_URL}/pelanggan/login`, {
@@ -30,24 +33,26 @@ export default function LoginPage() {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.errors || result.message || 'Login gagal');
+        const errorMessage = result.message || result.errors || 'Login gagal. Periksa kembali email dan password Anda.';
+        throw new Error(errorMessage);
       }
 
-      // Simpan token, nama, email ke localStorage PAKAI KEY KHUSUS CUSTOMER
       localStorage.setItem('customer_token', result.data.token);
       localStorage.setItem('customer_nama', result.data.nama);
       localStorage.setItem('customer_email', result.data.email);
 
-      // Redirect ke halaman Home (atau halaman setelah login)
       router.push('/produk');
+
     } catch (err: any) {
       setError(err.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <>
-      <Navbar />
+      <Header />
       <main className={styles.main}>
         <h1 className={styles.title}>LOG IN</h1>
         <div className={styles.kotak_login}>
@@ -74,8 +79,9 @@ export default function LoginPage() {
               />
             </div>
 
+            {/* Notifikasi menggunakan kelas CSS */}
             {error && (
-              <p style={{ color: 'red', marginTop: '10px' }}>{error}</p>
+              <p className={styles.error}>{error}</p>
             )}
 
             <div className={styles.btn_group}>
@@ -83,14 +89,16 @@ export default function LoginPage() {
                 type="button"
                 className={styles.btn_back}
                 onClick={() => router.push('/')}
+                disabled={isLoading}
               >
                 BACK
               </button>
               <button
                 type="submit"
                 className={styles.btn_next}
+                disabled={isLoading}
               >
-                NEXT
+                {isLoading ? 'Logging In...' : 'NEXT'}
               </button>
             </div>
           </form>

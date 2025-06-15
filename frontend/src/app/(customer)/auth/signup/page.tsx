@@ -17,16 +17,19 @@ export default function SignupPage() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [isLoading, setIsLoading] = useState(false); 
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+    setSuccess('');
 
-    // Validasi password & confirm
     if (password !== confirmPassword) {
       setError('Password dan Confirm Password harus sama');
-      setSuccess('');
       return;
     }
+
+    setIsLoading(true);
 
     try {
       const response = await fetch(`${API_BASE_URL}/pelanggan/register`, {
@@ -40,19 +43,22 @@ export default function SignupPage() {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.errors || result.message || 'Signup gagal');
+        const errorMessage = result.message || result.errors || 'Signup gagal. Silakan coba lagi.';
+        throw new Error(errorMessage);
       }
 
-      setSuccess(result.message);
+      setSuccess('Registrasi berhasil! Anda akan dialihkan ke halaman login.');
       setError('');
 
       setTimeout(() => {
         router.push('/auth/login');
-      }, 1500);
+      }, 2000); 
 
     } catch (err: any) {
       setError(err.message);
       setSuccess('');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -120,22 +126,25 @@ export default function SignupPage() {
               />
             </div>
 
-            {error && <p style={{ color: 'red', marginTop: '10px' }}>{error}</p>}
-            {success && <p style={{ color: 'green', marginTop: '10px' }}>{success}</p>}
+            {/* Notifikasi menggunakan kelas CSS */}
+            {error && <p className={styles.error}>{error}</p>}
+            {success && <p className={styles.success}>{success}</p>}
 
             <div className={styles.btn_group}>
               <button
                 type="button"
                 className={styles.btn_back}
                 onClick={() => router.push('/auth/login')}
+                disabled={isLoading}
               >
                 BACK
               </button>
               <button
                 type="submit"
                 className={styles.btn_next}
+                disabled={isLoading}
               >
-                NEXT
+                {isLoading ? 'Mendaftar...' : 'NEXT'}
               </button>
             </div>
           </form>

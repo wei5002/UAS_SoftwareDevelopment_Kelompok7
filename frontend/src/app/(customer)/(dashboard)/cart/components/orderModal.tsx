@@ -89,6 +89,9 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
   const [selectedDistrictId, setSelectedDistrictId] = useState('');
   const [selectedVillageId, setSelectedVillageId] = useState('');
 
+const [popupMessage, setPopupMessage] = useState('');
+const [popupType, setPopupType] = useState<'success' | 'error' | ''>('');
+
   const fetchProvinces = async () => {
     try {
         const res = await fetch(`${PROXY_BASE_URL}/provinces`);
@@ -135,27 +138,63 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
     setForm((prev) => ({ ...prev, buktiTransferFile: file }));
   };
 
-  const handleProvinceChange = (provinceId: string) => {
-    setSelectedProvinceId(provinceId);
-    const selectedProvince = provinces.find((p) => p.id === provinceId);
-    const provinceName = selectedProvince?.name || '';
-    setForm((prev) => ({ ...prev, provinsi: provinceName }));
-    setSelectedRegencyId('');
-    setSelectedDistrictId('');
-    setSelectedVillageId('');
-    setRegencies([]);
-    setDistricts([]);
-    setVillages([]);
-    fetchRegencies(provinceId);
-    const isPulauJawa = PULAU_JAWA_PROVINCES.some((jawaProv) =>
-      provinceName.toLowerCase().includes(jawaProv.toLowerCase())
-    );
-    if (isPulauJawa) {
-      setShippingFee(0);
-    } else {
-      setShippingFee(100000);
-    }
+const calculateShippingFee = (province: string, basePrice: number): number => {
+  const normalizedProvince = province.trim().toLowerCase();
+
+  const provinceToPulau: { [key: string]: string } = {
+    'banten': 'Jawa', 'dki jakarta': 'Jawa', 'jakarta': 'Jawa',
+    'jawa barat': 'Jawa', 'jawa tengah': 'Jawa', 'di yogyakarta': 'Jawa', 'jawa timur': 'Jawa',
+    'bali': 'Bali', 'nusa tenggara barat': 'NTB', 'nusa tenggara timur': 'NTT',
+    'sumatera utara': 'Sumatera', 'sumatera barat': 'Sumatera', 'riau': 'Sumatera', 'kepulauan riau': 'Sumatera',
+    'bangka belitung': 'Sumatera', 'jambi': 'Sumatera', 'bengkulu': 'Sumatera', 'sumatera selatan': 'Sumatera', 'lampung': 'Sumatera',
+    'kalimantan barat': 'Kalimantan', 'kalimantan tengah': 'Kalimantan', 'kalimantan selatan': 'Kalimantan', 'kalimantan timur': 'Kalimantan', 'kalimantan utara': 'Kalimantan',
+    'sulawesi utara': 'Sulawesi', 'sulawesi tengah': 'Sulawesi', 'sulawesi tenggara': 'Sulawesi', 'sulawesi barat': 'Sulawesi', 'sulawesi selatan': 'Sulawesi', 'gorontalo': 'Sulawesi',
+    'maluku': 'Maluku', 'maluku utara': 'Maluku',
+    'papua': 'Papua', 'papua barat': 'Papua', 'papua tengah': 'Papua', 'papua pegunungan': 'Papua', 'papua selatan': 'Papua', 'papua barat daya': 'Papua'
   };
+
+  const feeByPulau: { [key: string]: number } = {
+    'Jawa': 0,
+    'Bali': 0.03,
+    'Sumatera': 0.05,
+    'Kalimantan': 0.07,
+    'Sulawesi': 0.09,
+    'NTB': 0.10,
+    'NTT': 0.12,
+    'Maluku': 0.15,
+    'Papua': 0.18,
+    'Lainnya': 0.2
+  };
+
+  const pulau = provinceToPulau[normalizedProvince] || 'Lainnya';
+  const percentage = feeByPulau[pulau] ?? 0.2;
+  return Math.ceil(basePrice * percentage * 1.5);
+};
+
+const handleProvinceChange = (provinceId: string) => {
+  setSelectedProvinceId(provinceId);
+  const selectedProvince = provinces.find((p) => p.id === provinceId);
+  const provinceName = selectedProvince?.name || '';
+  setForm((prev) => ({ ...prev, provinsi: provinceName }));
+  setSelectedRegencyId('');
+  setSelectedDistrictId('');
+  setSelectedVillageId('');
+  setRegencies([]);
+  setDistricts([]);
+  setVillages([]);
+  fetchRegencies(provinceId);
+  const fee = calculateShippingFee(provinceName, totalPrice);
+  setShippingFee(fee);
+};
+
+const showPopup = (message: string, type: 'success' | 'error') => {
+  setPopupMessage(message);
+  setPopupType(type);
+  setTimeout(() => {
+    setPopupMessage('');
+    setPopupType('');
+  }, 3000);
+};
 
  const handleSubmit = async () => {
     if (!form.buktiTransferFile) {
@@ -220,7 +259,7 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
         throw new Error(Array.isArray(errorMessage) ? errorMessage.join(', ') : errorMessage);
       }
 
-      alert('Pesanan berhasil dikirim!');
+      showPopup('Pesanan berhasil dikirim!', 'success');
       
       try {
         const produkToUpdateInfo = cartItem.produkVarian.produk;
@@ -262,12 +301,12 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
         if (!updateStockRes.ok) {
             const errorBody = await updateStockRes.json();
             console.error('Order created, but failed to update stock.', errorBody);
-            alert('Pesanan dibuat, tetapi gagal memperbarui stok. Hubungi admin.');
+            showPopup('Pesanan dibuat, tetapi gagal memperbarui stok. Hubungi admin.', 'error');
         }
 
       } catch (stockUpdateError) {
           console.error("Error during stock update:", stockUpdateError);
-          alert('Terjadi kesalahan saat memperbarui stok produk.');
+          showPopup('Terjadi kesalahan saat memperbarui stok produk.', 'error');
       }
 
       await fetch(`${API_BASE_URL}/keranjang/${keranjangId}/markAsOrdered`, {
@@ -427,10 +466,17 @@ export default function OrderModal({ isOpen, onClose, totalPrice, shippingFee: i
         
         {error && <p className={styles.errorText}>{error}</p>}
 
+        {popupMessage && (
+        <div className={`${styles.popup} ${styles[popupType]}`}>
+          <p>{popupMessage}</p>
+        </div>
+        )}
+
         <button className={styles['order-btn']} onClick={handleSubmit} disabled={uploading}>
           {uploading ? 'Processing...' : 'Order'}
         </button>
       </div>
     </div>
+    
   );
 }

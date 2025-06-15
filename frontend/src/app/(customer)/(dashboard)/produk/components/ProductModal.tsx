@@ -12,19 +12,25 @@ export default function ProductModal({ id, onClose }: { id: string; onClose: () 
   const [produk, setProduk] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [showLoginAlert, setShowLoginAlert] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
+  const [popupType, setPopupType] = useState<'success' | 'error'>('success');
 
   const [selectedSize, setSelectedSize] = useState<any>(null);
   const [selectedThickness, setSelectedThickness] = useState<any>(null);
   const [selectedHole, setSelectedHole] = useState<any>(null);
   const [jumlah, setJumlah] = useState(1);
 
+  const showPopup = (message: string, type: 'success' | 'error') => {
+    setPopupMessage(message);
+    setPopupType(type);
+    setTimeout(() => setPopupMessage(''), 3000);
+  };
+
   useEffect(() => {
     const token = localStorage.getItem('customer_token');
     if (!token) {
       setShowLoginAlert(true);
-      setTimeout(() => {
-        router.replace('/auth/login');
-      }, 1500);
+      setTimeout(() => router.replace('/auth/login'), 1500);
       return;
     }
     const fetchProdukDetail = async () => {
@@ -47,31 +53,20 @@ export default function ProductModal({ id, onClose }: { id: string; onClose: () 
     fetchProdukDetail();
   }, [id, router]);
 
-  const thicknessSet = Array.from(
-    new Set(produk?.varian.map((v: any) => v.thickness).filter((v: any) => v != null)) || []
-  );
-  const holeSet = Array.from(
-    new Set(produk?.varian.map((v: any) => v.hole).filter((v: any) => v != null)) || []
-  );
-  const sizeSet = Array.from(
-    new Set(produk?.varian.map((v: any) => v.size).filter((v: any) => v != null && v !== '')) || []
-  );
+  const thicknessSet = Array.from(new Set(produk?.varian.map((v: any) => v.thickness).filter(Boolean)) || []);
+  const holeSet = Array.from(new Set(produk?.varian.map((v: any) => v.hole).filter(Boolean)) || []);
+  const sizeSet = Array.from(new Set(produk?.varian.map((v: any) => v.size).filter((s: any) => s !== '')) || []);
 
-  const selectedVarian = produk?.varian.find((v: any) => {
-    const matchSize = sizeSet.length === 0 || (selectedSize !== null && v.size === selectedSize);
-    const matchThickness = thicknessSet.length === 0 || (selectedThickness !== null && v.thickness === selectedThickness);
-    const matchHole = holeSet.length === 0 || (selectedHole !== null && v.hole === selectedHole);
-    return matchSize && matchThickness && matchHole;
-  });
+  const selectedVarian = produk?.varian.find((v: any) =>
+    (sizeSet.length === 0 || (selectedSize && v.size === selectedSize)) &&
+    (thicknessSet.length === 0 || (selectedThickness && v.thickness === selectedThickness)) &&
+    (holeSet.length === 0 || (selectedHole && v.hole === selectedHole))
+  );
 
   useEffect(() => {
     if (selectedVarian) {
-      if (jumlah > selectedVarian.stok) {
-        setJumlah(1);
-      }
-      if (selectedVarian.stok === 0) {
-        setJumlah(0);
-      }
+      if (jumlah > selectedVarian.stok) setJumlah(1);
+      if (selectedVarian.stok === 0) setJumlah(0);
     }
   }, [selectedVarian, jumlah]);
 
@@ -84,20 +79,17 @@ export default function ProductModal({ id, onClose }: { id: string; onClose: () 
   const hargaTotal = selectedVarian ? selectedVarian.harga * jumlah : 0;
 
   const handleAddToCart = async () => {
-    if (!selectedVarian) {
-      alert('Pilih varian produk terlebih dahulu.');
-      return;
-    }
-    if (selectedVarian.stok < jumlah || jumlah === 0) {
-      alert('Stok tidak mencukupi atau jumlah tidak valid.');
-      return;
-    }
     const token = localStorage.getItem('customer_token');
     if (!token) {
-      alert('Anda harus login terlebih dahulu.');
+      showPopup('Anda harus login terlebih dahulu.', 'error');
       router.replace('/auth/login');
       return;
     }
+    if (!selectedVarian) return showPopup('Pilih varian produk terlebih dahulu.', 'error');
+    if (selectedVarian.stok < jumlah || jumlah === 0) {
+      return showPopup('Stok tidak mencukupi atau jumlah tidak valid.', 'error');
+    }
+
     try {
       const response = await fetch(`${API_BASE_URL}/keranjang`, {
         method: 'POST',
@@ -107,154 +99,96 @@ export default function ProductModal({ id, onClose }: { id: string; onClose: () 
         },
         body: JSON.stringify({
           produkVarianId: selectedVarian.id,
-          jumlah: jumlah,
+          jumlah,
           totalHarga: hargaTotal,
         }),
       });
       if (response.ok) {
-        alert('Berhasil ditambahkan ke keranjang!');
-        onClose();
+        showPopup('Berhasil ditambahkan ke keranjang!', 'success');
+        setTimeout(onClose, 2000);
       } else {
-        const errorData = await response.json();
-        console.error(errorData);
-        alert('Gagal menambahkan ke keranjang.');
+        showPopup('Gagal menambahkan ke keranjang.', 'error');
       }
     } catch (err) {
       console.error(err);
-      alert('Terjadi kesalahan saat menambahkan ke keranjang.');
+      showPopup('Terjadi kesalahan saat menambahkan ke keranjang.', 'error');
     }
   };
 
   if (showLoginAlert) {
     return (
-      <div id="popup_produk" className={styles.popup_produk} style={{ display: 'block' }} onClick={onClose}>
+      <div className={styles.popup_produk} onClick={onClose}>
         <div className={styles.popup_isi} onClick={(e) => e.stopPropagation()}>
-          <h2 style={{ color: 'white', textAlign: 'center' }}>
-            Anda harus login terlebih dahulu. Mengarahkan ke halaman login...
-          </h2>
+          <h2 style={{ textAlign: 'center' }}>Anda harus login terlebih dahulu. Mengarahkan ke login...</h2>
         </div>
       </div>
     );
   }
 
-  if (loading) return null;
-  if (!produk) return null;
+  if (loading || !produk) return null;
 
   return (
-    <div id="popup_produk" className={styles.popup_produk} style={{ display: 'block' }} onClick={onClose}>
+    <div className={styles.popup_produk} onClick={onClose}>
       <div className={styles.popup_isi} onClick={(e) => e.stopPropagation()}>
+        {popupMessage && (
+          <div className={`${styles.popup} ${styles[popupType]}`}>
+            <p>{popupMessage}</p>
+          </div>
+        )}
+
         <span className={styles.close} onClick={onClose}>&times;</span>
         <div className={styles.popup_container}>
           <div className={styles.popup_header}>
-            <h2 id="judul_produk" className={styles.judul_produk}>{produk.namaProduk}</h2>
-            <br />
-            <h2 id="jenis_produk" className={styles.jenis_produk}>{produk.kategori}</h2>
-            <img id="gambar_produk" src={produk.gambar} alt="" className={styles.gambar_produk}/>
+            <h2 className={styles.judul_produk}>{produk.namaProduk}</h2>
+            <h2 className={styles.jenis_produk}>{produk.kategori}</h2>
+            <img src={produk.gambar} alt={produk.namaProduk} className={styles.gambar_produk} />
+
             <div className={styles['kurang-tambah-btn']}>
               <div className={styles.jumlah_wrapper}>
-                <button
-                  className={styles.kurang_btn}
-                  onClick={() => setJumlah(Math.max(1, jumlah - 1))}
-                  disabled={!isVariantSelected || selectedVarian?.stok === 0 || jumlah <= 1}
-                >
-                  -
-                </button>
-                <span id="jumlah_produk" className={styles.jumlah_produk}>
-                    {selectedVarian && selectedVarian.stok === 0 ? 0 : jumlah}
-                </span>
-                <button
-                  className={styles.tambah_btn}
-                  onClick={() => setJumlah(jumlah + 1)}
-                  disabled={
-                    !isVariantSelected ||
-                    (selectedVarian && jumlah >= selectedVarian.stok)
-                  }
-                >
-                  +
-                </button>
+                <button onClick={() => setJumlah(Math.max(1, jumlah - 1))} disabled={!isVariantSelected || jumlah <= 1} className={styles.kurang_btn}>-</button>
+                <span className={styles.jumlah_produk}>{selectedVarian?.stok === 0 ? 0 : jumlah}</span>
+                <button onClick={() => setJumlah(jumlah + 1)} disabled={!isVariantSelected || jumlah >= selectedVarian?.stok} className={styles.tambah_btn}>+</button>
               </div>
-              <button
-                className={styles.keranjang_btn}
-                onClick={handleAddToCart}
-                disabled={!isVariantSelected || (selectedVarian && selectedVarian.stok === 0)}
-              >
-                Add to Cart
-              </button>
+              <button onClick={handleAddToCart} disabled={!isVariantSelected || selectedVarian?.stok === 0} className={styles.keranjang_btn}>Add to Cart</button>
             </div>
           </div>
 
           <div className={styles.popup_detail}>
-             {thicknessSet.length > 0 && (
-              <div className={styles.bagian_kanan} id="detail_thickness">
-                <h3 id="judul_thickness">THICKNESS (mm)</h3>
-                <div id="popup_thickness" className={styles.thickness_buttons}>
+            {thicknessSet.length > 0 && (
+              <div className={styles.bagian_kanan}>
+                <h3>THICKNESS (mm)</h3>
+                <div className={styles.thickness_buttons}>
                   {thicknessSet.map((t: any) => (
-                    <button
-                      key={t}
-                      className={`${styles.thickness_btn} ${selectedThickness === t ? styles.active : ''}`}
-                      onClick={() => setSelectedThickness(t)}
-                    >
-                      {t}
-                    </button>
+                    <button key={t} onClick={() => setSelectedThickness(t)} className={`${styles.thickness_btn} ${selectedThickness === t ? styles.active : ''}`}>{t}</button>
                   ))}
                 </div>
               </div>
             )}
-
             {holeSet.length > 0 && (
-              <div className={styles.bagian_kanan} id="detail_hole">
-                <h3 id="judul_hole">HOLE DIAMETER (mm)</h3>
-                <div id="popup_hole" className={styles.hole_buttons}>
+              <div className={styles.bagian_kanan}>
+                <h3>HOLE DIAMETER (mm)</h3>
+                <div className={styles.hole_buttons}>
                   {holeSet.map((h: any) => (
-                    <button
-                      key={h}
-                      className={`${styles.hole_btn} ${selectedHole === h ? styles.active : ''}`}
-                      onClick={() => setSelectedHole(h)}
-                    >
-                      {h}
-                    </button>
+                    <button key={h} onClick={() => setSelectedHole(h)} className={`${styles.hole_btn} ${selectedHole === h ? styles.active : ''}`}>{h}</button>
                   ))}
                 </div>
               </div>
             )}
-
             {sizeSet.length > 0 && (
-              <div className={styles.bagian_kanan} id="detail_size">
-                <h3 id="judul_size">SIZE (mm)</h3>
-                <div id="popup_size" className={styles.size_buttons}>
+              <div className={styles.bagian_kanan}>
+                <h3>SIZE (mm)</h3>
+                <div className={styles.size_buttons}>
                   {sizeSet.map((s: any) => (
-                    <button
-                      key={s}
-                      className={`${styles.size_btn} ${selectedSize === s ? styles.active : ''}`}
-                      onClick={() => setSelectedSize(s)}
-                    >
-                      {s}
-                    </button>
+                    <button key={s} onClick={() => setSelectedSize(s)} className={`${styles.size_btn} ${selectedSize === s ? styles.active : ''}`}>{s}</button>
                   ))}
                 </div>
               </div>
             )}
-
             <div className={styles.popup_action}>
               <div className={styles.stock_price}>
-                <p>
-                  Stock:{' '}
-                  <span id="popup_stock" className={styles.nilai_stock}>
-                    {selectedVarian?.stok === 0 ? 'Habis' : selectedVarian?.stok ?? '-'}
-                  </span>
-                </p>
-                <p>
-                  Price:{' '}
-                  <span id="popup_price" className={styles.nilai_price}>
-                    Rp {selectedVarian ? selectedVarian.harga.toLocaleString() : '-'}
-                  </span>
-                </p>
-                <p>
-                  Total:{' '}
-                  <span className={styles.nilai_price}>
-                    Rp {hargaTotal.toLocaleString()}
-                  </span>
-                </p>
+                <p>Stock: <span className={styles.nilai_stock}>{selectedVarian?.stok === 0 ? 'Habis' : selectedVarian?.stok ?? '-'}</span></p>
+                <p>Price: <span className={styles.nilai_price}>Rp {selectedVarian?.harga?.toLocaleString() ?? '-'}</span></p>
+                <p>Total: <span className={styles.nilai_price}>Rp {hargaTotal.toLocaleString()}</span></p>
               </div>
             </div>
           </div>

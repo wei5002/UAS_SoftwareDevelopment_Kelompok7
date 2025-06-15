@@ -1,11 +1,18 @@
 .order-list {
-    padding-top: 150px;
+    padding-top: 100px;
     padding-bottom: 100px;
     display: flex;
     flex-direction: column;
     gap: 40px;
     align-items: center;
     background: rgba(49, 59, 70, 1);
+}
+
+.noOrdersMessage {
+    color: white;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-top: 50px;
 }
 
 .order-card {
@@ -24,11 +31,35 @@
     position: relative;
 }
 
+.onProcessOrderCard {
+    border: 2.5px solid #2196f3 !important;
+    background: #e0f2f7 !important;
+    box-shadow: 0 0 8px 0 rgba(33, 150, 243, 0.8);
+}
+
+.approvedCancellationOrderCard {
+    border: 2.5px solid #5cb85c !important;
+    background: #e6ffe6 !important;
+    box-shadow: 0 0 8px 0 rgba(92, 184, 92, 0.8);
+}
+
+.rejectedCancellationOrderCard {
+    border: 2.5px solid #ff4500 !important; 
+    background: #ffebe5 !important;
+    box-shadow: 0 0 8px 0 rgba(255, 69, 0, 0.8);
+}
+
+
 .rejectedOrderCard {
     background: #fff4f4 !important;
     border: 2.5px solid #e57373 !important;
     box-shadow: 0 0 8px 0 #e57373cc;
-    /* badge & alasan pakai inline style di React */
+}
+
+.cancelRequestedOrderCard { 
+    background: #fffbe5 !important;
+    border: 2.5px solid #ffc107 !important;
+    box-shadow: 0 0 8px 0 rgba(255, 193, 7, 0.8);
 }
 
 .order-card-img {
@@ -46,17 +77,25 @@
 .order-card-content {
     display: flex;
     flex-direction: column;
-    justify-content: right;
+    justify-content: space-between;
     width: 100%;
 }
 
 .order-card-desc {
     color: white;
     display: flex;
-    width: 390px;
     flex-direction: column;
     line-height: 1.95rem;
     gap: 2px;
+}
+
+.order-card-desc h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .order-card-desc p {
@@ -67,7 +106,8 @@
 
 .button-wrap {
     display: flex;
-    justify-content: right;
+    justify-content: flex-end;
+    margin-top: auto;
 }
 
 .detail-btn {
@@ -111,6 +151,50 @@
   vertical-align: middle;
 }
 
+.badge-pending {
+  background: #6c757d;
+  color: #fff;
+  border-radius: 7px;
+  font-size: 13px;
+  padding: 3px 14px;
+  margin-left: 12px;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+.badge-cancel-requested {
+  background: #ffc107;
+  color: #fff;
+  border-radius: 7px;
+  font-size: 13px;
+  padding: 3px 14px;
+  margin-left: 12px;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+.badge-cancellation-rejected {
+    background: #6c757d;
+    color: #fff;
+    border-radius: 7px;
+    font-size: 13px;
+    padding: 3px 14px;
+    margin-left: 12px;
+    font-weight: 700;
+    vertical-align: middle;
+}
+
+.badge-cancellation-approved {
+    background: #5cb85c;
+    color: #fff;
+    border-radius: 7px;
+    font-size: 13px;
+    padding: 3px 14px;
+    margin-left: 12px;
+    font-weight: 700;
+    vertical-align: middle;
+}
+
 .alasan-rejected {
     color: #c00;
     font-size: 14px;
@@ -119,17 +203,54 @@
     border-radius: 6px;
     padding: 6px 10px;
     font-style: italic;
+    word-break: break-word;
+}
+
+.alasan-cancel-requested {
+    color: #cc8400;
+    font-size: 14px;
+    margin-top: 4px;
+    background: #fff8e1;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-style: italic;
+    word-break: break-word;
+}
+
+.alasan-cancellation-rejected {
+    color: #495057;
+    font-size: 14px;
+    margin-top: 4px;
+    background: #e9ecef;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-style: italic;
+    word-break: break-word;
+}
+
+.alasan-cancellation-approved {
+    color: #316831; 
+    font-size: 14px;
+    margin-top: 4px;
+    background: #e0ffe0; 
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-style: italic;
+    word-break: break-word;
 }
 
 .popup-wrapper {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .popup-line-one {
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .popup-title {
@@ -139,6 +260,14 @@
     margin-bottom: 20px;
     width: 100%;
     font-size: 1.3em;
+    text-align: center;
+}
+
+.popup-title h3 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .popup-overlay {
@@ -161,19 +290,24 @@
     width: 900px;
     max-width: 90vw;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
     position: relative;
     line-height: 25px;
     box-sizing: border-box;
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .popup-img img {
     width: 250px;
+    min-width: 150px;
     margin-right: 20px;
     border-radius: 8px;
     background: #eaeaea;
+    object-fit: cover;
+    height: 250px;
 }
 
 .close-popup {
@@ -186,75 +320,349 @@
     z-index: 2;
 }
 
-.popup-cusinfo {
+.popup-cusinfo, .popup-productinfo {
     display: flex;
     flex-direction: row;
     gap: 20px;
+    width: 100%;
+    margin-bottom: 15px;
 }
 
-.popup-productinfo {
+.popup-cusinfo-title, .popup-productinfo-title {
+    flex: 1;
+    text-align: right;
+    font-weight: bold;
+}
+
+.popup-cusinfo-content, .popup-productinfo-content {
+    flex: 2;
+    text-align: left;
+}
+
+.popup-confirm-decline-btns {
     display: flex;
-    flex-direction: row;
-    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: 15px;
 }
 
 .text-type {
-    padding: 5px;
-    width: 80%;
+    padding: 10px;
+    flex-grow: 1;
+    max-width: 300px;
     height: 40px;
     border-radius: 10px;
     border: none;
+    box-sizing: border-box;
+    min-width: 150px;
 }
 
-.popup-confirm-btn {
-    display: flex;
-    flex-direction: row;
-    justify-content: right;
-}
-
-.confirm-btn {
-    background-color: limegreen;
-    color: white;
+.confirm-btn, .decline-btn {
     padding: 10px 15px;
     border: none;
     cursor: pointer;
     border-radius: 20px;
     font-weight: 600;
+    transition: opacity 0.3s, background-color 0.3s;
+    white-space: nowrap;
+}
+
+.confirm-btn {
+    background-color: limegreen;
+    color: white;
+}
+.confirm-btn:disabled {
+    background-color: #5cb85c;
 }
 
 .decline-btn {
     background-color: crimson;
     color: white;
-    padding: 10px 17px;
-    border: none;
-    cursor: pointer;
-    border-radius: 20px;
-    font-weight: 600;
 }
+.decline-btn:disabled {
+    background-color: #e57373;
+}
+
+.confirm-btn:disabled, .decline-btn:disabled, .text-type:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
 
 .see-receipt-btn {
-    width: 100px;
+    width: 120px;
+    height: 35px;
     border-radius: 5px;
     border: none;
+    background-color: #f5f5f5;
+    color: #29324a;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+.see-receipt-btn:hover {
+    background: #2d3640;
+    color: #fff;
 }
 
-.popup-decline-btn {
+.popup-admin-note {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.popup-actions {
     display: flex;
-    flex-direction: row;
-    justify-content: right;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    width: 100%;
 }
 
-@media (max-width: 700px) {
+.popup-cancellation-info, .popup-cancellation-order-detail {
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+.popup-cancellation-info h4, .popup-cancellation-order-detail h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #e0e0e0;
+}
+
+.popup-cancellation-info p, .popup-cancellation-order-detail p {
+    margin-bottom: 8px;
+}
+
+.alasanRejected {
+    color: #c00;
+    font-size: 14px;
+    margin-top: 15px;
+    background: #ffeaea;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-style: italic;
+    word-break: break-word;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.status-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10001;
+}
+
+.status-popup-content {
+  background-color: #fff;
+  color: #333;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  min-width: 280px;
+  max-width: 90vw;
+  text-align: center;
+  font-size: 1.1em;
+  font-weight: 500;
+  position: relative;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.status-popup-content p {
+  margin: 0;
+  padding-right: 20px;
+}
+
+.status-popup-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 20px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: #888;
+  padding: 0;
+  line-height: 1;
+}
+
+.status-popup-content.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.status-popup-content.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.status-popup-content.info {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 1024px) {
+    .order-card {
+        width: 80%;
+        padding: 20px;
+    }
+    .order-card-img img {
+        width: 150px;
+        height: 150px;
+    }
+    .order-card-desc {
+        width: auto;
+    }
+    .popup-content {
+        padding: 25px;
+    }
+    .popup-img img {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+    .orderList {
+        padding-top: 100px;
+    }
+    .order-card {
+        width: 95%;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .order-card-img {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+    .order-card-img img {
+        width: 180px;
+        height: 180px;
+    }
+    .order-card-content {
+        align-items: center;
+    }
+    .order-card-desc {
+        width: 100%;
+    }
+    .button-wrap {
+        justify-content: center;
+        width: 100%;
+    }
+    .popup-content {
+        padding: 20px;
+    }
+    .popup-img img {
+        width: 150px;
+        height: 150px;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+    .popup-line-one {
+        flex-direction: column;
+        align-items: center;
+    }
+    .popup-cusinfo, .popup-productinfo {
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+    }
+    .popup-cusinfo-title, .popup-productinfo-title {
+        text-align: center;
+    }
+    .popup-cusinfo-content, .popup-productinfo-content {
+        text-align: center;
+    }
+    .popup-confirm-decline-btns, .popup-actions {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    .text-type {
+        max-width: 100%;
+    }
+    .confirm-btn, .decline-btn {
+        width: 100%;
+    }
+    .badge-confirmed, .badge-rejected, .badge-cancel-requested, .badge-cancellation-rejected, .badge-cancellation-approved, .badge-pending {
+        margin-left: 8px;
+        margin-top: 5px;
+    }
+    .order-card-desc h3 {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
   .order-card, .popup-content {
     width: 98vw;
     padding: 12px;
   }
+  .order-card-img img {
+    width: 90px;
+    height: 90px;
+  }
+  .order-card-desc p {
+    font-size: 15px;
+  }
+  .detail-btn {
+    width: 70px;
+    font-size: 15px;
+    height: 30px;
+  }
   .popup-img img {
     width: 100px;
-    margin-right: 8px;
-  }
-  .order-card-img img {
-    width: 100px;
     height: 100px;
+  }
+  .popup-title h3 {
+    font-size: 1em;
+  }
+  .confirm-btn, .decline-btn {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+  .see-receipt-btn {
+    width: 90px;
+    font-size: 13px;
+    height: 30px;
+  }
+  .text-type {
+    padding: 8px;
+    height: 35px;
+    font-size: 14px;
+  }
+  .popup-cancellation-info p, .popup-cancellation-order-detail p {
+    font-size: 14px;
+  }
+
+  .status-popup-content {
+    padding: 15px 20px;
+    font-size: 0.9em;
+  }
+  .status-popup-close {
+    font-size: 18px;
+    top: 5px;
+    right: 10px;
   }
 }

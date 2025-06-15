@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './products.module.css';
 import HeaderAdmin from '@/app/headerAdmin';
-import NavbarAdmin from '@/app/components/navbarAdmin';
 import Footer from '@/app/footer';
 import ProductModal from './components/ProductModal'; 
 
@@ -147,7 +146,6 @@ export default function AdminProductsPage() {
   return (
     <>
       <HeaderAdmin />
-      <NavbarAdmin />
       <main>
         <section className={styles.hero}>
           <Image src="/assets/images/hero.jpg" alt="Hero background" layout="fill" objectFit="cover" className={styles.heroBg} priority />
